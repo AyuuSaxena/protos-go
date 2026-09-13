@@ -9,6 +9,7 @@ package common
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -176,7 +177,10 @@ type CommonListRequest struct {
 	Sortby *string `protobuf:"bytes,4,opt,name=sortby,proto3,oneof" json:"sortby,omitempty" form:"sortby" bson:"sortby,omitempty"`
 	// Sort direction order (asc or desc, default desc)
 	// @gotags: `form:"sortOrder" json:"sortOrder,omitempty" bson:"sortOrder,omitempty"`
-	SortOrder     *string `protobuf:"bytes,5,opt,name=sort_order,json=sortOrder,proto3,oneof" json:"sortOrder,omitempty" form:"sortOrder" bson:"sortOrder,omitempty"`
+	SortOrder *string `protobuf:"bytes,5,opt,name=sort_order,json=sortOrder,proto3,oneof" json:"sortOrder,omitempty" form:"sortOrder" bson:"sortOrder,omitempty"`
+	// Optional site identifier
+	// @gotags: `form:"site" json:"site,omitempty" bson:"site,omitempty"`
+	Site          *string `protobuf:"bytes,6,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site" bson:"site,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -246,6 +250,120 @@ func (x *CommonListRequest) GetSortOrder() string {
 	return ""
 }
 
+func (x *CommonListRequest) GetSite() string {
+	if x != nil && x.Site != nil {
+		return *x.Site
+	}
+	return ""
+}
+
+// CommonSearchRequest represents a generic, universal search and pagination request across all microservices.
+type CommonSearchRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Maximum number of items to return (default 20, max 100)
+	// @gotags: `form:"limit" json:"limit,omitempty" bson:"limit,omitempty"`
+	Limit *int32 `protobuf:"varint,1,opt,name=limit,proto3,oneof" json:"limit,omitempty" form:"limit" bson:"limit,omitempty"`
+	// Number of items to skip for pagination (default 0)
+	// @gotags: `form:"offset" json:"offset,omitempty" bson:"offset,omitempty"`
+	Offset *int32 `protobuf:"varint,2,opt,name=offset,proto3,oneof" json:"offset,omitempty" form:"offset" bson:"offset,omitempty"`
+	// Search keyword across text fields
+	// @gotags: `form:"keyword" json:"keyword,omitempty" bson:"keyword,omitempty"`
+	Keyword *string `protobuf:"bytes,3,opt,name=keyword,proto3,oneof" json:"keyword,omitempty" form:"keyword" bson:"keyword,omitempty"`
+	// Field name to sort by (e.g. title, createdAt, releaseYear)
+	// @gotags: `form:"sortby" json:"sortby,omitempty" bson:"sortby,omitempty"`
+	Sortby *string `protobuf:"bytes,4,opt,name=sortby,proto3,oneof" json:"sortby,omitempty" form:"sortby" bson:"sortby,omitempty"`
+	// Sort direction order (asc or desc, default desc)
+	// @gotags: `form:"sortOrder" json:"sortOrder,omitempty" bson:"sortOrder,omitempty"`
+	SortOrder *string `protobuf:"bytes,5,opt,name=sort_order,json=sortOrder,proto3,oneof" json:"sortOrder,omitempty" form:"sortOrder" bson:"sortOrder,omitempty"`
+	// Dynamic arbitrary query filter object
+	// @gotags: `json:"query,omitempty" bson:"query,omitempty"`
+	Query *structpb.Struct `protobuf:"bytes,6,opt,name=query,proto3" json:"query,omitempty" bson:"query,omitempty"`
+	// Optional site identifier
+	// @gotags: `form:"site" json:"site,omitempty" bson:"site,omitempty"`
+	Site          *string `protobuf:"bytes,7,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site" bson:"site,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CommonSearchRequest) Reset() {
+	*x = CommonSearchRequest{}
+	mi := &file_common_v1_common_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CommonSearchRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CommonSearchRequest) ProtoMessage() {}
+
+func (x *CommonSearchRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_common_v1_common_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CommonSearchRequest.ProtoReflect.Descriptor instead.
+func (*CommonSearchRequest) Descriptor() ([]byte, []int) {
+	return file_common_v1_common_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *CommonSearchRequest) GetLimit() int32 {
+	if x != nil && x.Limit != nil {
+		return *x.Limit
+	}
+	return 0
+}
+
+func (x *CommonSearchRequest) GetOffset() int32 {
+	if x != nil && x.Offset != nil {
+		return *x.Offset
+	}
+	return 0
+}
+
+func (x *CommonSearchRequest) GetKeyword() string {
+	if x != nil && x.Keyword != nil {
+		return *x.Keyword
+	}
+	return ""
+}
+
+func (x *CommonSearchRequest) GetSortby() string {
+	if x != nil && x.Sortby != nil {
+		return *x.Sortby
+	}
+	return ""
+}
+
+func (x *CommonSearchRequest) GetSortOrder() string {
+	if x != nil && x.SortOrder != nil {
+		return *x.SortOrder
+	}
+	return ""
+}
+
+func (x *CommonSearchRequest) GetQuery() *structpb.Struct {
+	if x != nil {
+		return x.Query
+	}
+	return nil
+}
+
+func (x *CommonSearchRequest) GetSite() string {
+	if x != nil && x.Site != nil {
+		return *x.Site
+	}
+	return ""
+}
+
 // CommonListResponse represents standardized pagination metadata across all services.
 type CommonListResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -265,7 +383,7 @@ type CommonListResponse struct {
 
 func (x *CommonListResponse) Reset() {
 	*x = CommonListResponse{}
-	mi := &file_common_v1_common_proto_msgTypes[2]
+	mi := &file_common_v1_common_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -277,7 +395,7 @@ func (x *CommonListResponse) String() string {
 func (*CommonListResponse) ProtoMessage() {}
 
 func (x *CommonListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_common_v1_common_proto_msgTypes[2]
+	mi := &file_common_v1_common_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -290,7 +408,7 @@ func (x *CommonListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CommonListResponse.ProtoReflect.Descriptor instead.
 func (*CommonListResponse) Descriptor() ([]byte, []int) {
-	return file_common_v1_common_proto_rawDescGZIP(), []int{2}
+	return file_common_v1_common_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *CommonListResponse) GetTotalCount() int64 {
@@ -363,7 +481,7 @@ type FileMetadata struct {
 
 func (x *FileMetadata) Reset() {
 	*x = FileMetadata{}
-	mi := &file_common_v1_common_proto_msgTypes[3]
+	mi := &file_common_v1_common_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -375,7 +493,7 @@ func (x *FileMetadata) String() string {
 func (*FileMetadata) ProtoMessage() {}
 
 func (x *FileMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_common_v1_common_proto_msgTypes[3]
+	mi := &file_common_v1_common_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -388,7 +506,7 @@ func (x *FileMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileMetadata.ProtoReflect.Descriptor instead.
 func (*FileMetadata) Descriptor() ([]byte, []int) {
-	return file_common_v1_common_proto_rawDescGZIP(), []int{3}
+	return file_common_v1_common_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *FileMetadata) GetMongoId() string {
@@ -486,7 +604,7 @@ type FileChunk struct {
 
 func (x *FileChunk) Reset() {
 	*x = FileChunk{}
-	mi := &file_common_v1_common_proto_msgTypes[4]
+	mi := &file_common_v1_common_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -498,7 +616,7 @@ func (x *FileChunk) String() string {
 func (*FileChunk) ProtoMessage() {}
 
 func (x *FileChunk) ProtoReflect() protoreflect.Message {
-	mi := &file_common_v1_common_proto_msgTypes[4]
+	mi := &file_common_v1_common_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -511,7 +629,7 @@ func (x *FileChunk) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileChunk.ProtoReflect.Descriptor instead.
 func (*FileChunk) Descriptor() ([]byte, []int) {
-	return file_common_v1_common_proto_rawDescGZIP(), []int{4}
+	return file_common_v1_common_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *FileChunk) GetData() []byte {
@@ -525,7 +643,7 @@ var File_common_v1_common_proto protoreflect.FileDescriptor
 
 const file_common_v1_common_proto_rawDesc = "" +
 	"\n" +
-	"\x16common/v1/common.proto\x12\tcommon.v1\"\x86\x04\n" +
+	"\x16common/v1/common.proto\x12\tcommon.v1\x1a\x1cgoogle/protobuf/struct.proto\"\x86\x04\n" +
 	"\x10UserTokenPayload\x12\x12\n" +
 	"\x04site\x18\x01 \x01(\tR\x04site\x12\x1c\n" +
 	"\asite_id\x18\x02 \x01(\tH\x00R\x06siteId\x88\x01\x01\x12\x0e\n" +
@@ -551,20 +669,38 @@ const file_common_v1_common_proto_rawDesc = "" +
 	"\v_postalcodeB\f\n" +
 	"\n" +
 	"_device_idB\x18\n" +
-	"\x16_device_limit_exceeded\"\xe6\x01\n" +
+	"\x16_device_limit_exceeded\"\x88\x02\n" +
 	"\x11CommonListRequest\x12\x19\n" +
 	"\x05limit\x18\x01 \x01(\x05H\x00R\x05limit\x88\x01\x01\x12\x1b\n" +
 	"\x06offset\x18\x02 \x01(\x05H\x01R\x06offset\x88\x01\x01\x12\x1d\n" +
 	"\akeyword\x18\x03 \x01(\tH\x02R\akeyword\x88\x01\x01\x12\x1b\n" +
 	"\x06sortby\x18\x04 \x01(\tH\x03R\x06sortby\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"sort_order\x18\x05 \x01(\tH\x04R\tsortOrder\x88\x01\x01B\b\n" +
+	"sort_order\x18\x05 \x01(\tH\x04R\tsortOrder\x88\x01\x01\x12\x17\n" +
+	"\x04site\x18\x06 \x01(\tH\x05R\x04site\x88\x01\x01B\b\n" +
 	"\x06_limitB\t\n" +
 	"\a_offsetB\n" +
 	"\n" +
 	"\b_keywordB\t\n" +
 	"\a_sortbyB\r\n" +
-	"\v_sort_order\"\x84\x01\n" +
+	"\v_sort_orderB\a\n" +
+	"\x05_site\"\xb9\x02\n" +
+	"\x13CommonSearchRequest\x12\x19\n" +
+	"\x05limit\x18\x01 \x01(\x05H\x00R\x05limit\x88\x01\x01\x12\x1b\n" +
+	"\x06offset\x18\x02 \x01(\x05H\x01R\x06offset\x88\x01\x01\x12\x1d\n" +
+	"\akeyword\x18\x03 \x01(\tH\x02R\akeyword\x88\x01\x01\x12\x1b\n" +
+	"\x06sortby\x18\x04 \x01(\tH\x03R\x06sortby\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"sort_order\x18\x05 \x01(\tH\x04R\tsortOrder\x88\x01\x01\x12-\n" +
+	"\x05query\x18\x06 \x01(\v2\x17.google.protobuf.StructR\x05query\x12\x17\n" +
+	"\x04site\x18\a \x01(\tH\x05R\x04site\x88\x01\x01B\b\n" +
+	"\x06_limitB\t\n" +
+	"\a_offsetB\n" +
+	"\n" +
+	"\b_keywordB\t\n" +
+	"\a_sortbyB\r\n" +
+	"\v_sort_orderB\a\n" +
+	"\x05_site\"\x84\x01\n" +
 	"\x12CommonListResponse\x12\x1f\n" +
 	"\vtotal_count\x18\x01 \x01(\x03R\n" +
 	"totalCount\x12\x14\n" +
@@ -603,20 +739,23 @@ func file_common_v1_common_proto_rawDescGZIP() []byte {
 	return file_common_v1_common_proto_rawDescData
 }
 
-var file_common_v1_common_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_common_v1_common_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_common_v1_common_proto_goTypes = []any{
-	(*UserTokenPayload)(nil),   // 0: common.v1.UserTokenPayload
-	(*CommonListRequest)(nil),  // 1: common.v1.CommonListRequest
-	(*CommonListResponse)(nil), // 2: common.v1.CommonListResponse
-	(*FileMetadata)(nil),       // 3: common.v1.FileMetadata
-	(*FileChunk)(nil),          // 4: common.v1.FileChunk
+	(*UserTokenPayload)(nil),    // 0: common.v1.UserTokenPayload
+	(*CommonListRequest)(nil),   // 1: common.v1.CommonListRequest
+	(*CommonSearchRequest)(nil), // 2: common.v1.CommonSearchRequest
+	(*CommonListResponse)(nil),  // 3: common.v1.CommonListResponse
+	(*FileMetadata)(nil),        // 4: common.v1.FileMetadata
+	(*FileChunk)(nil),           // 5: common.v1.FileChunk
+	(*structpb.Struct)(nil),     // 6: google.protobuf.Struct
 }
 var file_common_v1_common_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	6, // 0: common.v1.CommonSearchRequest.query:type_name -> google.protobuf.Struct
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_common_v1_common_proto_init() }
@@ -626,13 +765,14 @@ func file_common_v1_common_proto_init() {
 	}
 	file_common_v1_common_proto_msgTypes[0].OneofWrappers = []any{}
 	file_common_v1_common_proto_msgTypes[1].OneofWrappers = []any{}
+	file_common_v1_common_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_common_v1_common_proto_rawDesc), len(file_common_v1_common_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

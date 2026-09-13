@@ -77,6 +77,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "pagination.site",
+            "description": "Optional site identifier",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -214,6 +221,13 @@
           {
             "name": "pagination.sortOrder",
             "description": "Sort direction order (asc or desc, default desc)",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagination.site",
+            "description": "Optional site identifier",
             "in": "query",
             "required": false,
             "type": "string"
@@ -841,6 +855,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "pagination.site",
+            "description": "Optional site identifier",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -932,6 +953,13 @@
           {
             "name": "pagination.sortOrder",
             "description": "Sort direction order (asc or desc, default desc)",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagination.site",
+            "description": "Optional site identifier",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1097,6 +1125,10 @@
         "sortOrder": {
           "type": "string",
           "title": "Sort direction order (asc or desc, default desc)"
+        },
+        "site": {
+          "type": "string",
+          "title": "Optional site identifier"
         }
       }
     },
