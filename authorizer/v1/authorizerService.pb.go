@@ -25,7 +25,7 @@ var File_authorizer_v1_authorizerService_proto protoreflect.FileDescriptor
 
 const file_authorizer_v1_authorizerService_proto_rawDesc = "" +
 	"\n" +
-	"%authorizer/v1/authorizerService.proto\x12\rauthorizer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x18authorizer/v1/auth.proto2\xfd\x13\n" +
+	"%authorizer/v1/authorizerService.proto\x12\rauthorizer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x18authorizer/v1/auth.proto2\xfb\x13\n" +
 	"\x11AuthorizerService\x12u\n" +
 	"\vCheckAccess\x12!.authorizer.v1.CheckAccessRequest\x1a\".authorizer.v1.CheckAccessResponse\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/api/v1/access/check\x12\x86\x01\n" +
 	"\x0fCheckBulkAccess\x12%.authorizer.v1.CheckBulkAccessRequest\x1a&.authorizer.v1.CheckBulkAccessResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/api/v1/access/check/bulk\x12u\n" +
@@ -33,9 +33,9 @@ const file_authorizer_v1_authorizerService_proto_rawDesc = "" +
 	"\fRevokeAccess\x12\".authorizer.v1.RevokeAccessRequest\x1a#.authorizer.v1.RevokeAccessResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/access/revoke\x12q\n" +
 	"\rGetUserAccess\x12#.authorizer.v1.GetUserAccessRequest\x1a\x19.authorizer.v1.UserAccess\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/api/v1/access/{user_id}\x12u\n" +
 	"\x0eListUserAccess\x12$.authorizer.v1.ListUserAccessRequest\x1a%.authorizer.v1.ListUserAccessResponse\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/api/v1/access\x12w\n" +
-	"\rCreateService\x12#.authorizer.v1.CreateServiceRequest\x1a$.authorizer.v1.CreateServiceResponse\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/api/v1/services\x12r\n" +
+	"\rCreateService\x12#.authorizer.v1.CreateServiceRequest\x1a$.authorizer.v1.CreateServiceResponse\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/api/v1/services\x12p\n" +
 	"\n" +
-	"GetService\x12 .authorizer.v1.GetServiceRequest\x1a!.authorizer.v1.GetServiceResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/api/v1/services/{slug}\x12q\n" +
+	"GetService\x12 .authorizer.v1.GetServiceRequest\x1a!.authorizer.v1.GetServiceResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/api/v1/services/{id}\x12q\n" +
 	"\fListServices\x12\".authorizer.v1.ListServicesRequest\x1a#.authorizer.v1.ListServicesResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/api/v1/services\x12|\n" +
 	"\rUpdateService\x12#.authorizer.v1.UpdateServiceRequest\x1a$.authorizer.v1.UpdateServiceResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*2\x15/api/v1/services/{id}\x12y\n" +
 	"\rDeleteService\x12#.authorizer.v1.DeleteServiceRequest\x1a$.authorizer.v1.DeleteServiceResponse\"\x1d\x82\xd3\xe4\x93\x02\x17*\x15/api/v1/services/{id}\x12k\n" +

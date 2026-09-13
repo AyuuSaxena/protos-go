@@ -60,7 +60,7 @@ type AuthorizerServiceClient interface {
 	ListUserAccess(ctx context.Context, in *ListUserAccessRequest, opts ...grpc.CallOption) (*ListUserAccessResponse, error)
 	// CreateService registers a new service.
 	CreateService(ctx context.Context, in *CreateServiceRequest, opts ...grpc.CallOption) (*CreateServiceResponse, error)
-	// GetService retrieves a service by slug.
+	// GetService retrieves a service by ID.
 	GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*GetServiceResponse, error)
 	// ListServices lists registered services.
 	ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error)
@@ -326,7 +326,7 @@ type AuthorizerServiceServer interface {
 	ListUserAccess(context.Context, *ListUserAccessRequest) (*ListUserAccessResponse, error)
 	// CreateService registers a new service.
 	CreateService(context.Context, *CreateServiceRequest) (*CreateServiceResponse, error)
-	// GetService retrieves a service by slug.
+	// GetService retrieves a service by ID.
 	GetService(context.Context, *GetServiceRequest) (*GetServiceResponse, error)
 	// ListServices lists registered services.
 	ListServices(context.Context, *ListServicesRequest) (*ListServicesResponse, error)

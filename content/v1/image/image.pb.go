@@ -122,8 +122,6 @@ type ImageMetadata struct {
 	Site string `protobuf:"bytes,3,opt,name=site,proto3" json:"site,omitempty" bson:"site,omitempty"`
 	// Display title of the Image
 	Title string `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
-	// URL-friendly slug
-	Slug string `protobuf:"bytes,5,opt,name=slug,proto3" json:"slug,omitempty"`
 	// Detailed description
 	Description string `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
 	// Relational Foreign Key to storage file
@@ -224,13 +222,6 @@ func (x *ImageMetadata) GetSite() string {
 func (x *ImageMetadata) GetTitle() string {
 	if x != nil {
 		return x.Title
-	}
-	return ""
-}
-
-func (x *ImageMetadata) GetSlug() string {
-	if x != nil {
-		return x.Slug
 	}
 	return ""
 }
@@ -367,8 +358,6 @@ type ImageGetRequest struct {
 	Id *string `protobuf:"bytes,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	// Image name to match
 	Name *string `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	// Image URL slug
-	Slug *string `protobuf:"bytes,3,opt,name=slug,proto3,oneof" json:"slug,omitempty"`
 	// Optional site identifier
 	// @gotags: `form:"site" json:"site,omitempty"`
 	Site          *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
@@ -420,13 +409,6 @@ func (x *ImageGetRequest) GetName() string {
 	return ""
 }
 
-func (x *ImageGetRequest) GetSlug() string {
-	if x != nil && x.Slug != nil {
-		return *x.Slug
-	}
-	return ""
-}
-
 func (x *ImageGetRequest) GetSite() string {
 	if x != nil && x.Site != nil {
 		return *x.Site
@@ -440,8 +422,6 @@ type ImageDownloadRequest struct {
 	Id *string `protobuf:"bytes,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	// Image name to match
 	Name *string `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	// Image URL slug
-	Slug *string `protobuf:"bytes,3,opt,name=slug,proto3,oneof" json:"slug,omitempty"`
 	// Optional site identifier
 	// @gotags: `form:"site" json:"site,omitempty"`
 	Site          *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
@@ -489,13 +469,6 @@ func (x *ImageDownloadRequest) GetId() string {
 func (x *ImageDownloadRequest) GetName() string {
 	if x != nil && x.Name != nil {
 		return *x.Name
-	}
-	return ""
-}
-
-func (x *ImageDownloadRequest) GetSlug() string {
-	if x != nil && x.Slug != nil {
-		return *x.Slug
 	}
 	return ""
 }
@@ -1780,13 +1753,12 @@ var File_content_v1_image_image_proto protoreflect.FileDescriptor
 
 const file_content_v1_image_image_proto_rawDesc = "" +
 	"\n" +
-	"\x1ccontent/v1/image/image.proto\x12\x10content.v1.image\x1a\x16common/v1/common.proto\"\xc1\x05\n" +
+	"\x1ccontent/v1/image/image.proto\x12\x10content.v1.image\x1a\x16common/v1/common.proto\"\xad\x05\n" +
 	"\rImageMetadata\x12\x19\n" +
 	"\bmongo_id\x18\x01 \x01(\tR\amongoId\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
 	"\x04site\x18\x03 \x01(\tR\x04site\x12\x14\n" +
-	"\x05title\x18\x04 \x01(\tR\x05title\x12\x12\n" +
-	"\x04slug\x18\x05 \x01(\tR\x04slug\x12 \n" +
+	"\x05title\x18\x04 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x06 \x01(\tR\vdescription\x12\x17\n" +
 	"\afile_id\x18\a \x01(\tR\x06fileId\x12\x19\n" +
 	"\balt_text\x18\b \x01(\tR\aaltText\x12\x14\n" +
@@ -1809,24 +1781,20 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"\rfile_metadata\x18\x15 \x01(\v2\x17.common.v1.FileMetadataR\ffileMetadata\x12\x1d\n" +
 	"\n" +
 	"is_publish\x18\x16 \x01(\bR\tisPublish\x12\x1b\n" +
-	"\tis_active\x18\x17 \x01(\bR\bisActive\"\x93\x01\n" +
+	"\tis_active\x18\x17 \x01(\bR\bisActive\"q\n" +
 	"\x0fImageGetRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x17\n" +
-	"\x04slug\x18\x03 \x01(\tH\x02R\x04slug\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\x04 \x01(\tH\x03R\x04site\x88\x01\x01B\x05\n" +
+	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01B\x05\n" +
 	"\x03_idB\a\n" +
 	"\x05_nameB\a\n" +
-	"\x05_slugB\a\n" +
-	"\x05_site\"\x98\x01\n" +
+	"\x05_site\"v\n" +
 	"\x14ImageDownloadRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x17\n" +
-	"\x04slug\x18\x03 \x01(\tH\x02R\x04slug\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\x04 \x01(\tH\x03R\x04site\x88\x01\x01B\x05\n" +
+	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01B\x05\n" +
 	"\x03_idB\a\n" +
 	"\x05_nameB\a\n" +
-	"\x05_slugB\a\n" +
 	"\x05_site\"\x8e\x04\n" +
 	"\n" +
 	"ImageQuery\x12\x17\n" +

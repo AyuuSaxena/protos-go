@@ -40,8 +40,6 @@ type ConsoleInfo struct {
 	// Full display name of the console
 	// @gotags: `json:"fullName,omitempty" bson:"fullName,omitempty"`
 	FullName string `protobuf:"bytes,5,opt,name=full_name,json=fullName,proto3" json:"fullName,omitempty" bson:"fullName,omitempty"`
-	// URL-friendly slug
-	Slug string `protobuf:"bytes,6,opt,name=slug,proto3" json:"slug,omitempty"`
 	// Supported file extensions (without leading dot)
 	Extensions []string `protobuf:"bytes,7,rep,name=extensions,proto3" json:"extensions,omitempty"`
 	// Hardware manufacturer (e.g. Nintendo, Sony, Sega)
@@ -130,13 +128,6 @@ func (x *ConsoleInfo) GetFullName() string {
 	return ""
 }
 
-func (x *ConsoleInfo) GetSlug() string {
-	if x != nil {
-		return x.Slug
-	}
-	return ""
-}
-
 func (x *ConsoleInfo) GetExtensions() []string {
 	if x != nil {
 		return x.Extensions
@@ -200,8 +191,6 @@ type RomMetadata struct {
 	Site string `protobuf:"bytes,3,opt,name=site,proto3" json:"site,omitempty" bson:"site,omitempty"`
 	// Display title of the ROM
 	Title string `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
-	// URL-friendly slug
-	Slug string `protobuf:"bytes,5,opt,name=slug,proto3" json:"slug,omitempty"`
 	// Detailed description
 	Description string `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
 	// Relational Foreign Keys
@@ -305,13 +294,6 @@ func (x *RomMetadata) GetSite() string {
 func (x *RomMetadata) GetTitle() string {
 	if x != nil {
 		return x.Title
-	}
-	return ""
-}
-
-func (x *RomMetadata) GetSlug() string {
-	if x != nil {
-		return x.Slug
 	}
 	return ""
 }
@@ -469,8 +451,6 @@ type RomGetRequest struct {
 	Id *string `protobuf:"bytes,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	// ROM name to match
 	Name *string `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	// ROM URL slug
-	Slug *string `protobuf:"bytes,3,opt,name=slug,proto3,oneof" json:"slug,omitempty"`
 	// Optional site identifier
 	// @gotags: `form:"site" json:"site,omitempty"`
 	Site          *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
@@ -522,13 +502,6 @@ func (x *RomGetRequest) GetName() string {
 	return ""
 }
 
-func (x *RomGetRequest) GetSlug() string {
-	if x != nil && x.Slug != nil {
-		return *x.Slug
-	}
-	return ""
-}
-
 func (x *RomGetRequest) GetSite() string {
 	if x != nil && x.Site != nil {
 		return *x.Site
@@ -542,8 +515,6 @@ type RomDownloadRequest struct {
 	Id *string `protobuf:"bytes,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	// ROM name to match
 	Name *string `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	// ROM URL slug
-	Slug *string `protobuf:"bytes,3,opt,name=slug,proto3,oneof" json:"slug,omitempty"`
 	// Optional site identifier
 	// @gotags: `form:"site" json:"site,omitempty"`
 	Site          *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
@@ -591,13 +562,6 @@ func (x *RomDownloadRequest) GetId() string {
 func (x *RomDownloadRequest) GetName() string {
 	if x != nil && x.Name != nil {
 		return *x.Name
-	}
-	return ""
-}
-
-func (x *RomDownloadRequest) GetSlug() string {
-	if x != nil && x.Slug != nil {
-		return *x.Slug
 	}
 	return ""
 }
@@ -2064,14 +2028,13 @@ var File_content_v1_rom_rom_proto protoreflect.FileDescriptor
 
 const file_content_v1_rom_rom_proto_rawDesc = "" +
 	"\n" +
-	"\x18content/v1/rom/rom.proto\x12\x0econtent.v1.rom\x1a\x16common/v1/common.proto\x1a\x1ccontent/v1/image/image.proto\"\xf4\x02\n" +
+	"\x18content/v1/rom/rom.proto\x12\x0econtent.v1.rom\x1a\x16common/v1/common.proto\x1a\x1ccontent/v1/image/image.proto\"\xe0\x02\n" +
 	"\vConsoleInfo\x12\x19\n" +
 	"\bmongo_id\x18\x01 \x01(\tR\amongoId\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
 	"\x04site\x18\x03 \x01(\tR\x04site\x12\x10\n" +
 	"\x03key\x18\x04 \x01(\tR\x03key\x12\x1b\n" +
-	"\tfull_name\x18\x05 \x01(\tR\bfullName\x12\x12\n" +
-	"\x04slug\x18\x06 \x01(\tR\x04slug\x12\x1e\n" +
+	"\tfull_name\x18\x05 \x01(\tR\bfullName\x12\x1e\n" +
 	"\n" +
 	"extensions\x18\a \x03(\tR\n" +
 	"extensions\x12\"\n" +
@@ -2083,13 +2046,12 @@ const file_content_v1_rom_rom_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\f \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\r \x01(\tR\tupdatedAt\"\xc5\x06\n" +
+	"updated_at\x18\r \x01(\tR\tupdatedAt\"\xb1\x06\n" +
 	"\vRomMetadata\x12\x19\n" +
 	"\bmongo_id\x18\x01 \x01(\tR\amongoId\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
 	"\x04site\x18\x03 \x01(\tR\x04site\x12\x14\n" +
-	"\x05title\x18\x04 \x01(\tR\x05title\x12\x12\n" +
-	"\x04slug\x18\x05 \x01(\tR\x04slug\x12 \n" +
+	"\x05title\x18\x04 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x06 \x01(\tR\vdescription\x12\x1d\n" +
 	"\n" +
 	"console_id\x18\a \x01(\tR\tconsoleId\x12\x17\n" +
@@ -2116,24 +2078,20 @@ const file_content_v1_rom_rom_proto_rawDesc = "" +
 	"\x06images\x18\x19 \x03(\v2#.content.v1.image.AspectRatioImagesR\x06images\x12\x1d\n" +
 	"\n" +
 	"is_publish\x18\x1a \x01(\bR\tisPublish\x12\x1b\n" +
-	"\tis_active\x18\x1b \x01(\bR\bisActive\"\x91\x01\n" +
+	"\tis_active\x18\x1b \x01(\bR\bisActive\"o\n" +
 	"\rRomGetRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x17\n" +
-	"\x04slug\x18\x03 \x01(\tH\x02R\x04slug\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\x04 \x01(\tH\x03R\x04site\x88\x01\x01B\x05\n" +
+	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01B\x05\n" +
 	"\x03_idB\a\n" +
 	"\x05_nameB\a\n" +
-	"\x05_slugB\a\n" +
-	"\x05_site\"\x96\x01\n" +
+	"\x05_site\"t\n" +
 	"\x12RomDownloadRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x17\n" +
-	"\x04slug\x18\x03 \x01(\tH\x02R\x04slug\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\x04 \x01(\tH\x03R\x04site\x88\x01\x01B\x05\n" +
+	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01B\x05\n" +
 	"\x03_idB\a\n" +
 	"\x05_nameB\a\n" +
-	"\x05_slugB\a\n" +
 	"\x05_site\"\x94\x04\n" +
 	"\bRomQuery\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tH\x00R\x04name\x88\x01\x01\x12\"\n" +

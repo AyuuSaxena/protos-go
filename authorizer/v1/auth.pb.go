@@ -157,9 +157,6 @@ type Service struct {
 	Site string `protobuf:"bytes,3,opt,name=site,proto3" json:"site,omitempty" bson:"site,omitempty"`
 	// @gotags: `json:"name,omitempty" bson:"name,omitempty"`
 	Name string `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty" bson:"name,omitempty"`
-	// Unique service identifier
-	// @gotags: `json:"slug,omitempty" bson:"slug,omitempty"`
-	Slug string `protobuf:"bytes,5,opt,name=slug,proto3" json:"slug,omitempty" bson:"slug,omitempty"`
 	// @gotags: `json:"description,omitempty" bson:"description,omitempty"`
 	Description *string `protobuf:"bytes,6,opt,name=description,proto3,oneof" json:"description,omitempty" bson:"description,omitempty"`
 	// @gotags: `json:"enabled" bson:"enabled"`
@@ -226,13 +223,6 @@ func (x *Service) GetSite() string {
 func (x *Service) GetName() string {
 	if x != nil {
 		return x.Name
-	}
-	return ""
-}
-
-func (x *Service) GetSlug() string {
-	if x != nil {
-		return x.Slug
 	}
 	return ""
 }
@@ -720,7 +710,7 @@ type CheckAccessRequest struct {
 	Site string `protobuf:"bytes,1,opt,name=site,proto3" json:"site,omitempty"`
 	// @gotags: `json:"userId,omitempty"`
 	UserId string `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"userId,omitempty"`
-	// Service slug
+	// Service identifier
 	// @gotags: `json:"service,omitempty"`
 	Service string `protobuf:"bytes,3,opt,name=service,proto3" json:"service,omitempty"`
 	// Optional permission
@@ -1550,8 +1540,6 @@ type CreateServiceRequest struct {
 	Site string `protobuf:"bytes,1,opt,name=site,proto3" json:"site"`
 	// @gotags: `json:"name"`
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
-	// @gotags: `json:"slug"`
-	Slug string `protobuf:"bytes,3,opt,name=slug,proto3" json:"slug"`
 	// @gotags: `json:"description,omitempty"`
 	Description   *string `protobuf:"bytes,4,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1598,13 +1586,6 @@ func (x *CreateServiceRequest) GetSite() string {
 func (x *CreateServiceRequest) GetName() string {
 	if x != nil {
 		return x.Name
-	}
-	return ""
-}
-
-func (x *CreateServiceRequest) GetSlug() string {
-	if x != nil {
-		return x.Slug
 	}
 	return ""
 }
@@ -1665,8 +1646,8 @@ type GetServiceRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// @gotags: `json:"site"`
 	Site string `protobuf:"bytes,1,opt,name=site,proto3" json:"site"`
-	// @gotags: `json:"slug"`
-	Slug          string `protobuf:"bytes,2,opt,name=slug,proto3" json:"slug"`
+	// @gotags: `json:"id"`
+	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1708,9 +1689,9 @@ func (x *GetServiceRequest) GetSite() string {
 	return ""
 }
 
-func (x *GetServiceRequest) GetSlug() string {
+func (x *GetServiceRequest) GetId() string {
 	if x != nil {
-		return x.Slug
+		return x.Id
 	}
 	return ""
 }
@@ -3169,13 +3150,12 @@ var File_authorizer_v1_auth_proto protoreflect.FileDescriptor
 
 const file_authorizer_v1_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x18authorizer/v1/auth.proto\x12\rauthorizer.v1\"\xff\x01\n" +
+	"\x18authorizer/v1/auth.proto\x12\rauthorizer.v1\"\xeb\x01\n" +
 	"\aService\x12\x19\n" +
 	"\bmongo_id\x18\x01 \x01(\tR\amongoId\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
 	"\x04site\x18\x03 \x01(\tR\x04site\x12\x12\n" +
-	"\x04name\x18\x04 \x01(\tR\x04name\x12\x12\n" +
-	"\x04slug\x18\x05 \x01(\tR\x04slug\x12%\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\x12%\n" +
 	"\vdescription\x18\x06 \x01(\tH\x00R\vdescription\x88\x01\x01\x12\x18\n" +
 	"\aenabled\x18\a \x01(\bR\aenabled\x12\x1d\n" +
 	"\n" +
@@ -3305,18 +3285,17 @@ const file_authorizer_v1_auth_proto_rawDesc = "" +
 	"\arecords\x18\x01 \x03(\v2\x19.authorizer.v1.UserAccessR\arecords\x12\x14\n" +
 	"\x05count\x18\x02 \x01(\x03R\x05count\x12\x16\n" +
 	"\x06offset\x18\x03 \x01(\x03R\x06offset\x12\x14\n" +
-	"\x05limit\x18\x04 \x01(\x03R\x05limit\"\x89\x01\n" +
+	"\x05limit\x18\x04 \x01(\x03R\x05limit\"u\n" +
 	"\x14CreateServiceRequest\x12\x12\n" +
 	"\x04site\x18\x01 \x01(\tR\x04site\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
-	"\x04slug\x18\x03 \x01(\tR\x04slug\x12%\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
 	"\vdescription\x18\x04 \x01(\tH\x00R\vdescription\x88\x01\x01B\x0e\n" +
 	"\f_description\"I\n" +
 	"\x15CreateServiceResponse\x120\n" +
-	"\aservice\x18\x01 \x01(\v2\x16.authorizer.v1.ServiceR\aservice\";\n" +
+	"\aservice\x18\x01 \x01(\v2\x16.authorizer.v1.ServiceR\aservice\"7\n" +
 	"\x11GetServiceRequest\x12\x12\n" +
-	"\x04site\x18\x01 \x01(\tR\x04site\x12\x12\n" +
-	"\x04slug\x18\x02 \x01(\tR\x04slug\"F\n" +
+	"\x04site\x18\x01 \x01(\tR\x04site\x12\x0e\n" +
+	"\x02id\x18\x02 \x01(\tR\x02id\"F\n" +
 	"\x12GetServiceResponse\x120\n" +
 	"\aservice\x18\x01 \x01(\v2\x16.authorizer.v1.ServiceR\aservice\"v\n" +
 	"\x13ListServicesRequest\x12\x12\n" +

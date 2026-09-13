@@ -148,13 +148,6 @@
             "type": "string"
           },
           {
-            "name": "slug",
-            "description": "Image URL slug",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "site",
             "description": "Optional site identifier",
             "in": "query",
@@ -326,13 +319,6 @@
           {
             "name": "name",
             "description": "Image name to match",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "slug",
-            "description": "Image URL slug",
             "in": "query",
             "required": false,
             "type": "string"
@@ -603,10 +589,6 @@
         "title": {
           "type": "string",
           "title": "Display title of the Image"
-        },
-        "slug": {
-          "type": "string",
-          "title": "URL-friendly slug"
         },
         "description": {
           "type": "string",
