@@ -191,6 +191,9 @@ type RomMetadata struct {
 	Site string `protobuf:"bytes,3,opt,name=site,proto3" json:"site,omitempty" bson:"site,omitempty"`
 	// Display title of the ROM
 	Title string `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
+	// URL-friendly permalink
+	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty"`
+	Permalink string `protobuf:"bytes,5,opt,name=permalink,proto3" json:"permalink,omitempty" bson:"permalink,omitempty"`
 	// Detailed description
 	Description string `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
 	// Relational Foreign Keys
@@ -294,6 +297,13 @@ func (x *RomMetadata) GetSite() string {
 func (x *RomMetadata) GetTitle() string {
 	if x != nil {
 		return x.Title
+	}
+	return ""
+}
+
+func (x *RomMetadata) GetPermalink() string {
+	if x != nil {
+		return x.Permalink
 	}
 	return ""
 }
@@ -453,7 +463,10 @@ type RomGetRequest struct {
 	Name *string `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	// Optional site identifier
 	// @gotags: `form:"site" json:"site,omitempty"`
-	Site          *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
+	Site *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
+	// Optional permalink to match
+	// @gotags: `form:"permalink" json:"permalink,omitempty"`
+	Permalink     *string `protobuf:"bytes,5,opt,name=permalink,proto3,oneof" json:"permalink,omitempty" form:"permalink"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -509,6 +522,13 @@ func (x *RomGetRequest) GetSite() string {
 	return ""
 }
 
+func (x *RomGetRequest) GetPermalink() string {
+	if x != nil && x.Permalink != nil {
+		return *x.Permalink
+	}
+	return ""
+}
+
 type RomDownloadRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ROM unique identifier
@@ -517,7 +537,10 @@ type RomDownloadRequest struct {
 	Name *string `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	// Optional site identifier
 	// @gotags: `form:"site" json:"site,omitempty"`
-	Site          *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
+	Site *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
+	// Optional permalink to match
+	// @gotags: `form:"permalink" json:"permalink,omitempty"`
+	Permalink     *string `protobuf:"bytes,5,opt,name=permalink,proto3,oneof" json:"permalink,omitempty" form:"permalink"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -569,6 +592,13 @@ func (x *RomDownloadRequest) GetName() string {
 func (x *RomDownloadRequest) GetSite() string {
 	if x != nil && x.Site != nil {
 		return *x.Site
+	}
+	return ""
+}
+
+func (x *RomDownloadRequest) GetPermalink() string {
+	if x != nil && x.Permalink != nil {
+		return *x.Permalink
 	}
 	return ""
 }
@@ -935,6 +965,9 @@ type FileInfo struct {
 	// Console system database ID or key
 	// @gotags: `json:"consoleId,omitempty" bson:"consoleId,omitempty"`
 	ConsoleId string `protobuf:"bytes,6,opt,name=console_id,json=consoleId,proto3" json:"consoleId,omitempty" bson:"consoleId,omitempty"`
+	// URL-friendly permalink
+	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty"`
+	Permalink string `protobuf:"bytes,7,opt,name=permalink,proto3" json:"permalink,omitempty" bson:"permalink,omitempty"`
 	// Game publisher
 	// @gotags: `json:"publisher,omitempty" bson:"publisher,omitempty"`
 	Publisher string `protobuf:"bytes,8,opt,name=publisher,proto3" json:"publisher,omitempty" bson:"publisher,omitempty"`
@@ -1047,6 +1080,13 @@ func (x *FileInfo) GetDescription() string {
 func (x *FileInfo) GetConsoleId() string {
 	if x != nil {
 		return x.ConsoleId
+	}
+	return ""
+}
+
+func (x *FileInfo) GetPermalink() string {
+	if x != nil {
+		return x.Permalink
 	}
 	return ""
 }
@@ -1168,6 +1208,9 @@ type UploadRomRequest struct {
 	// Console system key fallback (e.g. gba, snes)
 	// @gotags: `json:"console,omitempty" bson:"console,omitempty" form:"console"`
 	Console string `protobuf:"bytes,4,opt,name=console,proto3" json:"console,omitempty" bson:"console,omitempty" form:"console"`
+	// URL-friendly permalink (e.g. /super-mario)
+	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty" form:"permalink"`
+	Permalink string `protobuf:"bytes,5,opt,name=permalink,proto3" json:"permalink,omitempty" bson:"permalink,omitempty" form:"permalink"`
 	// Game publisher
 	// @gotags: `json:"publisher,omitempty" bson:"publisher,omitempty" form:"publisher"`
 	Publisher string `protobuf:"bytes,6,opt,name=publisher,proto3" json:"publisher,omitempty" bson:"publisher,omitempty" form:"publisher"`
@@ -1260,6 +1303,13 @@ func (x *UploadRomRequest) GetConsoleId() string {
 func (x *UploadRomRequest) GetConsole() string {
 	if x != nil {
 		return x.Console
+	}
+	return ""
+}
+
+func (x *UploadRomRequest) GetPermalink() string {
+	if x != nil {
+		return x.Permalink
 	}
 	return ""
 }
@@ -1497,6 +1547,9 @@ type RomUpdateRequest struct {
 	// Updated console ID
 	// @gotags: `json:"consoleId,omitempty" bson:"consoleId,omitempty"`
 	ConsoleId *string `protobuf:"bytes,4,opt,name=console_id,json=consoleId,proto3,oneof" json:"consoleId,omitempty" bson:"consoleId,omitempty"`
+	// Updated permalink
+	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty"`
+	Permalink *string `protobuf:"bytes,5,opt,name=permalink,proto3,oneof" json:"permalink,omitempty" bson:"permalink,omitempty"`
 	// Updated game publisher
 	// @gotags: `json:"publisher,omitempty" bson:"publisher,omitempty"`
 	Publisher *string `protobuf:"bytes,6,opt,name=publisher,proto3,oneof" json:"publisher,omitempty" bson:"publisher,omitempty"`
@@ -1589,6 +1642,13 @@ func (x *RomUpdateRequest) GetDescription() string {
 func (x *RomUpdateRequest) GetConsoleId() string {
 	if x != nil && x.ConsoleId != nil {
 		return *x.ConsoleId
+	}
+	return ""
+}
+
+func (x *RomUpdateRequest) GetPermalink() string {
+	if x != nil && x.Permalink != nil {
+		return *x.Permalink
 	}
 	return ""
 }
@@ -2046,12 +2106,13 @@ const file_content_v1_rom_rom_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\f \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\r \x01(\tR\tupdatedAt\"\xb1\x06\n" +
+	"updated_at\x18\r \x01(\tR\tupdatedAt\"\xcf\x06\n" +
 	"\vRomMetadata\x12\x19\n" +
 	"\bmongo_id\x18\x01 \x01(\tR\amongoId\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
 	"\x04site\x18\x03 \x01(\tR\x04site\x12\x14\n" +
-	"\x05title\x18\x04 \x01(\tR\x05title\x12 \n" +
+	"\x05title\x18\x04 \x01(\tR\x05title\x12\x1c\n" +
+	"\tpermalink\x18\x05 \x01(\tR\tpermalink\x12 \n" +
 	"\vdescription\x18\x06 \x01(\tR\vdescription\x12\x1d\n" +
 	"\n" +
 	"console_id\x18\a \x01(\tR\tconsoleId\x12\x17\n" +
@@ -2078,21 +2139,27 @@ const file_content_v1_rom_rom_proto_rawDesc = "" +
 	"\x06images\x18\x19 \x03(\v2#.content.v1.image.AspectRatioImagesR\x06images\x12\x1d\n" +
 	"\n" +
 	"is_publish\x18\x1a \x01(\bR\tisPublish\x12\x1b\n" +
-	"\tis_active\x18\x1b \x01(\bR\bisActive\"o\n" +
+	"\tis_active\x18\x1b \x01(\bR\bisActive\"\xa0\x01\n" +
 	"\rRomGetRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01B\x05\n" +
+	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01\x12!\n" +
+	"\tpermalink\x18\x05 \x01(\tH\x03R\tpermalink\x88\x01\x01B\x05\n" +
 	"\x03_idB\a\n" +
 	"\x05_nameB\a\n" +
-	"\x05_site\"t\n" +
+	"\x05_siteB\f\n" +
+	"\n" +
+	"_permalink\"\xa5\x01\n" +
 	"\x12RomDownloadRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01B\x05\n" +
+	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01\x12!\n" +
+	"\tpermalink\x18\x05 \x01(\tH\x03R\tpermalink\x88\x01\x01B\x05\n" +
 	"\x03_idB\a\n" +
 	"\x05_nameB\a\n" +
-	"\x05_site\"\x94\x04\n" +
+	"\x05_siteB\f\n" +
+	"\n" +
+	"_permalink\"\x94\x04\n" +
 	"\bRomQuery\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tH\x00R\x04name\x88\x01\x01\x12\"\n" +
 	"\n" +
@@ -2150,7 +2217,7 @@ const file_content_v1_rom_rom_proto_rawDesc = "" +
 	"\x05limit\x18\x03 \x01(\x05R\x05limit\x12\x16\n" +
 	"\x06offset\x18\x04 \x01(\x05R\x06offset\x12\x1f\n" +
 	"\vtotal_pages\x18\x05 \x01(\x05R\n" +
-	"totalPages\"\xfd\x04\n" +
+	"totalPages\"\x9b\x05\n" +
 	"\bFileInfo\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\tmime_type\x18\x02 \x01(\tR\bmimeType\x12\x1d\n" +
@@ -2160,6 +2227,7 @@ const file_content_v1_rom_rom_proto_rawDesc = "" +
 	"\vdescription\x18\x05 \x01(\tR\vdescription\x12\x1d\n" +
 	"\n" +
 	"console_id\x18\x06 \x01(\tR\tconsoleId\x12\x1c\n" +
+	"\tpermalink\x18\a \x01(\tR\tpermalink\x12\x1c\n" +
 	"\tpublisher\x18\b \x01(\tR\tpublisher\x12!\n" +
 	"\frelease_year\x18\t \x01(\x05R\vreleaseYear\x12\x14\n" +
 	"\x05genre\x18\n" +
@@ -2178,13 +2246,14 @@ const file_content_v1_rom_rom_proto_rawDesc = "" +
 	"\x06images\x18\x14 \x03(\v2#.content.v1.image.AspectRatioImagesR\x06images\x12\x1d\n" +
 	"\n" +
 	"is_publish\x18\x15 \x01(\bR\tisPublish\x12\x1b\n" +
-	"\tis_active\x18\x16 \x01(\bR\bisActive\"\xc9\x04\n" +
+	"\tis_active\x18\x16 \x01(\bR\bisActive\"\xe7\x04\n" +
 	"\x10UploadRomRequest\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x1d\n" +
 	"\n" +
 	"console_id\x18\x03 \x01(\tR\tconsoleId\x12\x18\n" +
 	"\aconsole\x18\x04 \x01(\tR\aconsole\x12\x1c\n" +
+	"\tpermalink\x18\x05 \x01(\tR\tpermalink\x12\x1c\n" +
 	"\tpublisher\x18\x06 \x01(\tR\tpublisher\x12!\n" +
 	"\frelease_year\x18\a \x01(\x05R\vreleaseYear\x12\x14\n" +
 	"\x05genre\x18\b \x01(\tR\x05genre\x12\x16\n" +
@@ -2213,32 +2282,35 @@ const file_content_v1_rom_rom_proto_rawDesc = "" +
 	"chunk_data\x18\x02 \x01(\fH\x00R\tchunkDataB\x0e\n" +
 	"\frequest_data\"B\n" +
 	"\x11RomUploadResponse\x12-\n" +
-	"\x03rom\x18\x01 \x01(\v2\x1b.content.v1.rom.RomMetadataR\x03rom\"\xe9\x05\n" +
+	"\x03rom\x18\x01 \x01(\v2\x1b.content.v1.rom.RomMetadataR\x03rom\"\x9a\x06\n" +
 	"\x10RomUpdateRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
 	"\x05title\x18\x02 \x01(\tH\x00R\x05title\x88\x01\x01\x12%\n" +
 	"\vdescription\x18\x03 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\"\n" +
 	"\n" +
 	"console_id\x18\x04 \x01(\tH\x02R\tconsoleId\x88\x01\x01\x12!\n" +
-	"\tpublisher\x18\x06 \x01(\tH\x03R\tpublisher\x88\x01\x01\x12&\n" +
-	"\frelease_year\x18\a \x01(\x05H\x04R\vreleaseYear\x88\x01\x01\x12\x19\n" +
-	"\x05genre\x18\b \x01(\tH\x05R\x05genre\x88\x01\x01\x12\x1b\n" +
-	"\x06region\x18\t \x01(\tH\x06R\x06region\x88\x01\x01\x12\x1d\n" +
+	"\tpermalink\x18\x05 \x01(\tH\x03R\tpermalink\x88\x01\x01\x12!\n" +
+	"\tpublisher\x18\x06 \x01(\tH\x04R\tpublisher\x88\x01\x01\x12&\n" +
+	"\frelease_year\x18\a \x01(\x05H\x05R\vreleaseYear\x88\x01\x01\x12\x19\n" +
+	"\x05genre\x18\b \x01(\tH\x06R\x05genre\x88\x01\x01\x12\x1b\n" +
+	"\x06region\x18\t \x01(\tH\aR\x06region\x88\x01\x01\x12\x1d\n" +
 	"\aplayers\x18\n" +
-	" \x01(\x05H\aR\aplayers\x88\x01\x01\x12\x1b\n" +
-	"\x06rating\x18\v \x01(\tH\bR\x06rating\x88\x01\x01\x12\x12\n" +
+	" \x01(\x05H\bR\aplayers\x88\x01\x01\x12\x1b\n" +
+	"\x06rating\x18\v \x01(\tH\tR\x06rating\x88\x01\x01\x12\x12\n" +
 	"\x04tags\x18\f \x03(\tR\x04tags\x12 \n" +
-	"\tis_public\x18\r \x01(\bH\tR\bisPublic\x88\x01\x01\x12\x1b\n" +
-	"\x06status\x18\x0e \x01(\tH\n" +
-	"R\x06status\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\x0f \x01(\tH\vR\x04site\x88\x01\x01\x12;\n" +
+	"\tis_public\x18\r \x01(\bH\n" +
+	"R\bisPublic\x88\x01\x01\x12\x1b\n" +
+	"\x06status\x18\x0e \x01(\tH\vR\x06status\x88\x01\x01\x12\x17\n" +
+	"\x04site\x18\x0f \x01(\tH\fR\x04site\x88\x01\x01\x12;\n" +
 	"\x06images\x18\x10 \x03(\v2#.content.v1.image.AspectRatioImagesR\x06images\x12\"\n" +
 	"\n" +
-	"is_publish\x18\x11 \x01(\bH\fR\tisPublish\x88\x01\x01\x12 \n" +
-	"\tis_active\x18\x12 \x01(\bH\rR\bisActive\x88\x01\x01B\b\n" +
+	"is_publish\x18\x11 \x01(\bH\rR\tisPublish\x88\x01\x01\x12 \n" +
+	"\tis_active\x18\x12 \x01(\bH\x0eR\bisActive\x88\x01\x01B\b\n" +
 	"\x06_titleB\x0e\n" +
 	"\f_descriptionB\r\n" +
 	"\v_console_idB\f\n" +
+	"\n" +
+	"_permalinkB\f\n" +
 	"\n" +
 	"_publisherB\x0f\n" +
 	"\r_release_yearB\b\n" +

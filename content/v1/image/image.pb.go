@@ -122,6 +122,9 @@ type ImageMetadata struct {
 	Site string `protobuf:"bytes,3,opt,name=site,proto3" json:"site,omitempty" bson:"site,omitempty"`
 	// Display title of the Image
 	Title string `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
+	// URL-friendly permalink
+	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty"`
+	Permalink string `protobuf:"bytes,5,opt,name=permalink,proto3" json:"permalink,omitempty" bson:"permalink,omitempty"`
 	// Detailed description
 	Description string `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
 	// Relational Foreign Key to storage file
@@ -222,6 +225,13 @@ func (x *ImageMetadata) GetSite() string {
 func (x *ImageMetadata) GetTitle() string {
 	if x != nil {
 		return x.Title
+	}
+	return ""
+}
+
+func (x *ImageMetadata) GetPermalink() string {
+	if x != nil {
+		return x.Permalink
 	}
 	return ""
 }
@@ -360,7 +370,10 @@ type ImageGetRequest struct {
 	Name *string `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	// Optional site identifier
 	// @gotags: `form:"site" json:"site,omitempty"`
-	Site          *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
+	Site *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
+	// Optional permalink to match
+	// @gotags: `form:"permalink" json:"permalink,omitempty"`
+	Permalink     *string `protobuf:"bytes,5,opt,name=permalink,proto3,oneof" json:"permalink,omitempty" form:"permalink"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -416,6 +429,13 @@ func (x *ImageGetRequest) GetSite() string {
 	return ""
 }
 
+func (x *ImageGetRequest) GetPermalink() string {
+	if x != nil && x.Permalink != nil {
+		return *x.Permalink
+	}
+	return ""
+}
+
 type ImageDownloadRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Image unique identifier
@@ -424,7 +444,10 @@ type ImageDownloadRequest struct {
 	Name *string `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	// Optional site identifier
 	// @gotags: `form:"site" json:"site,omitempty"`
-	Site          *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
+	Site *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
+	// Optional permalink to match
+	// @gotags: `form:"permalink" json:"permalink,omitempty"`
+	Permalink     *string `protobuf:"bytes,5,opt,name=permalink,proto3,oneof" json:"permalink,omitempty" form:"permalink"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -476,6 +499,13 @@ func (x *ImageDownloadRequest) GetName() string {
 func (x *ImageDownloadRequest) GetSite() string {
 	if x != nil && x.Site != nil {
 		return *x.Site
+	}
+	return ""
+}
+
+func (x *ImageDownloadRequest) GetPermalink() string {
+	if x != nil && x.Permalink != nil {
+		return *x.Permalink
 	}
 	return ""
 }
@@ -859,7 +889,10 @@ type ImageFileInfo struct {
 	IsPublish bool `protobuf:"varint,15,opt,name=is_publish,json=isPublish,proto3" json:"isPublish,omitempty" bson:"isPublish,omitempty"`
 	// Active status flag
 	// @gotags: `json:"isActive,omitempty" bson:"isActive,omitempty"`
-	IsActive      bool `protobuf:"varint,16,opt,name=is_active,json=isActive,proto3" json:"isActive,omitempty" bson:"isActive,omitempty"`
+	IsActive bool `protobuf:"varint,16,opt,name=is_active,json=isActive,proto3" json:"isActive,omitempty" bson:"isActive,omitempty"`
+	// URL-friendly permalink
+	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty"`
+	Permalink     string `protobuf:"bytes,17,opt,name=permalink,proto3" json:"permalink,omitempty" bson:"permalink,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1006,6 +1039,13 @@ func (x *ImageFileInfo) GetIsActive() bool {
 	return false
 }
 
+func (x *ImageFileInfo) GetPermalink() string {
+	if x != nil {
+		return x.Permalink
+	}
+	return ""
+}
+
 type UploadImageRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Image display title
@@ -1037,7 +1077,10 @@ type UploadImageRequest struct {
 	IsPublish *bool `protobuf:"varint,10,opt,name=is_publish,json=isPublish,proto3,oneof" json:"isPublish,omitempty" bson:"isPublish,omitempty" form:"isPublish"`
 	// Active status flag
 	// @gotags: `json:"isActive,omitempty" bson:"isActive,omitempty" form:"isActive"`
-	IsActive      *bool `protobuf:"varint,11,opt,name=is_active,json=isActive,proto3,oneof" json:"isActive,omitempty" bson:"isActive,omitempty" form:"isActive"`
+	IsActive *bool `protobuf:"varint,11,opt,name=is_active,json=isActive,proto3,oneof" json:"isActive,omitempty" bson:"isActive,omitempty" form:"isActive"`
+	// URL-friendly permalink (e.g. /box-art)
+	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty" form:"permalink"`
+	Permalink     string `protobuf:"bytes,12,opt,name=permalink,proto3" json:"permalink,omitempty" bson:"permalink,omitempty" form:"permalink"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1147,6 +1190,13 @@ func (x *UploadImageRequest) GetIsActive() bool {
 		return *x.IsActive
 	}
 	return false
+}
+
+func (x *UploadImageRequest) GetPermalink() string {
+	if x != nil {
+		return x.Permalink
+	}
+	return ""
 }
 
 type ImageUploadRequest struct {
@@ -1313,7 +1363,10 @@ type ImageUpdateRequest struct {
 	IsPublish *bool `protobuf:"varint,11,opt,name=is_publish,json=isPublish,proto3,oneof" json:"isPublish,omitempty" bson:"isPublish,omitempty"`
 	// Updated active status flag
 	// @gotags: `json:"isActive,omitempty" bson:"isActive,omitempty"`
-	IsActive      *bool `protobuf:"varint,12,opt,name=is_active,json=isActive,proto3,oneof" json:"isActive,omitempty" bson:"isActive,omitempty"`
+	IsActive *bool `protobuf:"varint,12,opt,name=is_active,json=isActive,proto3,oneof" json:"isActive,omitempty" bson:"isActive,omitempty"`
+	// Updated permalink
+	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty"`
+	Permalink     *string `protobuf:"bytes,13,opt,name=permalink,proto3,oneof" json:"permalink,omitempty" bson:"permalink,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1430,6 +1483,13 @@ func (x *ImageUpdateRequest) GetIsActive() bool {
 		return *x.IsActive
 	}
 	return false
+}
+
+func (x *ImageUpdateRequest) GetPermalink() string {
+	if x != nil && x.Permalink != nil {
+		return *x.Permalink
+	}
+	return ""
 }
 
 type ImageDeleteRequest struct {
@@ -1753,12 +1813,13 @@ var File_content_v1_image_image_proto protoreflect.FileDescriptor
 
 const file_content_v1_image_image_proto_rawDesc = "" +
 	"\n" +
-	"\x1ccontent/v1/image/image.proto\x12\x10content.v1.image\x1a\x16common/v1/common.proto\"\xad\x05\n" +
+	"\x1ccontent/v1/image/image.proto\x12\x10content.v1.image\x1a\x16common/v1/common.proto\"\xcb\x05\n" +
 	"\rImageMetadata\x12\x19\n" +
 	"\bmongo_id\x18\x01 \x01(\tR\amongoId\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
 	"\x04site\x18\x03 \x01(\tR\x04site\x12\x14\n" +
-	"\x05title\x18\x04 \x01(\tR\x05title\x12 \n" +
+	"\x05title\x18\x04 \x01(\tR\x05title\x12\x1c\n" +
+	"\tpermalink\x18\x05 \x01(\tR\tpermalink\x12 \n" +
 	"\vdescription\x18\x06 \x01(\tR\vdescription\x12\x17\n" +
 	"\afile_id\x18\a \x01(\tR\x06fileId\x12\x19\n" +
 	"\balt_text\x18\b \x01(\tR\aaltText\x12\x14\n" +
@@ -1781,21 +1842,27 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"\rfile_metadata\x18\x15 \x01(\v2\x17.common.v1.FileMetadataR\ffileMetadata\x12\x1d\n" +
 	"\n" +
 	"is_publish\x18\x16 \x01(\bR\tisPublish\x12\x1b\n" +
-	"\tis_active\x18\x17 \x01(\bR\bisActive\"q\n" +
+	"\tis_active\x18\x17 \x01(\bR\bisActive\"\xa2\x01\n" +
 	"\x0fImageGetRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01B\x05\n" +
+	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01\x12!\n" +
+	"\tpermalink\x18\x05 \x01(\tH\x03R\tpermalink\x88\x01\x01B\x05\n" +
 	"\x03_idB\a\n" +
 	"\x05_nameB\a\n" +
-	"\x05_site\"v\n" +
+	"\x05_siteB\f\n" +
+	"\n" +
+	"_permalink\"\xa7\x01\n" +
 	"\x14ImageDownloadRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01B\x05\n" +
+	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01\x12!\n" +
+	"\tpermalink\x18\x05 \x01(\tH\x03R\tpermalink\x88\x01\x01B\x05\n" +
 	"\x03_idB\a\n" +
 	"\x05_nameB\a\n" +
-	"\x05_site\"\x8e\x04\n" +
+	"\x05_siteB\f\n" +
+	"\n" +
+	"_permalink\"\x8e\x04\n" +
 	"\n" +
 	"ImageQuery\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tH\x00R\x04name\x88\x01\x01\x12\x1f\n" +
@@ -1850,7 +1917,7 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"\x05limit\x18\x03 \x01(\x05R\x05limit\x12\x16\n" +
 	"\x06offset\x18\x04 \x01(\x05R\x06offset\x12\x1f\n" +
 	"\vtotal_pages\x18\x05 \x01(\x05R\n" +
-	"totalPages\"\xfe\x03\n" +
+	"totalPages\"\x9c\x04\n" +
 	"\rImageFileInfo\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\tmime_type\x18\x02 \x01(\tR\bmimeType\x12\x1d\n" +
@@ -1872,7 +1939,8 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"\faspect_ratio\x18\x0e \x01(\x0e2\x1d.content.v1.image.AspectRatioR\vaspectRatio\x12\x1d\n" +
 	"\n" +
 	"is_publish\x18\x0f \x01(\bR\tisPublish\x12\x1b\n" +
-	"\tis_active\x18\x10 \x01(\bR\bisActive\"\xc3\x03\n" +
+	"\tis_active\x18\x10 \x01(\bR\bisActive\x12\x1c\n" +
+	"\tpermalink\x18\x11 \x01(\tR\tpermalink\"\xe1\x03\n" +
 	"\x12UploadImageRequest\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
@@ -1887,7 +1955,8 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"\n" +
 	"is_publish\x18\n" +
 	" \x01(\bH\x03R\tisPublish\x88\x01\x01\x12 \n" +
-	"\tis_active\x18\v \x01(\bH\x04R\bisActive\x88\x01\x01B\f\n" +
+	"\tis_active\x18\v \x01(\bH\x04R\bisActive\x88\x01\x01\x12\x1c\n" +
+	"\tpermalink\x18\f \x01(\tR\tpermalinkB\f\n" +
 	"\n" +
 	"_is_publicB\a\n" +
 	"\x05_siteB\x0f\n" +
@@ -1901,7 +1970,7 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"chunk_data\x18\x02 \x01(\fH\x00R\tchunkDataB\x0e\n" +
 	"\frequest_data\"L\n" +
 	"\x13ImageUploadResponse\x125\n" +
-	"\x05image\x18\x01 \x01(\v2\x1f.content.v1.image.ImageMetadataR\x05image\"\xa4\x04\n" +
+	"\x05image\x18\x01 \x01(\v2\x1f.content.v1.image.ImageMetadataR\x05image\"\xd5\x04\n" +
 	"\x12ImageUpdateRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
 	"\x05title\x18\x02 \x01(\tH\x00R\x05title\x88\x01\x01\x12%\n" +
@@ -1916,7 +1985,9 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	" \x01(\x0e2\x1d.content.v1.image.AspectRatioH\aR\vaspectRatio\x88\x01\x01\x12\"\n" +
 	"\n" +
 	"is_publish\x18\v \x01(\bH\bR\tisPublish\x88\x01\x01\x12 \n" +
-	"\tis_active\x18\f \x01(\bH\tR\bisActive\x88\x01\x01B\b\n" +
+	"\tis_active\x18\f \x01(\bH\tR\bisActive\x88\x01\x01\x12!\n" +
+	"\tpermalink\x18\r \x01(\tH\n" +
+	"R\tpermalink\x88\x01\x01B\b\n" +
 	"\x06_titleB\x0e\n" +
 	"\f_descriptionB\v\n" +
 	"\t_alt_textB\v\n" +
@@ -1928,7 +1999,9 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"\r_aspect_ratioB\r\n" +
 	"\v_is_publishB\f\n" +
 	"\n" +
-	"_is_active\"g\n" +
+	"_is_activeB\f\n" +
+	"\n" +
+	"_permalink\"g\n" +
 	"\x12ImageDeleteRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vhard_delete\x18\x02 \x01(\bR\n" +

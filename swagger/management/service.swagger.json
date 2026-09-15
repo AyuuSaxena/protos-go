@@ -1,12 +1,15 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "content/v1/image/imageService.proto",
-    "version": "version not set"
+    "title": "Management Service API (Console & Game)",
+    "version": "v1"
   },
   "tags": [
     {
-      "name": "Images"
+      "name": "Consoles"
+    },
+    {
+      "name": "Games"
     }
   ],
   "consumes": [
@@ -15,108 +18,131 @@
   "produces": [
     "application/json"
   ],
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization header using the Bearer scheme. Enter: 'Bearer <token>'"
+    },
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "name": "x-api-key",
+      "in": "header",
+      "description": "Admin or Identity API key (header: x-api-key)"
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    },
+    {
+      "ApiKeyAuth": []
+    }
+  ],
   "paths": {
-    "/api/v1/images/search": {
-      "post": {
-        "operationId": "ImageService_ImageSearch",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/imageImageSearchResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
-          },
-          "403": {
-            "description": "Forbidden - Insufficient permissions or invalid token claims"
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/imageImageSearchRequest"
-            }
-          }
-        ],
-        "tags": [
-          "Images"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/images/upload": {
-      "post": {
-        "operationId": "ImageService_ImageUpload",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/imageImageUploadResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
-          },
-          "403": {
-            "description": "Forbidden - Insufficient permissions or invalid token claims"
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "description": "(streaming inputs)",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/imageImageUploadRequest"
-            }
-          }
-        ],
-        "tags": [
-          "Images"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/images/{id}": {
+    "/api/v1/consoles": {
       "get": {
-        "operationId": "ImageService_ImageGet",
+        "summary": "ListConsoles returns supported gaming platforms/consoles for end users.",
+        "operationId": "ConsoleService_ListConsoles",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/imageImageMetadata"
+              "$ref": "#/definitions/romListConsolesResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "site",
+            "description": "Optional site identifier filter",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Consoles"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/games/search": {
+      "post": {
+        "summary": "SearchGames searches and filters games by keyword, console, and pagination.",
+        "operationId": "GameService_SearchGames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/romRomSearchResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/romRomSearchRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Games"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/games/{id}": {
+      "get": {
+        "summary": "GetGame retrieves detailed metadata for a single game by ID.",
+        "operationId": "GameService_GetGame",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/romRomMetadata"
             }
           },
           "401": {
@@ -135,143 +161,21 @@
         "parameters": [
           {
             "name": "id",
-            "description": "Image unique identifier",
+            "description": "Unique game (ROM) identifier",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "description": "Image name to match",
-            "in": "query",
-            "required": false,
             "type": "string"
           },
           {
             "name": "site",
-            "description": "Optional site identifier",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "permalink",
-            "description": "Optional permalink to match",
+            "description": "Optional site/tenant identifier",
             "in": "query",
             "required": false,
             "type": "string"
           }
         ],
         "tags": [
-          "Images"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "operationId": "ImageService_ImageDelete",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/imageImageDeleteResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
-          },
-          "403": {
-            "description": "Forbidden - Insufficient permissions or invalid token claims"
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "description": "Unique Image identifier to delete",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "hardDelete",
-            "description": "Hard delete flag (permanently remove file from storage and database)",
-            "in": "query",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "name": "site",
-            "description": "Optional site identifier",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "Images"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ]
-      },
-      "put": {
-        "operationId": "ImageService_ImageUpdate",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/imageImageMetadata"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
-          },
-          "403": {
-            "description": "Forbidden - Insufficient permissions or invalid token claims"
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "description": "Unique Image identifier",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ImageServiceImageUpdateBody"
-            }
-          }
-        ],
-        "tags": [
-          "Images"
+          "Games"
         ],
         "security": [
           {
@@ -283,9 +187,10 @@
         ]
       }
     },
-    "/api/v1/images/{id}/download": {
+    "/api/v1/games/{id}/stream": {
       "get": {
-        "operationId": "ImageService_ImageDownload",
+        "summary": "StreamGame streams the game ROM binary data directly to the caller.",
+        "operationId": "GameService_StreamGame",
         "responses": {
           "200": {
             "description": "A successful response.(streaming responses)",
@@ -318,88 +223,21 @@
         "parameters": [
           {
             "name": "id",
-            "description": "Image unique identifier",
+            "description": "Unique game (ROM) identifier",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "description": "Image name to match",
-            "in": "query",
-            "required": false,
             "type": "string"
           },
           {
             "name": "site",
-            "description": "Optional site identifier",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "permalink",
-            "description": "Optional permalink to match",
+            "description": "Optional site/tenant identifier",
             "in": "query",
             "required": false,
             "type": "string"
           }
         ],
         "tags": [
-          "Images"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          },
-          {
-            "ApiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/images/{id}/share": {
-      "post": {
-        "operationId": "ImageService_ImageShare",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/imageImageShareResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
-          },
-          "403": {
-            "description": "Forbidden - Insufficient permissions or invalid token claims"
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "description": "Unique Image identifier to share",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ImageServiceImageShareBody"
-            }
-          }
-        ],
-        "tags": [
-          "Images"
+          "Games"
         ],
         "security": [
           {
@@ -413,73 +251,103 @@
     }
   },
   "definitions": {
-    "ImageServiceImageShareBody": {
+    "protobufAny": {
       "type": "object",
       "properties": {
-        "expiresInSec": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Pre-signed download URL expiration duration in seconds"
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "romConsoleInfo": {
+      "type": "object",
+      "properties": {
+        "mongoId": {
+          "type": "string",
+          "title": "MongoDB internal record identifier (_id)"
+        },
+        "id": {
+          "type": "string",
+          "title": "Unique console identifier (UUID)"
         },
         "site": {
           "type": "string",
-          "title": "Optional site identifier"
-        }
-      }
-    },
-    "ImageServiceImageUpdateBody": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string",
-          "title": "Updated Image title"
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
         },
-        "description": {
+        "key": {
           "type": "string",
-          "title": "Updated Image description"
+          "title": "Console system key (e.g. gba, snes, nds, psx)"
         },
-        "altText": {
+        "fullName": {
           "type": "string",
-          "title": "Updated alt text"
+          "title": "Full display name of the console"
         },
-        "category": {
-          "type": "string",
-          "title": "Updated category"
-        },
-        "tags": {
+        "extensions": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Updated tags"
+          "title": "Supported file extensions (without leading dot)"
         },
-        "isPublic": {
-          "type": "boolean",
-          "title": "Updated public visibility flag"
-        },
-        "status": {
+        "manufacturer": {
           "type": "string",
-          "title": "Updated lifecycle status"
+          "title": "Hardware manufacturer (e.g. Nintendo, Sony, Sega)"
         },
-        "site": {
+        "releaseYear": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Release year"
+        },
+        "iconUrl": {
           "type": "string",
-          "title": "Updated site identifier"
+          "title": "Console icon or logo URL"
         },
-        "aspectRatio": {
-          "$ref": "#/definitions/imageAspectRatio",
-          "title": "Updated aspect ratio classification"
-        },
-        "isPublish": {
-          "type": "boolean",
-          "title": "Updated publication status flag"
-        },
-        "isActive": {
-          "type": "boolean",
-          "title": "Updated active status flag"
-        },
-        "permalink": {
+        "contentCount": {
           "type": "string",
-          "title": "Updated permalink"
+          "format": "int64",
+          "title": "Total number of ROMs linked to this console"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "title": "Last update timestamp"
+        }
+      },
+      "description": "ConsoleInfo represents a gaming console system stored in the database taxonomy."
+    },
+    "romListConsolesResponse": {
+      "type": "object",
+      "properties": {
+        "consoles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/romConsoleInfo"
+          },
+          "title": "List of supported console systems"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
         }
       }
     },
@@ -503,95 +371,30 @@
       "default": "ASPECT_RATIO_UNSPECIFIED",
       "description": "AspectRatio represents standard visual aspect ratio classifications.\n\n - ASPECT_RATIO_16_9_LANDSCAPE: 16:9 Landscape - Primary widescreen format (Recommended 1920x1080)\n - ASPECT_RATIO_1_1_SQUARE: 1:1 Square (Recommended 1080x1080)\n - ASPECT_RATIO_32_9_ULTRA_WIDE: 32:9 Ultra-Wide (OTT)\n - ASPECT_RATIO_3_4_PORTRAIT: 3:4 Portrait\n - ASPECT_RATIO_9_16_VERTICAL: 9:16 Vertical\n - ASPECT_RATIO_2_3_PORTRAIT: 2:3 Portrait"
     },
-    "imageImageDeleteResponse": {
+    "imageAspectRatioImages": {
       "type": "object",
       "properties": {
-        "success": {
-          "type": "boolean",
-          "title": "Operation success flag"
+        "aspectRatio": {
+          "$ref": "#/definitions/imageAspectRatio",
+          "title": "Aspect ratio enum classification (16:9, 1:1, 32:9, 3:4, 9:16, 2:3)"
         },
-        "message": {
-          "type": "string",
-          "title": "Status message"
-        }
-      }
-    },
-    "imageImageFileInfo": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "title": "File name"
-        },
-        "mimeType": {
-          "type": "string",
-          "title": "MIME type"
-        },
-        "sizeBytes": {
-          "type": "string",
-          "format": "int64",
-          "title": "File size in bytes"
-        },
-        "title": {
-          "type": "string",
-          "title": "Image title"
-        },
-        "description": {
-          "type": "string",
-          "title": "Image description"
-        },
-        "altText": {
-          "type": "string",
-          "title": "Alt text"
-        },
-        "category": {
-          "type": "string",
-          "title": "Category (e.g. cover, screenshot, wallpaper)"
-        },
-        "tags": {
+        "imageIds": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Category tags"
+          "title": "Array of image UUID foreign keys stored in database"
         },
-        "isPublic": {
-          "type": "boolean",
-          "title": "Public visibility flag"
-        },
-        "customKey": {
-          "type": "string",
-          "title": "Custom storage key if specified"
-        },
-        "uploaderId": {
-          "type": "string",
-          "title": "Uploader user ID"
-        },
-        "uploaderUsername": {
-          "type": "string",
-          "title": "Uploader username"
-        },
-        "site": {
-          "type": "string",
-          "title": "Dynamic site/tenant key (e.g. retrogames)"
-        },
-        "aspectRatio": {
-          "$ref": "#/definitions/imageAspectRatio",
-          "title": "Aspect ratio classification"
-        },
-        "isPublish": {
-          "type": "boolean",
-          "title": "Publication status flag"
-        },
-        "isActive": {
-          "type": "boolean",
-          "title": "Active status flag"
-        },
-        "permalink": {
-          "type": "string",
-          "title": "URL-friendly permalink"
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/imageImageMetadata"
+          },
+          "title": "Enriched array of full image metadata resolved at read-time (response only)"
         }
-      }
+      },
+      "title": "AspectRatioImages groups image IDs and enriched image metadata by aspect ratio format.\nReusable across all content entities (ROMs, games, articles, videos, etc.)"
     },
     "imageImageMetadata": {
       "type": "object",
@@ -686,20 +489,135 @@
       },
       "description": "ImageMetadata represents the core normalized Image entity with relational IDs."
     },
-    "imageImageQuery": {
+    "romRomMetadata": {
+      "type": "object",
+      "properties": {
+        "mongoId": {
+          "type": "string",
+          "title": "MongoDB internal record identifier (_id)"
+        },
+        "id": {
+          "type": "string",
+          "title": "Unique ROM identifier (UUID)"
+        },
+        "site": {
+          "type": "string",
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Display title of the ROM"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed description"
+        },
+        "consoleId": {
+          "type": "string",
+          "title": "Relational Foreign Keys"
+        },
+        "fileId": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string",
+          "title": "Game publisher"
+        },
+        "releaseYear": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "genre": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "players": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "rating": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "isPublic": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "title": "Lifecycle status (active, archived, draft)"
+        },
+        "uploaderId": {
+          "type": "string"
+        },
+        "uploaderUsername": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "consoleMetadata": {
+          "$ref": "#/definitions/romConsoleInfo",
+          "title": "Enriched Relations (populated on read, not persisted in DB)\nFull console details resolved from consoleId"
+        },
+        "fileMetadata": {
+          "$ref": "#/definitions/v1FileMetadata",
+          "title": "Full file details resolved from fileId"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/imageAspectRatioImages"
+          },
+          "title": "Array of image groups categorized by aspect ratio, storing imageIds in DB and enriched images on read"
+        },
+        "isPublish": {
+          "type": "boolean",
+          "title": "Publication status flag"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Active status flag (false indicates archived/deactivated)"
+        }
+      },
+      "description": "RomMetadata represents the core normalized ROM entity with relational IDs."
+    },
+    "romRomQuery": {
       "type": "object",
       "properties": {
         "name": {
           "type": "string",
-          "title": "Filter by Image name (partial or exact)"
+          "title": "Filter by ROM name (partial or exact)"
         },
-        "category": {
+        "consoleId": {
           "type": "string",
-          "title": "Filter by category (e.g. cover, screenshot, wallpaper)"
+          "title": "Filter by console database ID"
         },
-        "format": {
+        "consoleKey": {
           "type": "string",
-          "title": "Filter by format (e.g. png, jpeg, webp)"
+          "title": "Filter by console key (e.g. gba, snes, nds, psx)"
+        },
+        "genre": {
+          "type": "string",
+          "title": "Filter by genre"
+        },
+        "region": {
+          "type": "string",
+          "title": "Filter by release region (e.g. USA, EUR, JPN)"
         },
         "status": {
           "type": "string",
@@ -721,10 +639,6 @@
           "type": "string",
           "title": "Filter by site key (e.g. retrogames)"
         },
-        "aspectRatio": {
-          "$ref": "#/definitions/imageAspectRatio",
-          "title": "Filter by aspect ratio"
-        },
         "isPublish": {
           "type": "boolean",
           "title": "Filter by publication status"
@@ -735,7 +649,7 @@
         }
       }
     },
-    "imageImageSearchRequest": {
+    "romRomSearchRequest": {
       "type": "object",
       "properties": {
         "limit": {
@@ -754,15 +668,15 @@
         },
         "sortby": {
           "type": "string",
-          "title": "Field name to sort by (e.g. title, createdAt)"
+          "title": "Field name to sort by (e.g. title, createdAt, releaseYear)"
         },
         "sortOrder": {
           "type": "string",
           "title": "Sort direction order (asc or desc, default desc)"
         },
         "query": {
-          "$ref": "#/definitions/imageImageQuery",
-          "title": "Nested query filters for Image properties"
+          "$ref": "#/definitions/romRomQuery",
+          "title": "Nested query filters for ROM properties"
         },
         "site": {
           "type": "string",
@@ -770,16 +684,16 @@
         }
       }
     },
-    "imageImageSearchResponse": {
+    "romRomSearchResponse": {
       "type": "object",
       "properties": {
-        "images": {
+        "roms": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/imageImageMetadata"
+            "$ref": "#/definitions/romRomMetadata"
           },
-          "title": "List of Image metadata items for the current page"
+          "title": "List of ROM metadata items for the current page"
         },
         "totalCount": {
           "type": "string",
@@ -800,74 +714,6 @@
           "type": "integer",
           "format": "int32",
           "title": "Calculated total number of pages"
-        }
-      }
-    },
-    "imageImageShareResponse": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Image identifier"
-        },
-        "downloadUrl": {
-          "type": "string",
-          "title": "Generated pre-signed download URL"
-        },
-        "expiresAt": {
-          "type": "string",
-          "title": "ISO-8601 expiration timestamp"
-        }
-      }
-    },
-    "imageImageUploadRequest": {
-      "type": "object",
-      "properties": {
-        "fileInfo": {
-          "$ref": "#/definitions/imageImageFileInfo",
-          "title": "Image metadata for initial chunk"
-        },
-        "chunkData": {
-          "type": "string",
-          "format": "byte",
-          "title": "Binary chunk data"
-        }
-      }
-    },
-    "imageImageUploadResponse": {
-      "type": "object",
-      "properties": {
-        "image": {
-          "$ref": "#/definitions/imageImageMetadata",
-          "title": "Uploaded Image metadata"
-        }
-      }
-    },
-    "protobufAny": {
-      "type": "object",
-      "properties": {
-        "@type": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": {}
-    },
-    "rpcStatus": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "message": {
-          "type": "string"
-        },
-        "details": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/protobufAny"
-          }
         }
       }
     },
@@ -937,27 +783,5 @@
       },
       "description": "FileMetadata describes a storage file record returned from the S3-Free database."
     }
-  },
-  "securityDefinitions": {
-    "BearerAuth": {
-      "type": "apiKey",
-      "name": "Authorization",
-      "in": "header",
-      "description": "JWT Authorization header using the Bearer scheme. Enter: 'Bearer <token>'"
-    },
-    "ApiKeyAuth": {
-      "type": "apiKey",
-      "name": "x-api-key",
-      "in": "header",
-      "description": "Admin or Identity API key (header: x-api-key)"
-    }
-  },
-  "security": [
-    {
-      "BearerAuth": []
-    },
-    {
-      "ApiKeyAuth": []
-    }
-  ]
+  }
 }

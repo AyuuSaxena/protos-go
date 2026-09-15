@@ -181,6 +181,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "permalink",
+            "description": "Optional permalink to match",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -354,6 +361,13 @@
           {
             "name": "site",
             "description": "Optional site identifier",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "permalink",
+            "description": "Optional permalink to match",
             "in": "query",
             "required": false,
             "type": "string"
@@ -607,6 +621,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "permalink",
+            "description": "Optional permalink to match",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -783,6 +804,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "permalink",
+            "description": "Optional permalink to match",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -916,6 +944,10 @@
         "isActive": {
           "type": "boolean",
           "title": "Updated active status flag"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "Updated permalink"
         }
       }
     },
@@ -1022,6 +1054,10 @@
         "isActive": {
           "type": "boolean",
           "title": "Active status flag"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
         }
       }
     },
@@ -1043,6 +1079,10 @@
         "title": {
           "type": "string",
           "title": "Display title of the Image"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
         },
         "description": {
           "type": "string",
@@ -1394,6 +1434,10 @@
           "type": "string",
           "title": "Updated console ID"
         },
+        "permalink": {
+          "type": "string",
+          "title": "Updated permalink"
+        },
         "publisher": {
           "type": "string",
           "title": "Updated game publisher"
@@ -1569,6 +1613,10 @@
           "type": "string",
           "title": "Console system database ID or key"
         },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
         "publisher": {
           "type": "string",
           "title": "Game publisher"
@@ -1684,6 +1732,10 @@
         "title": {
           "type": "string",
           "title": "Display title of the ROM"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
         },
         "description": {
           "type": "string",

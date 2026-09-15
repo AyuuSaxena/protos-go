@@ -32,3 +32,21 @@ var ContentImageServiceSwaggerJSON []byte
 //
 //go:embed identity/v1/service.swagger.json
 var IdentityServiceSwaggerJSON []byte
+
+// ManagementServiceSwaggerJSON contains the raw OpenAPI 2.0 JSON for ManagementService (Console & Game).
+//
+//go:embed management/service.swagger.json
+var ManagementServiceSwaggerJSON []byte
+
+// ManagementSwaggerJSON is an alias for ManagementServiceSwaggerJSON.
+var ManagementSwaggerJSON = ManagementServiceSwaggerJSON
+
+// ManagementConsoleServiceSwaggerJSON contains the raw OpenAPI 2.0 JSON for ConsoleService.
+//
+//go:embed management/v1/console/consoleService.swagger.json
+var ManagementConsoleServiceSwaggerJSON []byte
+
+// ManagementGameServiceSwaggerJSON contains the raw OpenAPI 2.0 JSON for GameService.
+//
+//go:embed management/v1/game/gameService.swagger.json
+var ManagementGameServiceSwaggerJSON []byte

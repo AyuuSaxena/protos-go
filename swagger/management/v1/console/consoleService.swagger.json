@@ -1,0 +1,190 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "management/v1/console/consoleService.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Consoles"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/consoles": {
+      "get": {
+        "summary": "ListConsoles returns supported gaming platforms/consoles for end users.",
+        "operationId": "ConsoleService_ListConsoles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/romListConsolesResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "site",
+            "description": "Optional site identifier filter",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Consoles"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "romConsoleInfo": {
+      "type": "object",
+      "properties": {
+        "mongoId": {
+          "type": "string",
+          "title": "MongoDB internal record identifier (_id)"
+        },
+        "id": {
+          "type": "string",
+          "title": "Unique console identifier (UUID)"
+        },
+        "site": {
+          "type": "string",
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
+        },
+        "key": {
+          "type": "string",
+          "title": "Console system key (e.g. gba, snes, nds, psx)"
+        },
+        "fullName": {
+          "type": "string",
+          "title": "Full display name of the console"
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Supported file extensions (without leading dot)"
+        },
+        "manufacturer": {
+          "type": "string",
+          "title": "Hardware manufacturer (e.g. Nintendo, Sony, Sega)"
+        },
+        "releaseYear": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Release year"
+        },
+        "iconUrl": {
+          "type": "string",
+          "title": "Console icon or logo URL"
+        },
+        "contentCount": {
+          "type": "string",
+          "format": "int64",
+          "title": "Total number of ROMs linked to this console"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "title": "Last update timestamp"
+        }
+      },
+      "description": "ConsoleInfo represents a gaming console system stored in the database taxonomy."
+    },
+    "romListConsolesResponse": {
+      "type": "object",
+      "properties": {
+        "consoles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/romConsoleInfo"
+          },
+          "title": "List of supported console systems"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization header using the Bearer scheme. Enter: 'Bearer <token>'"
+    },
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "name": "x-api-key",
+      "in": "header",
+      "description": "Admin or Identity API key (header: x-api-key)"
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    },
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}
