@@ -26,44 +26,44 @@ var File_content_v1_image_imageService_proto protoreflect.FileDescriptor
 
 const file_content_v1_image_imageService_proto_rawDesc = "" +
 	"\n" +
-	"#content/v1/image/imageService.proto\x12\x10content.v1.image\x1a\x1cgoogle/api/annotations.proto\x1a\x16common/v1/common.proto\x1a\x1ccontent/v1/image/image.proto2\xde\x06\n" +
+	"#content/v1/image/imageService.proto\x12\x10content.v1.image\x1a\x1cgoogle/api/annotations.proto\x1a\x16common/v1/common.proto\x1a\x1ccontent/v1/image/image.proto2\xe6\x06\n" +
 	"\fImageService\x12|\n" +
 	"\vImageSearch\x12$.content.v1.image.ImageSearchRequest\x1a%.content.v1.image.ImageSearchResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/images/search\x12~\n" +
 	"\vImageUpload\x12$.content.v1.image.ImageUploadRequest\x1a%.content.v1.image.ImageUploadResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/images/upload(\x01\x12k\n" +
-	"\bImageGet\x12!.content.v1.image.ImageGetRequest\x1a\x1f.content.v1.image.ImageMetadata\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/images/{id}\x12t\n" +
-	"\vImageUpdate\x12$.content.v1.image.ImageUpdateRequest\x1a\x1f.content.v1.image.ImageMetadata\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\x1a\x13/api/v1/images/{id}\x12w\n" +
+	"\bImageGet\x12!.content.v1.image.ImageGetRequest\x1a\x1f.content.v1.image.ImageResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/images/{id}\x12|\n" +
+	"\vImageUpdate\x12,.content.v1.image.ImageCreateOrUpdateRequest\x1a\x1f.content.v1.image.ImageResponse\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\x1a\x13/api/v1/images/{id}\x12w\n" +
 	"\vImageDelete\x12$.content.v1.image.ImageDeleteRequest\x1a%.content.v1.image.ImageDeleteResponse\"\x1b\x82\xd3\xe4\x93\x02\x15*\x13/api/v1/images/{id}\x12u\n" +
 	"\rImageDownload\x12&.content.v1.image.ImageDownloadRequest\x1a\x14.common.v1.FileChunk\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/images/{id}/download0\x01\x12}\n" +
 	"\n" +
 	"ImageShare\x12#.content.v1.image.ImageShareRequest\x1a$.content.v1.image.ImageShareResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/api/v1/images/{id}/shareB8Z6github.com/AyuuSaxena/protos-go/content/v1/image;imageb\x06proto3"
 
 var file_content_v1_image_imageService_proto_goTypes = []any{
-	(*ImageSearchRequest)(nil),   // 0: content.v1.image.ImageSearchRequest
-	(*ImageUploadRequest)(nil),   // 1: content.v1.image.ImageUploadRequest
-	(*ImageGetRequest)(nil),      // 2: content.v1.image.ImageGetRequest
-	(*ImageUpdateRequest)(nil),   // 3: content.v1.image.ImageUpdateRequest
-	(*ImageDeleteRequest)(nil),   // 4: content.v1.image.ImageDeleteRequest
-	(*ImageDownloadRequest)(nil), // 5: content.v1.image.ImageDownloadRequest
-	(*ImageShareRequest)(nil),    // 6: content.v1.image.ImageShareRequest
-	(*ImageSearchResponse)(nil),  // 7: content.v1.image.ImageSearchResponse
-	(*ImageUploadResponse)(nil),  // 8: content.v1.image.ImageUploadResponse
-	(*ImageMetadata)(nil),        // 9: content.v1.image.ImageMetadata
-	(*ImageDeleteResponse)(nil),  // 10: content.v1.image.ImageDeleteResponse
-	(*v1.FileChunk)(nil),         // 11: common.v1.FileChunk
-	(*ImageShareResponse)(nil),   // 12: content.v1.image.ImageShareResponse
+	(*ImageSearchRequest)(nil),         // 0: content.v1.image.ImageSearchRequest
+	(*ImageUploadRequest)(nil),         // 1: content.v1.image.ImageUploadRequest
+	(*ImageGetRequest)(nil),            // 2: content.v1.image.ImageGetRequest
+	(*ImageCreateOrUpdateRequest)(nil), // 3: content.v1.image.ImageCreateOrUpdateRequest
+	(*ImageDeleteRequest)(nil),         // 4: content.v1.image.ImageDeleteRequest
+	(*ImageDownloadRequest)(nil),       // 5: content.v1.image.ImageDownloadRequest
+	(*ImageShareRequest)(nil),          // 6: content.v1.image.ImageShareRequest
+	(*ImageSearchResponse)(nil),        // 7: content.v1.image.ImageSearchResponse
+	(*ImageUploadResponse)(nil),        // 8: content.v1.image.ImageUploadResponse
+	(*ImageResponse)(nil),              // 9: content.v1.image.ImageResponse
+	(*ImageDeleteResponse)(nil),        // 10: content.v1.image.ImageDeleteResponse
+	(*v1.FileChunk)(nil),               // 11: common.v1.FileChunk
+	(*ImageShareResponse)(nil),         // 12: content.v1.image.ImageShareResponse
 }
 var file_content_v1_image_imageService_proto_depIdxs = []int32{
 	0,  // 0: content.v1.image.ImageService.ImageSearch:input_type -> content.v1.image.ImageSearchRequest
 	1,  // 1: content.v1.image.ImageService.ImageUpload:input_type -> content.v1.image.ImageUploadRequest
 	2,  // 2: content.v1.image.ImageService.ImageGet:input_type -> content.v1.image.ImageGetRequest
-	3,  // 3: content.v1.image.ImageService.ImageUpdate:input_type -> content.v1.image.ImageUpdateRequest
+	3,  // 3: content.v1.image.ImageService.ImageUpdate:input_type -> content.v1.image.ImageCreateOrUpdateRequest
 	4,  // 4: content.v1.image.ImageService.ImageDelete:input_type -> content.v1.image.ImageDeleteRequest
 	5,  // 5: content.v1.image.ImageService.ImageDownload:input_type -> content.v1.image.ImageDownloadRequest
 	6,  // 6: content.v1.image.ImageService.ImageShare:input_type -> content.v1.image.ImageShareRequest
 	7,  // 7: content.v1.image.ImageService.ImageSearch:output_type -> content.v1.image.ImageSearchResponse
 	8,  // 8: content.v1.image.ImageService.ImageUpload:output_type -> content.v1.image.ImageUploadResponse
-	9,  // 9: content.v1.image.ImageService.ImageGet:output_type -> content.v1.image.ImageMetadata
-	9,  // 10: content.v1.image.ImageService.ImageUpdate:output_type -> content.v1.image.ImageMetadata
+	9,  // 9: content.v1.image.ImageService.ImageGet:output_type -> content.v1.image.ImageResponse
+	9,  // 10: content.v1.image.ImageService.ImageUpdate:output_type -> content.v1.image.ImageResponse
 	10, // 11: content.v1.image.ImageService.ImageDelete:output_type -> content.v1.image.ImageDeleteResponse
 	11, // 12: content.v1.image.ImageService.ImageDownload:output_type -> common.v1.FileChunk
 	12, // 13: content.v1.image.ImageService.ImageShare:output_type -> content.v1.image.ImageShareResponse

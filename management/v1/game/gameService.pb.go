@@ -30,7 +30,7 @@ const file_management_v1_game_gameService_proto_rawDesc = "" +
 	"$management/v1/game/gameService.proto\x12\x12management.v1.game\x1a\x1cgoogle/api/annotations.proto\x1a\x16common/v1/common.proto\x1a\x18content/v1/rom/rom.proto\x1a\x1dmanagement/v1/game/game.proto2\xda\x02\n" +
 	"\vGameService\x12s\n" +
 	"\vSearchGames\x12 .content.v1.rom.RomSearchRequest\x1a!.content.v1.rom.RomSearchResponse\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/api/v1/games/search\x12f\n" +
-	"\aGetGame\x12\".management.v1.game.GetGameRequest\x1a\x1b.content.v1.rom.RomMetadata\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/api/v1/games/{id}\x12n\n" +
+	"\aGetGame\x12\".management.v1.game.GetGameRequest\x1a\x1b.content.v1.rom.RomResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/api/v1/games/{id}\x12n\n" +
 	"\n" +
 	"StreamGame\x12%.management.v1.game.StreamGameRequest\x1a\x14.common.v1.FileChunk\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/api/v1/games/{id}/stream0\x01B9Z7github.com/AyuuSaxena/protos-go/management/v1/game;gameb\x06proto3"
 
@@ -39,7 +39,7 @@ var file_management_v1_game_gameService_proto_goTypes = []any{
 	(*GetGameRequest)(nil),        // 1: management.v1.game.GetGameRequest
 	(*StreamGameRequest)(nil),     // 2: management.v1.game.StreamGameRequest
 	(*rom.RomSearchResponse)(nil), // 3: content.v1.rom.RomSearchResponse
-	(*rom.RomMetadata)(nil),       // 4: content.v1.rom.RomMetadata
+	(*rom.RomResponse)(nil),       // 4: content.v1.rom.RomResponse
 	(*v1.FileChunk)(nil),          // 5: common.v1.FileChunk
 }
 var file_management_v1_game_gameService_proto_depIdxs = []int32{
@@ -47,7 +47,7 @@ var file_management_v1_game_gameService_proto_depIdxs = []int32{
 	1, // 1: management.v1.game.GameService.GetGame:input_type -> management.v1.game.GetGameRequest
 	2, // 2: management.v1.game.GameService.StreamGame:input_type -> management.v1.game.StreamGameRequest
 	3, // 3: management.v1.game.GameService.SearchGames:output_type -> content.v1.rom.RomSearchResponse
-	4, // 4: management.v1.game.GameService.GetGame:output_type -> content.v1.rom.RomMetadata
+	4, // 4: management.v1.game.GameService.GetGame:output_type -> content.v1.rom.RomResponse
 	5, // 5: management.v1.game.GameService.StreamGame:output_type -> common.v1.FileChunk
 	3, // [3:6] is the sub-list for method output_type
 	0, // [0:3] is the sub-list for method input_type

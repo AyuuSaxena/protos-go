@@ -36,7 +36,7 @@ type GameServiceClient interface {
 	// SearchGames searches and filters games by keyword, console, and pagination.
 	SearchGames(ctx context.Context, in *rom.RomSearchRequest, opts ...grpc.CallOption) (*rom.RomSearchResponse, error)
 	// GetGame retrieves detailed metadata for a single game by ID.
-	GetGame(ctx context.Context, in *GetGameRequest, opts ...grpc.CallOption) (*rom.RomMetadata, error)
+	GetGame(ctx context.Context, in *GetGameRequest, opts ...grpc.CallOption) (*rom.RomResponse, error)
 	// StreamGame streams the game ROM binary data directly to the caller.
 	StreamGame(ctx context.Context, in *StreamGameRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[v1.FileChunk], error)
 }
@@ -59,9 +59,9 @@ func (c *gameServiceClient) SearchGames(ctx context.Context, in *rom.RomSearchRe
 	return out, nil
 }
 
-func (c *gameServiceClient) GetGame(ctx context.Context, in *GetGameRequest, opts ...grpc.CallOption) (*rom.RomMetadata, error) {
+func (c *gameServiceClient) GetGame(ctx context.Context, in *GetGameRequest, opts ...grpc.CallOption) (*rom.RomResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(rom.RomMetadata)
+	out := new(rom.RomResponse)
 	err := c.cc.Invoke(ctx, GameService_GetGame_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -98,7 +98,7 @@ type GameServiceServer interface {
 	// SearchGames searches and filters games by keyword, console, and pagination.
 	SearchGames(context.Context, *rom.RomSearchRequest) (*rom.RomSearchResponse, error)
 	// GetGame retrieves detailed metadata for a single game by ID.
-	GetGame(context.Context, *GetGameRequest) (*rom.RomMetadata, error)
+	GetGame(context.Context, *GetGameRequest) (*rom.RomResponse, error)
 	// StreamGame streams the game ROM binary data directly to the caller.
 	StreamGame(*StreamGameRequest, grpc.ServerStreamingServer[v1.FileChunk]) error
 	mustEmbedUnimplementedGameServiceServer()
@@ -114,7 +114,7 @@ type UnimplementedGameServiceServer struct{}
 func (UnimplementedGameServiceServer) SearchGames(context.Context, *rom.RomSearchRequest) (*rom.RomSearchResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SearchGames not implemented")
 }
-func (UnimplementedGameServiceServer) GetGame(context.Context, *GetGameRequest) (*rom.RomMetadata, error) {
+func (UnimplementedGameServiceServer) GetGame(context.Context, *GetGameRequest) (*rom.RomResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetGame not implemented")
 }
 func (UnimplementedGameServiceServer) StreamGame(*StreamGameRequest, grpc.ServerStreamingServer[v1.FileChunk]) error {

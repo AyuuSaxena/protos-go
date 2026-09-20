@@ -158,7 +158,7 @@ func local_request_ImageService_ImageGet_0(ctx context.Context, marshaler runtim
 
 func request_ImageService_ImageUpdate_0(ctx context.Context, marshaler runtime.Marshaler, client ImageServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
-		protoReq ImageUpdateRequest
+		protoReq ImageCreateOrUpdateRequest
 		metadata runtime.ServerMetadata
 		err      error
 	)
@@ -169,7 +169,7 @@ func request_ImageService_ImageUpdate_0(ctx context.Context, marshaler runtime.M
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
-	protoReq.Id, err = runtime.String(val)
+	protoReq.Id, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
@@ -182,7 +182,7 @@ func request_ImageService_ImageUpdate_0(ctx context.Context, marshaler runtime.M
 
 func local_request_ImageService_ImageUpdate_0(ctx context.Context, marshaler runtime.Marshaler, server ImageServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
-		protoReq ImageUpdateRequest
+		protoReq ImageCreateOrUpdateRequest
 		metadata runtime.ServerMetadata
 		err      error
 	)
@@ -193,7 +193,7 @@ func local_request_ImageService_ImageUpdate_0(ctx context.Context, marshaler run
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
-	protoReq.Id, err = runtime.String(val)
+	protoReq.Id, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}

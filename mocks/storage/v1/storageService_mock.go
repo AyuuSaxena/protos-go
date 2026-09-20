@@ -123,14 +123,14 @@ func (mr *MockStorageServiceClientMockRecorder) DownloadFile(ctx, in any, opts .
 }
 
 // GetBucket mocks base method.
-func (m *MockStorageServiceClient) GetBucket(ctx context.Context, in *v1.GetBucketRequest, opts ...grpc.CallOption) (*v1.BucketMetadata, error) {
+func (m *MockStorageServiceClient) GetBucket(ctx context.Context, in *v1.GetBucketRequest, opts ...grpc.CallOption) (*v1.Bucket, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetBucket", varargs...)
-	ret0, _ := ret[0].(*v1.BucketMetadata)
+	ret0, _ := ret[0].(*v1.Bucket)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -143,14 +143,14 @@ func (mr *MockStorageServiceClientMockRecorder) GetBucket(ctx, in any, opts ...a
 }
 
 // GetFile mocks base method.
-func (m *MockStorageServiceClient) GetFile(ctx context.Context, in *v1.GetFileRequest, opts ...grpc.CallOption) (*v1.FileMetadata, error) {
+func (m *MockStorageServiceClient) GetFile(ctx context.Context, in *v1.GetFileRequest, opts ...grpc.CallOption) (*v1.File, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetFile", varargs...)
-	ret0, _ := ret[0].(*v1.FileMetadata)
+	ret0, _ := ret[0].(*v1.File)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -306,10 +306,10 @@ func (mr *MockStorageServiceServerMockRecorder) DownloadFile(arg0, arg1 any) *go
 }
 
 // GetBucket mocks base method.
-func (m *MockStorageServiceServer) GetBucket(arg0 context.Context, arg1 *v1.GetBucketRequest) (*v1.BucketMetadata, error) {
+func (m *MockStorageServiceServer) GetBucket(arg0 context.Context, arg1 *v1.GetBucketRequest) (*v1.Bucket, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetBucket", arg0, arg1)
-	ret0, _ := ret[0].(*v1.BucketMetadata)
+	ret0, _ := ret[0].(*v1.Bucket)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -321,10 +321,10 @@ func (mr *MockStorageServiceServerMockRecorder) GetBucket(arg0, arg1 any) *gomoc
 }
 
 // GetFile mocks base method.
-func (m *MockStorageServiceServer) GetFile(arg0 context.Context, arg1 *v1.GetFileRequest) (*v1.FileMetadata, error) {
+func (m *MockStorageServiceServer) GetFile(arg0 context.Context, arg1 *v1.GetFileRequest) (*v1.File, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetFile", arg0, arg1)
-	ret0, _ := ret[0].(*v1.FileMetadata)
+	ret0, _ := ret[0].(*v1.File)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

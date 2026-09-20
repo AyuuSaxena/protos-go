@@ -193,7 +193,7 @@ func local_request_RomService_RomGet_0(ctx context.Context, marshaler runtime.Ma
 
 func request_RomService_RomUpdate_0(ctx context.Context, marshaler runtime.Marshaler, client RomServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
-		protoReq RomUpdateRequest
+		protoReq RomCreateOrUpdateRequest
 		metadata runtime.ServerMetadata
 		err      error
 	)
@@ -204,7 +204,7 @@ func request_RomService_RomUpdate_0(ctx context.Context, marshaler runtime.Marsh
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
-	protoReq.Id, err = runtime.String(val)
+	protoReq.Id, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
@@ -217,7 +217,7 @@ func request_RomService_RomUpdate_0(ctx context.Context, marshaler runtime.Marsh
 
 func local_request_RomService_RomUpdate_0(ctx context.Context, marshaler runtime.Marshaler, server RomServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
-		protoReq RomUpdateRequest
+		protoReq RomCreateOrUpdateRequest
 		metadata runtime.ServerMetadata
 		err      error
 	)
@@ -228,7 +228,7 @@ func local_request_RomService_RomUpdate_0(ctx context.Context, marshaler runtime
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
-	protoReq.Id, err = runtime.String(val)
+	protoReq.Id, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}

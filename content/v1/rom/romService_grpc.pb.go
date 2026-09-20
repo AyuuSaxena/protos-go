@@ -37,8 +37,8 @@ type RomServiceClient interface {
 	ListConsoles(ctx context.Context, in *ListConsolesRequest, opts ...grpc.CallOption) (*ListConsolesResponse, error)
 	RomSearch(ctx context.Context, in *RomSearchRequest, opts ...grpc.CallOption) (*RomSearchResponse, error)
 	RomUpload(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[RomUploadRequest, RomUploadResponse], error)
-	RomGet(ctx context.Context, in *RomGetRequest, opts ...grpc.CallOption) (*RomMetadata, error)
-	RomUpdate(ctx context.Context, in *RomUpdateRequest, opts ...grpc.CallOption) (*RomMetadata, error)
+	RomGet(ctx context.Context, in *RomGetRequest, opts ...grpc.CallOption) (*RomResponse, error)
+	RomUpdate(ctx context.Context, in *RomCreateOrUpdateRequest, opts ...grpc.CallOption) (*RomResponse, error)
 	RomDelete(ctx context.Context, in *RomDeleteRequest, opts ...grpc.CallOption) (*RomDeleteResponse, error)
 	RomDownload(ctx context.Context, in *RomDownloadRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[v1.FileChunk], error)
 	RomShare(ctx context.Context, in *RomShareRequest, opts ...grpc.CallOption) (*RomShareResponse, error)
@@ -85,9 +85,9 @@ func (c *romServiceClient) RomUpload(ctx context.Context, opts ...grpc.CallOptio
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type RomService_RomUploadClient = grpc.ClientStreamingClient[RomUploadRequest, RomUploadResponse]
 
-func (c *romServiceClient) RomGet(ctx context.Context, in *RomGetRequest, opts ...grpc.CallOption) (*RomMetadata, error) {
+func (c *romServiceClient) RomGet(ctx context.Context, in *RomGetRequest, opts ...grpc.CallOption) (*RomResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RomMetadata)
+	out := new(RomResponse)
 	err := c.cc.Invoke(ctx, RomService_RomGet_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -95,9 +95,9 @@ func (c *romServiceClient) RomGet(ctx context.Context, in *RomGetRequest, opts .
 	return out, nil
 }
 
-func (c *romServiceClient) RomUpdate(ctx context.Context, in *RomUpdateRequest, opts ...grpc.CallOption) (*RomMetadata, error) {
+func (c *romServiceClient) RomUpdate(ctx context.Context, in *RomCreateOrUpdateRequest, opts ...grpc.CallOption) (*RomResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RomMetadata)
+	out := new(RomResponse)
 	err := c.cc.Invoke(ctx, RomService_RomUpdate_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -151,8 +151,8 @@ type RomServiceServer interface {
 	ListConsoles(context.Context, *ListConsolesRequest) (*ListConsolesResponse, error)
 	RomSearch(context.Context, *RomSearchRequest) (*RomSearchResponse, error)
 	RomUpload(grpc.ClientStreamingServer[RomUploadRequest, RomUploadResponse]) error
-	RomGet(context.Context, *RomGetRequest) (*RomMetadata, error)
-	RomUpdate(context.Context, *RomUpdateRequest) (*RomMetadata, error)
+	RomGet(context.Context, *RomGetRequest) (*RomResponse, error)
+	RomUpdate(context.Context, *RomCreateOrUpdateRequest) (*RomResponse, error)
 	RomDelete(context.Context, *RomDeleteRequest) (*RomDeleteResponse, error)
 	RomDownload(*RomDownloadRequest, grpc.ServerStreamingServer[v1.FileChunk]) error
 	RomShare(context.Context, *RomShareRequest) (*RomShareResponse, error)
@@ -175,10 +175,10 @@ func (UnimplementedRomServiceServer) RomSearch(context.Context, *RomSearchReques
 func (UnimplementedRomServiceServer) RomUpload(grpc.ClientStreamingServer[RomUploadRequest, RomUploadResponse]) error {
 	return status.Error(codes.Unimplemented, "method RomUpload not implemented")
 }
-func (UnimplementedRomServiceServer) RomGet(context.Context, *RomGetRequest) (*RomMetadata, error) {
+func (UnimplementedRomServiceServer) RomGet(context.Context, *RomGetRequest) (*RomResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RomGet not implemented")
 }
-func (UnimplementedRomServiceServer) RomUpdate(context.Context, *RomUpdateRequest) (*RomMetadata, error) {
+func (UnimplementedRomServiceServer) RomUpdate(context.Context, *RomCreateOrUpdateRequest) (*RomResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RomUpdate not implemented")
 }
 func (UnimplementedRomServiceServer) RomDelete(context.Context, *RomDeleteRequest) (*RomDeleteResponse, error) {
@@ -273,7 +273,7 @@ func _RomService_RomGet_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _RomService_RomUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RomUpdateRequest)
+	in := new(RomCreateOrUpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -285,7 +285,7 @@ func _RomService_RomUpdate_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: RomService_RomUpdate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RomServiceServer).RomUpdate(ctx, req.(*RomUpdateRequest))
+		return srv.(RomServiceServer).RomUpdate(ctx, req.(*RomCreateOrUpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

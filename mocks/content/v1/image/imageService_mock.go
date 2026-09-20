@@ -84,14 +84,14 @@ func (mr *MockImageServiceClientMockRecorder) ImageDownload(ctx, in any, opts ..
 }
 
 // ImageGet mocks base method.
-func (m *MockImageServiceClient) ImageGet(ctx context.Context, in *image.ImageGetRequest, opts ...grpc.CallOption) (*image.ImageMetadata, error) {
+func (m *MockImageServiceClient) ImageGet(ctx context.Context, in *image.ImageGetRequest, opts ...grpc.CallOption) (*image.ImageResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ImageGet", varargs...)
-	ret0, _ := ret[0].(*image.ImageMetadata)
+	ret0, _ := ret[0].(*image.ImageResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -144,14 +144,14 @@ func (mr *MockImageServiceClientMockRecorder) ImageShare(ctx, in any, opts ...an
 }
 
 // ImageUpdate mocks base method.
-func (m *MockImageServiceClient) ImageUpdate(ctx context.Context, in *image.ImageUpdateRequest, opts ...grpc.CallOption) (*image.ImageMetadata, error) {
+func (m *MockImageServiceClient) ImageUpdate(ctx context.Context, in *image.ImageCreateOrUpdateRequest, opts ...grpc.CallOption) (*image.ImageResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ImageUpdate", varargs...)
-	ret0, _ := ret[0].(*image.ImageMetadata)
+	ret0, _ := ret[0].(*image.ImageResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -237,10 +237,10 @@ func (mr *MockImageServiceServerMockRecorder) ImageDownload(arg0, arg1 any) *gom
 }
 
 // ImageGet mocks base method.
-func (m *MockImageServiceServer) ImageGet(arg0 context.Context, arg1 *image.ImageGetRequest) (*image.ImageMetadata, error) {
+func (m *MockImageServiceServer) ImageGet(arg0 context.Context, arg1 *image.ImageGetRequest) (*image.ImageResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ImageGet", arg0, arg1)
-	ret0, _ := ret[0].(*image.ImageMetadata)
+	ret0, _ := ret[0].(*image.ImageResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -282,10 +282,10 @@ func (mr *MockImageServiceServerMockRecorder) ImageShare(arg0, arg1 any) *gomock
 }
 
 // ImageUpdate mocks base method.
-func (m *MockImageServiceServer) ImageUpdate(arg0 context.Context, arg1 *image.ImageUpdateRequest) (*image.ImageMetadata, error) {
+func (m *MockImageServiceServer) ImageUpdate(arg0 context.Context, arg1 *image.ImageCreateOrUpdateRequest) (*image.ImageResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ImageUpdate", arg0, arg1)
-	ret0, _ := ret[0].(*image.ImageMetadata)
+	ret0, _ := ret[0].(*image.ImageResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

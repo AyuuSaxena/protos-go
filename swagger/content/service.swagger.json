@@ -144,7 +144,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/imageImageMetadata"
+              "$ref": "#/definitions/imageImageResponse"
             }
           },
           "401": {
@@ -169,22 +169,8 @@
             "type": "string"
           },
           {
-            "name": "name",
-            "description": "Image name to match",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "site",
             "description": "Optional site identifier",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "permalink",
-            "description": "Optional permalink to match",
             "in": "query",
             "required": false,
             "type": "string"
@@ -265,7 +251,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/imageImageMetadata"
+              "$ref": "#/definitions/imageImageResponse"
             }
           },
           "401": {
@@ -284,7 +270,7 @@
         "parameters": [
           {
             "name": "id",
-            "description": "Unique Image identifier",
+            "description": "Image unique identifier.\nRequired for update and omitted for create.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -584,7 +570,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/romRomMetadata"
+              "$ref": "#/definitions/romRomResponse"
             }
           },
           "401": {
@@ -609,22 +595,8 @@
             "type": "string"
           },
           {
-            "name": "name",
-            "description": "ROM name to match",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "site",
             "description": "Optional site identifier",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "permalink",
-            "description": "Optional permalink to match",
             "in": "query",
             "required": false,
             "type": "string"
@@ -705,7 +677,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/romRomMetadata"
+              "$ref": "#/definitions/romRomResponse"
             }
           },
           "401": {
@@ -724,7 +696,7 @@
         "parameters": [
           {
             "name": "id",
-            "description": "Unique ROM identifier",
+            "description": "ROM unique identifier.\nRequired for update and omitted for create.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -898,58 +870,72 @@
     "ImageServiceImageUpdateBody": {
       "type": "object",
       "properties": {
+        "site": {
+          "type": "string",
+          "title": "Site identifier"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
         "title": {
           "type": "string",
-          "title": "Updated Image title"
+          "title": "Image title"
         },
         "description": {
           "type": "string",
-          "title": "Updated Image description"
+          "title": "Image description"
         },
-        "altText": {
+        "mimeType": {
           "type": "string",
-          "title": "Updated alt text"
+          "title": "MIME type"
+        },
+        "sizeBytes": {
+          "type": "string",
+          "format": "int64",
+          "title": "File size in bytes"
         },
         "category": {
-          "type": "string",
-          "title": "Updated category"
+          "$ref": "#/definitions/imageImageCategory",
+          "title": "Category"
         },
         "tags": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Updated tags"
+          "title": "Category tags"
         },
-        "isPublic": {
-          "type": "boolean",
-          "title": "Updated public visibility flag"
-        },
-        "status": {
+        "uploaderId": {
           "type": "string",
-          "title": "Updated lifecycle status"
-        },
-        "site": {
-          "type": "string",
-          "title": "Updated site identifier"
+          "title": "Uploader user ID"
         },
         "aspectRatio": {
           "$ref": "#/definitions/imageAspectRatio",
-          "title": "Updated aspect ratio classification"
+          "title": "Aspect ratio classification"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
         },
         "isPublish": {
           "type": "boolean",
-          "title": "Updated publication status flag"
+          "title": "Publication status flag"
         },
         "isActive": {
           "type": "boolean",
-          "title": "Updated active status flag"
+          "title": "Active status flag"
         },
-        "permalink": {
+        "status": {
           "type": "string",
-          "title": "Updated permalink"
+          "title": "Lifecycle status"
+        },
+        "altText": {
+          "type": "string",
+          "title": "Alt text"
         }
-      }
+      },
+      "description": "ImageCreateOrUpdateRequest is used for both creating and updating\nan Image.\n\nFor create:\n- id is omitted\n- creation fields are provided\n\nFor update:\n- id is provided\n- only fields that need to be updated are provided."
     },
     "imageAspectRatio": {
       "type": "string",
@@ -1245,7 +1231,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/imageImageMetadata"
+            "$ref": "#/definitions/imageImage"
           },
           "title": "List of Image metadata items for the current page"
         },
@@ -1285,6 +1271,10 @@
         "expiresAt": {
           "type": "string",
           "title": "ISO-8601 expiration timestamp"
+        },
+        "message": {
+          "type": "string",
+          "title": "Status message"
         }
       }
     },
@@ -1292,7 +1282,7 @@
       "type": "object",
       "properties": {
         "fileInfo": {
-          "$ref": "#/definitions/imageImageFileInfo",
+          "$ref": "#/definitions/imageImageCreateOrUpdateRequest",
           "title": "Image metadata for initial chunk"
         },
         "chunkData": {
@@ -1306,8 +1296,12 @@
       "type": "object",
       "properties": {
         "image": {
-          "$ref": "#/definitions/imageImageMetadata",
-          "title": "Uploaded Image metadata"
+          "$ref": "#/definitions/imageImage",
+          "title": "Uploaded Image"
+        },
+        "message": {
+          "type": "string",
+          "title": "Status message"
         }
       }
     },
@@ -1422,66 +1416,70 @@
     "RomServiceRomUpdateBody": {
       "type": "object",
       "properties": {
+        "site": {
+          "type": "string",
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
+        },
         "title": {
           "type": "string",
-          "title": "Updated ROM title"
+          "title": "ROM display title"
         },
         "description": {
           "type": "string",
-          "title": "Updated ROM description"
+          "title": "ROM description"
         },
         "consoleId": {
           "type": "string",
-          "title": "Updated console ID"
+          "title": "Console system database ID"
+        },
+        "romExtension": {
+          "type": "string",
+          "title": "ROM extension (e.g. gba, snes, nds, psx)"
         },
         "permalink": {
           "type": "string",
-          "title": "Updated permalink"
+          "title": "URL-friendly permalink"
         },
         "publisher": {
           "type": "string",
-          "title": "Updated game publisher"
+          "title": "Game publisher"
         },
         "releaseYear": {
           "type": "integer",
           "format": "int32",
-          "title": "Updated release year"
+          "title": "Release year"
         },
         "genre": {
           "type": "string",
-          "title": "Updated genre"
+          "title": "Game genre"
         },
         "region": {
           "type": "string",
-          "title": "Updated region"
+          "title": "Release region"
         },
         "players": {
           "type": "integer",
           "format": "int32",
-          "title": "Updated player count"
+          "title": "Supported players"
         },
         "rating": {
           "type": "string",
-          "title": "Updated content rating"
+          "title": "Content rating"
         },
         "tags": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Updated tags"
+          "title": "Category tags"
         },
         "isPublic": {
           "type": "boolean",
-          "title": "Updated public visibility flag"
+          "title": "Public visibility flag"
         },
-        "status": {
+        "uploaderId": {
           "type": "string",
-          "title": "Updated lifecycle status"
-        },
-        "site": {
-          "type": "string",
-          "title": "Updated site identifier"
+          "title": "Uploader user ID"
         },
         "images": {
           "type": "array",
@@ -1489,42 +1487,35 @@
             "type": "object",
             "$ref": "#/definitions/imageAspectRatioImages"
           },
-          "title": "Updated array of image groups categorized by aspect ratio"
+          "title": "Array of image groups categorized by aspect ratio"
         },
         "isPublish": {
           "type": "boolean",
-          "title": "Updated publication status flag"
+          "title": "Publication status flag"
         },
         "isActive": {
           "type": "boolean",
-          "title": "Updated active status flag"
+          "title": "Active status flag"
         }
-      }
+      },
+      "description": "RomCreateOrUpdateRequest is used for both creating and updating\na ROM.\n\nFor create:\n- id is omitted\n- ROM fields are provided\n\nFor update:\n- id is provided\n- only fields that need to be updated are provided."
     },
     "imageAspectRatioImages": {
       "type": "object",
       "properties": {
         "aspectRatio": {
           "$ref": "#/definitions/imageAspectRatio",
-          "title": "Aspect ratio enum classification (16:9, 1:1, 32:9, 3:4, 9:16, 2:3)"
+          "title": "Aspect ratio enum classification"
         },
         "imageIds": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Array of image UUID foreign keys stored in database"
-        },
-        "images": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/imageImageMetadata"
-          },
-          "title": "Enriched array of full image metadata resolved at read-time (response only)"
+          "title": "Array of image UUID foreign keys"
         }
       },
-      "title": "AspectRatioImages groups image IDs and enriched image metadata by aspect ratio format.\nReusable across all content entities (ROMs, games, articles, videos, etc.)"
+      "description": "AspectRatioImages groups image IDs by aspect ratio format.\n\nReusable across all content entities\n(ROMs, games, articles, videos, etc.)"
     },
     "romConsoleInfo": {
       "type": "object",
@@ -1540,10 +1531,6 @@
         "site": {
           "type": "string",
           "title": "Dynamic site/tenant key (e.g. retrogames)"
-        },
-        "key": {
-          "type": "string",
-          "title": "Console system key (e.g. gba, snes, nds, psx)"
         },
         "fullName": {
           "type": "string",
@@ -1568,11 +1555,6 @@
         "iconUrl": {
           "type": "string",
           "title": "Console icon or logo URL"
-        },
-        "contentCount": {
-          "type": "string",
-          "format": "int64",
-          "title": "Total number of ROMs linked to this console"
         },
         "createdAt": {
           "type": "string",
@@ -1832,9 +1814,9 @@
           "type": "string",
           "title": "Filter by console database ID"
         },
-        "consoleKey": {
+        "romExtension": {
           "type": "string",
-          "title": "Filter by console key (e.g. gba, snes, nds, psx)"
+          "title": "Filter by ROM extension (e.g. gba, snes, nds, psx)"
         },
         "genre": {
           "type": "string",
@@ -1916,7 +1898,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/romRomMetadata"
+            "$ref": "#/definitions/romRom"
           },
           "title": "List of ROM metadata items for the current page"
         },
@@ -1956,14 +1938,18 @@
         "expiresAt": {
           "type": "string",
           "title": "ISO-8601 expiration timestamp"
+        },
+        "message": {
+          "type": "string",
+          "title": "Status message"
         }
       }
     },
     "romRomUploadRequest": {
       "type": "object",
       "properties": {
-        "fileInfo": {
-          "$ref": "#/definitions/romFileInfo",
+        "rom": {
+          "$ref": "#/definitions/romRomCreateOrUpdateRequest",
           "title": "ROM metadata for initial chunk"
         },
         "chunkData": {
@@ -1977,8 +1963,627 @@
       "type": "object",
       "properties": {
         "rom": {
-          "$ref": "#/definitions/romRomMetadata",
+          "$ref": "#/definitions/romRom",
           "title": "Uploaded ROM metadata"
+        },
+        "message": {
+          "type": "string",
+          "title": "Status message"
+        }
+      }
+    },
+    "imageImage": {
+      "type": "object",
+      "properties": {
+        "mongoId": {
+          "type": "string",
+          "title": "MongoDB internal record identifier (_id)"
+        },
+        "id": {
+          "type": "string",
+          "title": "Unique Image identifier (UUID)"
+        },
+        "site": {
+          "type": "string",
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Display title of the Image"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed description"
+        },
+        "fileId": {
+          "type": "string",
+          "title": "Relational Foreign Key to storage file"
+        },
+        "width": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Image width"
+        },
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Image height"
+        },
+        "aspectRatio": {
+          "$ref": "#/definitions/imageAspectRatio",
+          "title": "Aspect ratio classification"
+        },
+        "format": {
+          "type": "string",
+          "title": "Image format"
+        },
+        "category": {
+          "type": "string",
+          "title": "Image category"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Image tags"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
+        },
+        "status": {
+          "type": "string",
+          "title": "Lifecycle status (active, archived, draft)"
+        },
+        "uploaderId": {
+          "type": "string",
+          "title": "Uploader user ID"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "Created timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "title": "Updated timestamp"
+        },
+        "isPublish": {
+          "type": "boolean",
+          "title": "Publication status flag"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Active status flag"
+        }
+      },
+      "description": "Image represents the core normalized Image entity with relational IDs."
+    },
+    "imageImageCategory": {
+      "type": "string",
+      "enum": [
+        "IMAGE_CATEGORY_UNSPECIFIED",
+        "IMAGE_CATEGORY_COVER",
+        "IMAGE_CATEGORY_SCREENSHOT",
+        "IMAGE_CATEGORY_WALLPAPER"
+      ],
+      "default": "IMAGE_CATEGORY_UNSPECIFIED"
+    },
+    "imageImageCreateOrUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Image unique identifier.\nRequired for update and omitted for create."
+        },
+        "site": {
+          "type": "string",
+          "title": "Site identifier"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
+        "title": {
+          "type": "string",
+          "title": "Image title"
+        },
+        "description": {
+          "type": "string",
+          "title": "Image description"
+        },
+        "mimeType": {
+          "type": "string",
+          "title": "MIME type"
+        },
+        "sizeBytes": {
+          "type": "string",
+          "format": "int64",
+          "title": "File size in bytes"
+        },
+        "category": {
+          "$ref": "#/definitions/imageImageCategory",
+          "title": "Category"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Category tags"
+        },
+        "uploaderId": {
+          "type": "string",
+          "title": "Uploader user ID"
+        },
+        "aspectRatio": {
+          "$ref": "#/definitions/imageAspectRatio",
+          "title": "Aspect ratio classification"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
+        },
+        "isPublish": {
+          "type": "boolean",
+          "title": "Publication status flag"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Active status flag"
+        },
+        "status": {
+          "type": "string",
+          "title": "Lifecycle status"
+        },
+        "altText": {
+          "type": "string",
+          "title": "Alt text"
+        }
+      },
+      "description": "ImageCreateOrUpdateRequest is used for both creating and updating\nan Image.\n\nFor create:\n- id is omitted\n- creation fields are provided\n\nFor update:\n- id is provided\n- only fields that need to be updated are provided."
+    },
+    "imageImageResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string",
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Display title of the Image"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed description"
+        },
+        "file": {
+          "$ref": "#/definitions/v1FileResponse",
+          "title": "Relational Foreign Key to storage file"
+        },
+        "width": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Image width"
+        },
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Image height"
+        },
+        "aspectRatio": {
+          "$ref": "#/definitions/imageAspectRatio",
+          "title": "Aspect ratio classification"
+        },
+        "format": {
+          "type": "string",
+          "title": "Image format"
+        },
+        "category": {
+          "type": "string",
+          "title": "Image category"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Image tags"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
+        },
+        "status": {
+          "type": "string",
+          "title": "Lifecycle status (active, archived, draft)"
+        },
+        "uploadedBy": {
+          "type": "string",
+          "title": "Uploaded by user"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "Created timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "title": "Updated timestamp"
+        },
+        "isPublish": {
+          "type": "boolean",
+          "title": "Publication status flag"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Active status flag"
+        }
+      }
+    },
+    "v1FileResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique file identifier (UUID)"
+        },
+        "name": {
+          "type": "string",
+          "title": "File name"
+        },
+        "size": {
+          "type": "string",
+          "format": "int64",
+          "title": "File size in bytes"
+        },
+        "contentType": {
+          "type": "string",
+          "title": "MIME content type"
+        },
+        "etag": {
+          "type": "string",
+          "title": "ETag / Checksum"
+        },
+        "userMetadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Custom user metadata"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "Creation timestamp in RFC3339 format"
+        }
+      },
+      "title": "File response"
+    },
+    "imageAspectRatioImagesResponse": {
+      "type": "object",
+      "properties": {
+        "aspectRatio": {
+          "$ref": "#/definitions/imageAspectRatio",
+          "title": "Aspect ratio enum classification"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/imageImage"
+          },
+          "title": "Enriched array of full image metadata resolved at read-time"
+        }
+      }
+    },
+    "romRom": {
+      "type": "object",
+      "properties": {
+        "mongoId": {
+          "type": "string",
+          "title": "MongoDB internal record identifier (_id)"
+        },
+        "id": {
+          "type": "string",
+          "title": "Unique ROM identifier (UUID)"
+        },
+        "site": {
+          "type": "string",
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Display title of the ROM"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed description"
+        },
+        "consoleId": {
+          "type": "string",
+          "title": "Console system database ID"
+        },
+        "fileId": {
+          "type": "string",
+          "title": "Relational Foreign Key to storage file"
+        },
+        "publisher": {
+          "type": "string",
+          "title": "Game publisher"
+        },
+        "releaseYear": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Release year"
+        },
+        "genre": {
+          "type": "string",
+          "title": "Game genre"
+        },
+        "region": {
+          "type": "string",
+          "title": "Release region"
+        },
+        "players": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Supported players"
+        },
+        "rating": {
+          "type": "string",
+          "title": "Content rating"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Category tags"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
+        },
+        "status": {
+          "type": "string",
+          "title": "Lifecycle status (active, archived, draft)"
+        },
+        "uploaderId": {
+          "type": "string",
+          "title": "Uploader user ID"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "Created timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "title": "Updated timestamp"
+        },
+        "isPublish": {
+          "type": "boolean",
+          "title": "Publication status flag"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Active status flag (false indicates archived/deactivated)"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/imageAspectRatioImages"
+          },
+          "title": "Array of image groups categorized by aspect ratio.\nStores image IDs in DB and enriched images on read."
+        }
+      },
+      "description": "Rom represents the core normalized ROM entity with relational IDs."
+    },
+    "romRomCreateOrUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ROM unique identifier.\nRequired for update and omitted for create."
+        },
+        "site": {
+          "type": "string",
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
+        },
+        "title": {
+          "type": "string",
+          "title": "ROM display title"
+        },
+        "description": {
+          "type": "string",
+          "title": "ROM description"
+        },
+        "consoleId": {
+          "type": "string",
+          "title": "Console system database ID"
+        },
+        "romExtension": {
+          "type": "string",
+          "title": "ROM extension (e.g. gba, snes, nds, psx)"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
+        "publisher": {
+          "type": "string",
+          "title": "Game publisher"
+        },
+        "releaseYear": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Release year"
+        },
+        "genre": {
+          "type": "string",
+          "title": "Game genre"
+        },
+        "region": {
+          "type": "string",
+          "title": "Release region"
+        },
+        "players": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Supported players"
+        },
+        "rating": {
+          "type": "string",
+          "title": "Content rating"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Category tags"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
+        },
+        "uploaderId": {
+          "type": "string",
+          "title": "Uploader user ID"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/imageAspectRatioImages"
+          },
+          "title": "Array of image groups categorized by aspect ratio"
+        },
+        "isPublish": {
+          "type": "boolean",
+          "title": "Publication status flag"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Active status flag"
+        }
+      },
+      "description": "RomCreateOrUpdateRequest is used for both creating and updating\na ROM.\n\nFor create:\n- id is omitted\n- ROM fields are provided\n\nFor update:\n- id is provided\n- only fields that need to be updated are provided."
+    },
+    "romRomResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique ROM identifier (UUID)"
+        },
+        "site": {
+          "type": "string",
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Display title of the ROM"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed description"
+        },
+        "console": {
+          "$ref": "#/definitions/romConsoleInfo",
+          "title": "Console system database ID"
+        },
+        "file": {
+          "$ref": "#/definitions/v1FileResponse",
+          "title": "Relational Foreign Key to storage file"
+        },
+        "publisher": {
+          "type": "string",
+          "title": "Game publisher"
+        },
+        "releaseYear": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Release year"
+        },
+        "genre": {
+          "type": "string",
+          "title": "Game genre"
+        },
+        "region": {
+          "type": "string",
+          "title": "Release region"
+        },
+        "players": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Supported players"
+        },
+        "rating": {
+          "type": "string",
+          "title": "Content rating"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Category tags"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
+        },
+        "status": {
+          "type": "string",
+          "title": "Lifecycle status (active, archived, draft)"
+        },
+        "uploaderId": {
+          "type": "string",
+          "title": "Uploader user ID"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "Created timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "title": "Updated timestamp"
+        },
+        "isPublish": {
+          "type": "boolean",
+          "title": "Publication status flag"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Active status flag (false indicates archived/deactivated)"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/imageAspectRatioImagesResponse"
+          },
+          "title": "Array of image groups categorized by aspect ratio.\nStores image IDs in DB and enriched images on read."
         }
       }
     }

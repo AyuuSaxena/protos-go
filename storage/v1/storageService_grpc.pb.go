@@ -39,13 +39,13 @@ type StorageServiceClient interface {
 	// CreateBucket creates a new storage bucket.
 	CreateBucket(ctx context.Context, in *CreateBucketRequest, opts ...grpc.CallOption) (*CreateBucketResponse, error)
 	// GetBucket retrieves bucket metadata.
-	GetBucket(ctx context.Context, in *GetBucketRequest, opts ...grpc.CallOption) (*BucketMetadata, error)
+	GetBucket(ctx context.Context, in *GetBucketRequest, opts ...grpc.CallOption) (*Bucket, error)
 	// ListBuckets lists all buckets for the authenticated user.
 	ListBuckets(ctx context.Context, in *ListBucketsRequest, opts ...grpc.CallOption) (*ListBucketsResponse, error)
 	// DeleteBucket deletes a bucket and its attached metadata.
 	DeleteBucket(ctx context.Context, in *DeleteBucketRequest, opts ...grpc.CallOption) (*DeleteBucketResponse, error)
 	// GetFile retrieves metadata for a single stored file.
-	GetFile(ctx context.Context, in *GetFileRequest, opts ...grpc.CallOption) (*FileMetadata, error)
+	GetFile(ctx context.Context, in *GetFileRequest, opts ...grpc.CallOption) (*File, error)
 	// ListFiles lists files in a bucket with optional directory filtering and search.
 	ListFiles(ctx context.Context, in *ListFilesRequest, opts ...grpc.CallOption) (*ListFilesResponse, error)
 	// DeleteFile removes a file from a bucket.
@@ -74,9 +74,9 @@ func (c *storageServiceClient) CreateBucket(ctx context.Context, in *CreateBucke
 	return out, nil
 }
 
-func (c *storageServiceClient) GetBucket(ctx context.Context, in *GetBucketRequest, opts ...grpc.CallOption) (*BucketMetadata, error) {
+func (c *storageServiceClient) GetBucket(ctx context.Context, in *GetBucketRequest, opts ...grpc.CallOption) (*Bucket, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BucketMetadata)
+	out := new(Bucket)
 	err := c.cc.Invoke(ctx, StorageService_GetBucket_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -104,9 +104,9 @@ func (c *storageServiceClient) DeleteBucket(ctx context.Context, in *DeleteBucke
 	return out, nil
 }
 
-func (c *storageServiceClient) GetFile(ctx context.Context, in *GetFileRequest, opts ...grpc.CallOption) (*FileMetadata, error) {
+func (c *storageServiceClient) GetFile(ctx context.Context, in *GetFileRequest, opts ...grpc.CallOption) (*File, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(FileMetadata)
+	out := new(File)
 	err := c.cc.Invoke(ctx, StorageService_GetFile_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -175,13 +175,13 @@ type StorageServiceServer interface {
 	// CreateBucket creates a new storage bucket.
 	CreateBucket(context.Context, *CreateBucketRequest) (*CreateBucketResponse, error)
 	// GetBucket retrieves bucket metadata.
-	GetBucket(context.Context, *GetBucketRequest) (*BucketMetadata, error)
+	GetBucket(context.Context, *GetBucketRequest) (*Bucket, error)
 	// ListBuckets lists all buckets for the authenticated user.
 	ListBuckets(context.Context, *ListBucketsRequest) (*ListBucketsResponse, error)
 	// DeleteBucket deletes a bucket and its attached metadata.
 	DeleteBucket(context.Context, *DeleteBucketRequest) (*DeleteBucketResponse, error)
 	// GetFile retrieves metadata for a single stored file.
-	GetFile(context.Context, *GetFileRequest) (*FileMetadata, error)
+	GetFile(context.Context, *GetFileRequest) (*File, error)
 	// ListFiles lists files in a bucket with optional directory filtering and search.
 	ListFiles(context.Context, *ListFilesRequest) (*ListFilesResponse, error)
 	// DeleteFile removes a file from a bucket.
@@ -203,7 +203,7 @@ type UnimplementedStorageServiceServer struct{}
 func (UnimplementedStorageServiceServer) CreateBucket(context.Context, *CreateBucketRequest) (*CreateBucketResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateBucket not implemented")
 }
-func (UnimplementedStorageServiceServer) GetBucket(context.Context, *GetBucketRequest) (*BucketMetadata, error) {
+func (UnimplementedStorageServiceServer) GetBucket(context.Context, *GetBucketRequest) (*Bucket, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetBucket not implemented")
 }
 func (UnimplementedStorageServiceServer) ListBuckets(context.Context, *ListBucketsRequest) (*ListBucketsResponse, error) {
@@ -212,7 +212,7 @@ func (UnimplementedStorageServiceServer) ListBuckets(context.Context, *ListBucke
 func (UnimplementedStorageServiceServer) DeleteBucket(context.Context, *DeleteBucketRequest) (*DeleteBucketResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteBucket not implemented")
 }
-func (UnimplementedStorageServiceServer) GetFile(context.Context, *GetFileRequest) (*FileMetadata, error) {
+func (UnimplementedStorageServiceServer) GetFile(context.Context, *GetFileRequest) (*File, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetFile not implemented")
 }
 func (UnimplementedStorageServiceServer) ListFiles(context.Context, *ListFilesRequest) (*ListFilesResponse, error) {

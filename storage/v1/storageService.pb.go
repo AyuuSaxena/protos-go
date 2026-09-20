@@ -26,13 +26,13 @@ var File_storage_v1_storageService_proto protoreflect.FileDescriptor
 const file_storage_v1_storageService_proto_rawDesc = "" +
 	"\n" +
 	"\x1fstorage/v1/storageService.proto\x12\n" +
-	"storage.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x18storage/v1/storage.proto2\xc9\v\n" +
+	"storage.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x18storage/v1/storage.proto2\xb9\v\n" +
 	"\x0eStorageService\x12\xa3\x01\n" +
-	"\fCreateBucket\x12\x1f.storage.v1.CreateBucketRequest\x1a .storage.v1.CreateBucketResponse\"P\x82\xd3\xe4\x93\x02J:\x01*Z,:\x01*\"'/storage.v1.StorageService/CreateBucket\"\x17/api/v1/storage/buckets\x12\x93\x01\n" +
-	"\tGetBucket\x12\x1c.storage.v1.GetBucketRequest\x1a\x1a.storage.v1.BucketMetadata\"L\x82\xd3\xe4\x93\x02FZ&\x12$/storage.v1.StorageService/GetBucket\x12\x1c/api/v1/storage/buckets/{id}\x12\x99\x01\n" +
+	"\fCreateBucket\x12\x1f.storage.v1.CreateBucketRequest\x1a .storage.v1.CreateBucketResponse\"P\x82\xd3\xe4\x93\x02J:\x01*Z,:\x01*\"'/storage.v1.StorageService/CreateBucket\"\x17/api/v1/storage/buckets\x12\x8b\x01\n" +
+	"\tGetBucket\x12\x1c.storage.v1.GetBucketRequest\x1a\x12.storage.v1.Bucket\"L\x82\xd3\xe4\x93\x02FZ&\x12$/storage.v1.StorageService/GetBucket\x12\x1c/api/v1/storage/buckets/{id}\x12\x99\x01\n" +
 	"\vListBuckets\x12\x1e.storage.v1.ListBucketsRequest\x1a\x1f.storage.v1.ListBucketsResponse\"I\x82\xd3\xe4\x93\x02CZ(\x12&/storage.v1.StorageService/ListBuckets\x12\x17/api/v1/storage/buckets\x12\xa2\x01\n" +
-	"\fDeleteBucket\x12\x1f.storage.v1.DeleteBucketRequest\x1a .storage.v1.DeleteBucketResponse\"O\x82\xd3\xe4\x93\x02IZ)*'/storage.v1.StorageService/DeleteBucket*\x1c/api/v1/storage/buckets/{id}\x12\xa2\x01\n" +
-	"\aGetFile\x12\x1a.storage.v1.GetFileRequest\x1a\x18.storage.v1.FileMetadata\"a\x82\xd3\xe4\x93\x02[Z$\x12\"/storage.v1.StorageService/GetFile\x123/api/v1/storage/buckets/{bucket_id}/files/{file_id}\x12\xa3\x01\n" +
+	"\fDeleteBucket\x12\x1f.storage.v1.DeleteBucketRequest\x1a .storage.v1.DeleteBucketResponse\"O\x82\xd3\xe4\x93\x02IZ)*'/storage.v1.StorageService/DeleteBucket*\x1c/api/v1/storage/buckets/{id}\x12\x9a\x01\n" +
+	"\aGetFile\x12\x1a.storage.v1.GetFileRequest\x1a\x10.storage.v1.File\"a\x82\xd3\xe4\x93\x02[Z$\x12\"/storage.v1.StorageService/GetFile\x123/api/v1/storage/buckets/{bucket_id}/files/{file_id}\x12\xa3\x01\n" +
 	"\tListFiles\x12\x1c.storage.v1.ListFilesRequest\x1a\x1d.storage.v1.ListFilesResponse\"Y\x82\xd3\xe4\x93\x02SZ&\x12$/storage.v1.StorageService/ListFiles\x12)/api/v1/storage/buckets/{bucket_id}/files\x12\xb1\x01\n" +
 	"\n" +
 	"DeleteFile\x12\x1d.storage.v1.DeleteFileRequest\x1a\x1e.storage.v1.DeleteFileResponse\"d\x82\xd3\xe4\x93\x02^Z'*%/storage.v1.StorageService/DeleteFile*3/api/v1/storage/buckets/{bucket_id}/files/{file_id}\x12\x7f\n" +
@@ -51,10 +51,10 @@ var file_storage_v1_storageService_proto_goTypes = []any{
 	(*UploadFileRequest)(nil),    // 7: storage.v1.UploadFileRequest
 	(*DownloadFileRequest)(nil),  // 8: storage.v1.DownloadFileRequest
 	(*CreateBucketResponse)(nil), // 9: storage.v1.CreateBucketResponse
-	(*BucketMetadata)(nil),       // 10: storage.v1.BucketMetadata
+	(*Bucket)(nil),               // 10: storage.v1.Bucket
 	(*ListBucketsResponse)(nil),  // 11: storage.v1.ListBucketsResponse
 	(*DeleteBucketResponse)(nil), // 12: storage.v1.DeleteBucketResponse
-	(*FileMetadata)(nil),         // 13: storage.v1.FileMetadata
+	(*File)(nil),                 // 13: storage.v1.File
 	(*ListFilesResponse)(nil),    // 14: storage.v1.ListFilesResponse
 	(*DeleteFileResponse)(nil),   // 15: storage.v1.DeleteFileResponse
 	(*UploadFileResponse)(nil),   // 16: storage.v1.UploadFileResponse
@@ -71,10 +71,10 @@ var file_storage_v1_storageService_proto_depIdxs = []int32{
 	7,  // 7: storage.v1.StorageService.UploadFile:input_type -> storage.v1.UploadFileRequest
 	8,  // 8: storage.v1.StorageService.DownloadFile:input_type -> storage.v1.DownloadFileRequest
 	9,  // 9: storage.v1.StorageService.CreateBucket:output_type -> storage.v1.CreateBucketResponse
-	10, // 10: storage.v1.StorageService.GetBucket:output_type -> storage.v1.BucketMetadata
+	10, // 10: storage.v1.StorageService.GetBucket:output_type -> storage.v1.Bucket
 	11, // 11: storage.v1.StorageService.ListBuckets:output_type -> storage.v1.ListBucketsResponse
 	12, // 12: storage.v1.StorageService.DeleteBucket:output_type -> storage.v1.DeleteBucketResponse
-	13, // 13: storage.v1.StorageService.GetFile:output_type -> storage.v1.FileMetadata
+	13, // 13: storage.v1.StorageService.GetFile:output_type -> storage.v1.File
 	14, // 14: storage.v1.StorageService.ListFiles:output_type -> storage.v1.ListFilesResponse
 	15, // 15: storage.v1.StorageService.DeleteFile:output_type -> storage.v1.DeleteFileResponse
 	16, // 16: storage.v1.StorageService.UploadFile:output_type -> storage.v1.UploadFileResponse

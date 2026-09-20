@@ -7,7 +7,7 @@
 package image
 
 import (
-	v1 "github.com/AyuuSaxena/protos-go/common/v1"
+	v1 "github.com/AyuuSaxena/protos-go/storage/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -108,8 +108,60 @@ func (AspectRatio) EnumDescriptor() ([]byte, []int) {
 	return file_content_v1_image_image_proto_rawDescGZIP(), []int{0}
 }
 
-// ImageMetadata represents the core normalized Image entity with relational IDs.
-type ImageMetadata struct {
+type ImageCategory int32
+
+const (
+	ImageCategory_IMAGE_CATEGORY_UNSPECIFIED ImageCategory = 0
+	ImageCategory_IMAGE_CATEGORY_COVER       ImageCategory = 1
+	ImageCategory_IMAGE_CATEGORY_SCREENSHOT  ImageCategory = 2
+	ImageCategory_IMAGE_CATEGORY_WALLPAPER   ImageCategory = 3
+)
+
+// Enum value maps for ImageCategory.
+var (
+	ImageCategory_name = map[int32]string{
+		0: "IMAGE_CATEGORY_UNSPECIFIED",
+		1: "IMAGE_CATEGORY_COVER",
+		2: "IMAGE_CATEGORY_SCREENSHOT",
+		3: "IMAGE_CATEGORY_WALLPAPER",
+	}
+	ImageCategory_value = map[string]int32{
+		"IMAGE_CATEGORY_UNSPECIFIED": 0,
+		"IMAGE_CATEGORY_COVER":       1,
+		"IMAGE_CATEGORY_SCREENSHOT":  2,
+		"IMAGE_CATEGORY_WALLPAPER":   3,
+	}
+)
+
+func (x ImageCategory) Enum() *ImageCategory {
+	p := new(ImageCategory)
+	*p = x
+	return p
+}
+
+func (x ImageCategory) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ImageCategory) Descriptor() protoreflect.EnumDescriptor {
+	return file_content_v1_image_image_proto_enumTypes[1].Descriptor()
+}
+
+func (ImageCategory) Type() protoreflect.EnumType {
+	return &file_content_v1_image_image_proto_enumTypes[1]
+}
+
+func (x ImageCategory) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ImageCategory.Descriptor instead.
+func (ImageCategory) EnumDescriptor() ([]byte, []int) {
+	return file_content_v1_image_image_proto_rawDescGZIP(), []int{1}
+}
+
+// Image represents the core normalized Image entity with relational IDs.
+type Image struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// MongoDB internal record identifier (_id)
 	// @gotags: `json:"mongoId,omitempty" bson:"_id,omitempty"`
@@ -130,61 +182,61 @@ type ImageMetadata struct {
 	// Relational Foreign Key to storage file
 	// @gotags: `json:"fileId,omitempty" bson:"fileId,omitempty"`
 	FileId string `protobuf:"bytes,7,opt,name=file_id,json=fileId,proto3" json:"fileId,omitempty" bson:"fileId,omitempty"`
-	// Domain & Visual Metadata
-	// @gotags: `json:"altText,omitempty" bson:"altText,omitempty"`
-	AltText string `protobuf:"bytes,8,opt,name=alt_text,json=altText,proto3" json:"altText,omitempty" bson:"altText,omitempty"`
+	// Image width
 	// @gotags: `json:"width,omitempty" bson:"width,omitempty"`
 	Width int32 `protobuf:"varint,9,opt,name=width,proto3" json:"width,omitempty" bson:"width,omitempty"`
+	// Image height
 	// @gotags: `json:"height,omitempty" bson:"height,omitempty"`
 	Height int32 `protobuf:"varint,10,opt,name=height,proto3" json:"height,omitempty" bson:"height,omitempty"`
 	// Aspect ratio classification
 	// @gotags: `json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
 	AspectRatio AspectRatio `protobuf:"varint,11,opt,name=aspect_ratio,json=aspectRatio,proto3,enum=content.v1.image.AspectRatio" json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
+	// Image format
 	// @gotags: `json:"format,omitempty" bson:"format,omitempty"`
 	Format string `protobuf:"bytes,12,opt,name=format,proto3" json:"format,omitempty" bson:"format,omitempty"`
+	// Image category
 	// @gotags: `json:"category,omitempty" bson:"category,omitempty"`
-	Category string   `protobuf:"bytes,13,opt,name=category,proto3" json:"category,omitempty" bson:"category,omitempty"`
-	Tags     []string `protobuf:"bytes,14,rep,name=tags,proto3" json:"tags,omitempty"`
+	Category string `protobuf:"bytes,13,opt,name=category,proto3" json:"category,omitempty" bson:"category,omitempty"`
+	// Image tags
+	Tags []string `protobuf:"bytes,14,rep,name=tags,proto3" json:"tags,omitempty"`
+	// Public visibility flag
 	// @gotags: `json:"isPublic,omitempty" bson:"isPublic,omitempty"`
 	IsPublic bool `protobuf:"varint,15,opt,name=is_public,json=isPublic,proto3" json:"isPublic,omitempty" bson:"isPublic,omitempty"`
 	// Lifecycle status (active, archived, draft)
 	Status string `protobuf:"bytes,16,opt,name=status,proto3" json:"status,omitempty"`
+	// Uploader user ID
 	// @gotags: `json:"uploaderId,omitempty" bson:"uploaderId,omitempty"`
 	UploaderId string `protobuf:"bytes,17,opt,name=uploader_id,json=uploaderId,proto3" json:"uploaderId,omitempty" bson:"uploaderId,omitempty"`
-	// @gotags: `json:"uploaderUsername,omitempty" bson:"uploaderUsername,omitempty"`
-	UploaderUsername string `protobuf:"bytes,18,opt,name=uploader_username,json=uploaderUsername,proto3" json:"uploaderUsername,omitempty" bson:"uploaderUsername,omitempty"`
+	// Created timestamp
 	// @gotags: `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
 	CreatedAt string `protobuf:"bytes,19,opt,name=created_at,json=createdAt,proto3" json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	// Updated timestamp
 	// @gotags: `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
 	UpdatedAt string `protobuf:"bytes,20,opt,name=updated_at,json=updatedAt,proto3" json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
-	// Enriched Relations (populated on read, not persisted in DB)
-	// Full file details resolved from fileId
-	// @gotags: `json:"fileMetadata,omitempty" bson:"fileMetadata,omitempty"`
-	FileMetadata *v1.FileMetadata `protobuf:"bytes,21,opt,name=file_metadata,json=fileMetadata,proto3" json:"fileMetadata,omitempty" bson:"fileMetadata,omitempty"`
 	// Publication status flag
 	// @gotags: `json:"isPublish" bson:"isPublish"`
 	IsPublish bool `protobuf:"varint,22,opt,name=is_publish,json=isPublish,proto3" json:"isPublish" bson:"isPublish"`
-	// Active status flag (false indicates archived/deactivated)
+	// Active status flag
 	// @gotags: `json:"isActive" bson:"isActive"`
 	IsActive      bool `protobuf:"varint,23,opt,name=is_active,json=isActive,proto3" json:"isActive" bson:"isActive"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ImageMetadata) Reset() {
-	*x = ImageMetadata{}
+func (x *Image) Reset() {
+	*x = Image{}
 	mi := &file_content_v1_image_image_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ImageMetadata) String() string {
+func (x *Image) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ImageMetadata) ProtoMessage() {}
+func (*Image) ProtoMessage() {}
 
-func (x *ImageMetadata) ProtoReflect() protoreflect.Message {
+func (x *Image) ProtoReflect() protoreflect.Message {
 	mi := &file_content_v1_image_image_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -196,166 +248,145 @@ func (x *ImageMetadata) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ImageMetadata.ProtoReflect.Descriptor instead.
-func (*ImageMetadata) Descriptor() ([]byte, []int) {
+// Deprecated: Use Image.ProtoReflect.Descriptor instead.
+func (*Image) Descriptor() ([]byte, []int) {
 	return file_content_v1_image_image_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ImageMetadata) GetMongoId() string {
+func (x *Image) GetMongoId() string {
 	if x != nil {
 		return x.MongoId
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetId() string {
+func (x *Image) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetSite() string {
+func (x *Image) GetSite() string {
 	if x != nil {
 		return x.Site
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetTitle() string {
+func (x *Image) GetTitle() string {
 	if x != nil {
 		return x.Title
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetPermalink() string {
+func (x *Image) GetPermalink() string {
 	if x != nil {
 		return x.Permalink
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetDescription() string {
+func (x *Image) GetDescription() string {
 	if x != nil {
 		return x.Description
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetFileId() string {
+func (x *Image) GetFileId() string {
 	if x != nil {
 		return x.FileId
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetAltText() string {
-	if x != nil {
-		return x.AltText
-	}
-	return ""
-}
-
-func (x *ImageMetadata) GetWidth() int32 {
+func (x *Image) GetWidth() int32 {
 	if x != nil {
 		return x.Width
 	}
 	return 0
 }
 
-func (x *ImageMetadata) GetHeight() int32 {
+func (x *Image) GetHeight() int32 {
 	if x != nil {
 		return x.Height
 	}
 	return 0
 }
 
-func (x *ImageMetadata) GetAspectRatio() AspectRatio {
+func (x *Image) GetAspectRatio() AspectRatio {
 	if x != nil {
 		return x.AspectRatio
 	}
 	return AspectRatio_ASPECT_RATIO_UNSPECIFIED
 }
 
-func (x *ImageMetadata) GetFormat() string {
+func (x *Image) GetFormat() string {
 	if x != nil {
 		return x.Format
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetCategory() string {
+func (x *Image) GetCategory() string {
 	if x != nil {
 		return x.Category
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetTags() []string {
+func (x *Image) GetTags() []string {
 	if x != nil {
 		return x.Tags
 	}
 	return nil
 }
 
-func (x *ImageMetadata) GetIsPublic() bool {
+func (x *Image) GetIsPublic() bool {
 	if x != nil {
 		return x.IsPublic
 	}
 	return false
 }
 
-func (x *ImageMetadata) GetStatus() string {
+func (x *Image) GetStatus() string {
 	if x != nil {
 		return x.Status
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetUploaderId() string {
+func (x *Image) GetUploaderId() string {
 	if x != nil {
 		return x.UploaderId
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetUploaderUsername() string {
-	if x != nil {
-		return x.UploaderUsername
-	}
-	return ""
-}
-
-func (x *ImageMetadata) GetCreatedAt() string {
+func (x *Image) GetCreatedAt() string {
 	if x != nil {
 		return x.CreatedAt
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetUpdatedAt() string {
+func (x *Image) GetUpdatedAt() string {
 	if x != nil {
 		return x.UpdatedAt
 	}
 	return ""
 }
 
-func (x *ImageMetadata) GetFileMetadata() *v1.FileMetadata {
-	if x != nil {
-		return x.FileMetadata
-	}
-	return nil
-}
-
-func (x *ImageMetadata) GetIsPublish() bool {
+func (x *Image) GetIsPublish() bool {
 	if x != nil {
 		return x.IsPublish
 	}
 	return false
 }
 
-func (x *ImageMetadata) GetIsActive() bool {
+func (x *Image) GetIsActive() bool {
 	if x != nil {
 		return x.IsActive
 	}
@@ -366,14 +397,9 @@ type ImageGetRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Image unique identifier
 	Id *string `protobuf:"bytes,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
-	// Image name to match
-	Name *string `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	// Optional site identifier
 	// @gotags: `form:"site" json:"site,omitempty"`
-	Site *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
-	// Optional permalink to match
-	// @gotags: `form:"permalink" json:"permalink,omitempty"`
-	Permalink     *string `protobuf:"bytes,5,opt,name=permalink,proto3,oneof" json:"permalink,omitempty" form:"permalink"`
+	Site          *string `protobuf:"bytes,4,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -415,23 +441,9 @@ func (x *ImageGetRequest) GetId() string {
 	return ""
 }
 
-func (x *ImageGetRequest) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
 func (x *ImageGetRequest) GetSite() string {
 	if x != nil && x.Site != nil {
 		return *x.Site
-	}
-	return ""
-}
-
-func (x *ImageGetRequest) GetPermalink() string {
-	if x != nil && x.Permalink != nil {
-		return *x.Permalink
 	}
 	return ""
 }
@@ -762,10 +774,709 @@ func (x *ImageSearchRequest) GetSite() string {
 	return ""
 }
 
+// ImageCreateOrUpdateRequest is used for both creating and updating
+// an Image.
+//
+// For create:
+// - id is omitted
+// - creation fields are provided
+//
+// For update:
+// - id is provided
+// - only fields that need to be updated are provided.
+type ImageCreateOrUpdateRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Image unique identifier.
+	// Required for update and omitted for create.
+	Id *string `protobuf:"bytes,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
+	// Site identifier
+	// @gotags: `json:"site,omitempty" bson:"site,omitempty"`
+	Site *string `protobuf:"bytes,2,opt,name=site,proto3,oneof" json:"site,omitempty" bson:"site,omitempty"`
+	// URL-friendly permalink
+	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty"`
+	Permalink *string `protobuf:"bytes,3,opt,name=permalink,proto3,oneof" json:"permalink,omitempty" bson:"permalink,omitempty"`
+	// Image title
+	Title *string `protobuf:"bytes,4,opt,name=title,proto3,oneof" json:"title,omitempty"`
+	// Image description
+	Description *string `protobuf:"bytes,5,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	// MIME type
+	// @gotags: `json:"mimeType,omitempty" bson:"mimeType,omitempty"`
+	MimeType *string `protobuf:"bytes,6,opt,name=mime_type,json=mimeType,proto3,oneof" json:"mimeType,omitempty" bson:"mimeType,omitempty"`
+	// File size in bytes
+	// @gotags: `json:"sizeBytes,omitempty" bson:"sizeBytes,omitempty"`
+	SizeBytes *int64 `protobuf:"varint,7,opt,name=size_bytes,json=sizeBytes,proto3,oneof" json:"sizeBytes,omitempty" bson:"sizeBytes,omitempty"`
+	// Category
+	Category ImageCategory `protobuf:"varint,8,opt,name=category,proto3,enum=content.v1.image.ImageCategory" json:"category,omitempty"`
+	// Category tags
+	Tags []string `protobuf:"bytes,9,rep,name=tags,proto3" json:"tags,omitempty"`
+	// Uploader user ID
+	// @gotags: `json:"uploaderId,omitempty" bson:"uploaderId,omitempty"`
+	UploaderId *string `protobuf:"bytes,10,opt,name=uploader_id,json=uploaderId,proto3,oneof" json:"uploaderId,omitempty" bson:"uploaderId,omitempty"`
+	// Aspect ratio classification
+	// @gotags: `json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
+	AspectRatio *AspectRatio `protobuf:"varint,11,opt,name=aspect_ratio,json=aspectRatio,proto3,enum=content.v1.image.AspectRatio,oneof" json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
+	// Public visibility flag
+	// @gotags: `json:"isPublic,omitempty" bson:"isPublic,omitempty"`
+	IsPublic *bool `protobuf:"varint,12,opt,name=is_public,json=isPublic,proto3,oneof" json:"isPublic,omitempty" bson:"isPublic,omitempty"`
+	// Publication status flag
+	// @gotags: `json:"isPublish,omitempty" bson:"isPublish,omitempty"`
+	IsPublish *bool `protobuf:"varint,13,opt,name=is_publish,json=isPublish,proto3,oneof" json:"isPublish,omitempty" bson:"isPublish,omitempty"`
+	// Active status flag
+	// @gotags: `json:"isActive,omitempty" bson:"isActive,omitempty"`
+	IsActive *bool `protobuf:"varint,14,opt,name=is_active,json=isActive,proto3,oneof" json:"isActive,omitempty" bson:"isActive,omitempty"`
+	// Lifecycle status
+	// @gotags: `json:"status,omitempty" bson:"status,omitempty"`
+	Status *string `protobuf:"bytes,15,opt,name=status,proto3,oneof" json:"status,omitempty" bson:"status,omitempty"`
+	// Alt text
+	// @gotags: `json:"altText,omitempty" bson:"altText,omitempty"`
+	AltText       *string `protobuf:"bytes,16,opt,name=alt_text,json=altText,proto3,oneof" json:"altText,omitempty" bson:"altText,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImageCreateOrUpdateRequest) Reset() {
+	*x = ImageCreateOrUpdateRequest{}
+	mi := &file_content_v1_image_image_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImageCreateOrUpdateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImageCreateOrUpdateRequest) ProtoMessage() {}
+
+func (x *ImageCreateOrUpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_content_v1_image_image_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImageCreateOrUpdateRequest.ProtoReflect.Descriptor instead.
+func (*ImageCreateOrUpdateRequest) Descriptor() ([]byte, []int) {
+	return file_content_v1_image_image_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ImageCreateOrUpdateRequest) GetId() string {
+	if x != nil && x.Id != nil {
+		return *x.Id
+	}
+	return ""
+}
+
+func (x *ImageCreateOrUpdateRequest) GetSite() string {
+	if x != nil && x.Site != nil {
+		return *x.Site
+	}
+	return ""
+}
+
+func (x *ImageCreateOrUpdateRequest) GetPermalink() string {
+	if x != nil && x.Permalink != nil {
+		return *x.Permalink
+	}
+	return ""
+}
+
+func (x *ImageCreateOrUpdateRequest) GetTitle() string {
+	if x != nil && x.Title != nil {
+		return *x.Title
+	}
+	return ""
+}
+
+func (x *ImageCreateOrUpdateRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *ImageCreateOrUpdateRequest) GetMimeType() string {
+	if x != nil && x.MimeType != nil {
+		return *x.MimeType
+	}
+	return ""
+}
+
+func (x *ImageCreateOrUpdateRequest) GetSizeBytes() int64 {
+	if x != nil && x.SizeBytes != nil {
+		return *x.SizeBytes
+	}
+	return 0
+}
+
+func (x *ImageCreateOrUpdateRequest) GetCategory() ImageCategory {
+	if x != nil {
+		return x.Category
+	}
+	return ImageCategory_IMAGE_CATEGORY_UNSPECIFIED
+}
+
+func (x *ImageCreateOrUpdateRequest) GetTags() []string {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
+func (x *ImageCreateOrUpdateRequest) GetUploaderId() string {
+	if x != nil && x.UploaderId != nil {
+		return *x.UploaderId
+	}
+	return ""
+}
+
+func (x *ImageCreateOrUpdateRequest) GetAspectRatio() AspectRatio {
+	if x != nil && x.AspectRatio != nil {
+		return *x.AspectRatio
+	}
+	return AspectRatio_ASPECT_RATIO_UNSPECIFIED
+}
+
+func (x *ImageCreateOrUpdateRequest) GetIsPublic() bool {
+	if x != nil && x.IsPublic != nil {
+		return *x.IsPublic
+	}
+	return false
+}
+
+func (x *ImageCreateOrUpdateRequest) GetIsPublish() bool {
+	if x != nil && x.IsPublish != nil {
+		return *x.IsPublish
+	}
+	return false
+}
+
+func (x *ImageCreateOrUpdateRequest) GetIsActive() bool {
+	if x != nil && x.IsActive != nil {
+		return *x.IsActive
+	}
+	return false
+}
+
+func (x *ImageCreateOrUpdateRequest) GetStatus() string {
+	if x != nil && x.Status != nil {
+		return *x.Status
+	}
+	return ""
+}
+
+func (x *ImageCreateOrUpdateRequest) GetAltText() string {
+	if x != nil && x.AltText != nil {
+		return *x.AltText
+	}
+	return ""
+}
+
+type ImageUploadRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to RequestData:
+	//
+	//	*ImageUploadRequest_FileInfo
+	//	*ImageUploadRequest_ChunkData
+	RequestData   isImageUploadRequest_RequestData `protobuf_oneof:"request_data"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImageUploadRequest) Reset() {
+	*x = ImageUploadRequest{}
+	mi := &file_content_v1_image_image_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImageUploadRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImageUploadRequest) ProtoMessage() {}
+
+func (x *ImageUploadRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_content_v1_image_image_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImageUploadRequest.ProtoReflect.Descriptor instead.
+func (*ImageUploadRequest) Descriptor() ([]byte, []int) {
+	return file_content_v1_image_image_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ImageUploadRequest) GetRequestData() isImageUploadRequest_RequestData {
+	if x != nil {
+		return x.RequestData
+	}
+	return nil
+}
+
+func (x *ImageUploadRequest) GetFileInfo() *ImageCreateOrUpdateRequest {
+	if x != nil {
+		if x, ok := x.RequestData.(*ImageUploadRequest_FileInfo); ok {
+			return x.FileInfo
+		}
+	}
+	return nil
+}
+
+func (x *ImageUploadRequest) GetChunkData() []byte {
+	if x != nil {
+		if x, ok := x.RequestData.(*ImageUploadRequest_ChunkData); ok {
+			return x.ChunkData
+		}
+	}
+	return nil
+}
+
+type isImageUploadRequest_RequestData interface {
+	isImageUploadRequest_RequestData()
+}
+
+type ImageUploadRequest_FileInfo struct {
+	// Image metadata for initial chunk
+	// @gotags: `json:"fileInfo,omitempty" bson:"fileInfo,omitempty"`
+	FileInfo *ImageCreateOrUpdateRequest `protobuf:"bytes,1,opt,name=file_info,json=fileInfo,proto3,oneof" json:"fileInfo,omitempty" bson:"fileInfo,omitempty"`
+}
+
+type ImageUploadRequest_ChunkData struct {
+	// Binary chunk data
+	// @gotags: `json:"chunkData,omitempty" bson:"chunkData,omitempty"`
+	ChunkData []byte `protobuf:"bytes,2,opt,name=chunk_data,json=chunkData,proto3,oneof" json:"chunkData,omitempty" bson:"chunkData,omitempty"`
+}
+
+func (*ImageUploadRequest_FileInfo) isImageUploadRequest_RequestData() {}
+
+func (*ImageUploadRequest_ChunkData) isImageUploadRequest_RequestData() {}
+
+type ImageDeleteRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique Image identifier to delete
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Hard delete flag (permanently remove file from storage and database)
+	// @gotags: `json:"hardDelete,omitempty" bson:"hardDelete,omitempty"`
+	HardDelete bool `protobuf:"varint,2,opt,name=hard_delete,json=hardDelete,proto3" json:"hardDelete,omitempty" bson:"hardDelete,omitempty"`
+	// Optional site identifier
+	// @gotags: `form:"site" json:"site,omitempty"`
+	Site          *string `protobuf:"bytes,3,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImageDeleteRequest) Reset() {
+	*x = ImageDeleteRequest{}
+	mi := &file_content_v1_image_image_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImageDeleteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImageDeleteRequest) ProtoMessage() {}
+
+func (x *ImageDeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_content_v1_image_image_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImageDeleteRequest.ProtoReflect.Descriptor instead.
+func (*ImageDeleteRequest) Descriptor() ([]byte, []int) {
+	return file_content_v1_image_image_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ImageDeleteRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ImageDeleteRequest) GetHardDelete() bool {
+	if x != nil {
+		return x.HardDelete
+	}
+	return false
+}
+
+func (x *ImageDeleteRequest) GetSite() string {
+	if x != nil && x.Site != nil {
+		return *x.Site
+	}
+	return ""
+}
+
+type ImageShareRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique Image identifier to share
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Pre-signed download URL expiration duration in seconds
+	// @gotags: `json:"expiresInSec,omitempty" bson:"expiresInSec,omitempty"`
+	ExpiresInSec int32 `protobuf:"varint,2,opt,name=expires_in_sec,json=expiresInSec,proto3" json:"expiresInSec,omitempty" bson:"expiresInSec,omitempty"`
+	// Optional site identifier
+	// @gotags: `form:"site" json:"site,omitempty"`
+	Site          *string `protobuf:"bytes,3,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImageShareRequest) Reset() {
+	*x = ImageShareRequest{}
+	mi := &file_content_v1_image_image_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImageShareRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImageShareRequest) ProtoMessage() {}
+
+func (x *ImageShareRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_content_v1_image_image_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImageShareRequest.ProtoReflect.Descriptor instead.
+func (*ImageShareRequest) Descriptor() ([]byte, []int) {
+	return file_content_v1_image_image_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ImageShareRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ImageShareRequest) GetExpiresInSec() int32 {
+	if x != nil {
+		return x.ExpiresInSec
+	}
+	return 0
+}
+
+func (x *ImageShareRequest) GetSite() string {
+	if x != nil && x.Site != nil {
+		return *x.Site
+	}
+	return ""
+}
+
+// AspectRatioImages groups image IDs by aspect ratio format.
+//
+// Reusable across all content entities
+// (ROMs, games, articles, videos, etc.)
+type AspectRatioImages struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Aspect ratio enum classification
+	// @gotags: `json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
+	AspectRatio AspectRatio `protobuf:"varint,1,opt,name=aspect_ratio,json=aspectRatio,proto3,enum=content.v1.image.AspectRatio" json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
+	// Array of image UUID foreign keys
+	// @gotags: `json:"imageIds,omitempty" bson:"imageIds,omitempty"`
+	ImageIds      []string `protobuf:"bytes,2,rep,name=image_ids,json=imageIds,proto3" json:"imageIds,omitempty" bson:"imageIds,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AspectRatioImages) Reset() {
+	*x = AspectRatioImages{}
+	mi := &file_content_v1_image_image_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AspectRatioImages) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AspectRatioImages) ProtoMessage() {}
+
+func (x *AspectRatioImages) ProtoReflect() protoreflect.Message {
+	mi := &file_content_v1_image_image_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AspectRatioImages.ProtoReflect.Descriptor instead.
+func (*AspectRatioImages) Descriptor() ([]byte, []int) {
+	return file_content_v1_image_image_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *AspectRatioImages) GetAspectRatio() AspectRatio {
+	if x != nil {
+		return x.AspectRatio
+	}
+	return AspectRatio_ASPECT_RATIO_UNSPECIFIED
+}
+
+func (x *AspectRatioImages) GetImageIds() []string {
+	if x != nil {
+		return x.ImageIds
+	}
+	return nil
+}
+
+type ImageResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// @gotags: `json:"id,omitempty" bson:"id,omitempty"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" bson:"id,omitempty"`
+	// Dynamic site/tenant key (e.g. retrogames)
+	// @gotags: `json:"site,omitempty" bson:"site,omitempty"`
+	Site string `protobuf:"bytes,2,opt,name=site,proto3" json:"site,omitempty" bson:"site,omitempty"`
+	// Display title of the Image
+	Title string `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
+	// URL-friendly permalink
+	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty"`
+	Permalink string `protobuf:"bytes,4,opt,name=permalink,proto3" json:"permalink,omitempty" bson:"permalink,omitempty"`
+	// Detailed description
+	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+	// Relational Foreign Key to storage file
+	// @gotags: `json:"file,omitempty" bson:"file,omitempty"`
+	File *v1.FileResponse `protobuf:"bytes,6,opt,name=file,proto3" json:"file,omitempty" bson:"file,omitempty"`
+	// Image width
+	// @gotags: `json:"width,omitempty" bson:"width,omitempty"`
+	Width int32 `protobuf:"varint,7,opt,name=width,proto3" json:"width,omitempty" bson:"width,omitempty"`
+	// Image height
+	// @gotags: `json:"height,omitempty" bson:"height,omitempty"`
+	Height int32 `protobuf:"varint,8,opt,name=height,proto3" json:"height,omitempty" bson:"height,omitempty"`
+	// Aspect ratio classification
+	// @gotags: `json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
+	AspectRatio AspectRatio `protobuf:"varint,9,opt,name=aspect_ratio,json=aspectRatio,proto3,enum=content.v1.image.AspectRatio" json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
+	// Image format
+	// @gotags: `json:"format,omitempty" bson:"format,omitempty"`
+	Format string `protobuf:"bytes,10,opt,name=format,proto3" json:"format,omitempty" bson:"format,omitempty"`
+	// Image category
+	// @gotags: `json:"category,omitempty" bson:"category,omitempty"`
+	Category string `protobuf:"bytes,11,opt,name=category,proto3" json:"category,omitempty" bson:"category,omitempty"`
+	// Image tags
+	Tags []string `protobuf:"bytes,12,rep,name=tags,proto3" json:"tags,omitempty"`
+	// Public visibility flag
+	// @gotags: `json:"isPublic,omitempty" bson:"isPublic,omitempty"`
+	IsPublic bool `protobuf:"varint,13,opt,name=is_public,json=isPublic,proto3" json:"isPublic,omitempty" bson:"isPublic,omitempty"`
+	// Lifecycle status (active, archived, draft)
+	Status string `protobuf:"bytes,14,opt,name=status,proto3" json:"status,omitempty"`
+	// Uploaded by user
+	// @gotags: `json:"uploadedBy,omitempty" bson:"uploadedBy,omitempty"`
+	UploadedBy string `protobuf:"bytes,15,opt,name=uploaded_by,json=uploadedBy,proto3" json:"uploadedBy,omitempty" bson:"uploadedBy,omitempty"`
+	// Created timestamp
+	// @gotags: `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	CreatedAt string `protobuf:"bytes,16,opt,name=created_at,json=createdAt,proto3" json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	// Updated timestamp
+	// @gotags: `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+	UpdatedAt string `protobuf:"bytes,17,opt,name=updated_at,json=updatedAt,proto3" json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+	// Publication status flag
+	// @gotags: `json:"isPublish" bson:"isPublish"`
+	IsPublish bool `protobuf:"varint,18,opt,name=is_publish,json=isPublish,proto3" json:"isPublish" bson:"isPublish"`
+	// Active status flag
+	// @gotags: `json:"isActive" bson:"isActive"`
+	IsActive      bool `protobuf:"varint,19,opt,name=is_active,json=isActive,proto3" json:"isActive" bson:"isActive"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImageResponse) Reset() {
+	*x = ImageResponse{}
+	mi := &file_content_v1_image_image_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImageResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImageResponse) ProtoMessage() {}
+
+func (x *ImageResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_content_v1_image_image_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImageResponse.ProtoReflect.Descriptor instead.
+func (*ImageResponse) Descriptor() ([]byte, []int) {
+	return file_content_v1_image_image_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ImageResponse) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ImageResponse) GetSite() string {
+	if x != nil {
+		return x.Site
+	}
+	return ""
+}
+
+func (x *ImageResponse) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *ImageResponse) GetPermalink() string {
+	if x != nil {
+		return x.Permalink
+	}
+	return ""
+}
+
+func (x *ImageResponse) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *ImageResponse) GetFile() *v1.FileResponse {
+	if x != nil {
+		return x.File
+	}
+	return nil
+}
+
+func (x *ImageResponse) GetWidth() int32 {
+	if x != nil {
+		return x.Width
+	}
+	return 0
+}
+
+func (x *ImageResponse) GetHeight() int32 {
+	if x != nil {
+		return x.Height
+	}
+	return 0
+}
+
+func (x *ImageResponse) GetAspectRatio() AspectRatio {
+	if x != nil {
+		return x.AspectRatio
+	}
+	return AspectRatio_ASPECT_RATIO_UNSPECIFIED
+}
+
+func (x *ImageResponse) GetFormat() string {
+	if x != nil {
+		return x.Format
+	}
+	return ""
+}
+
+func (x *ImageResponse) GetCategory() string {
+	if x != nil {
+		return x.Category
+	}
+	return ""
+}
+
+func (x *ImageResponse) GetTags() []string {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
+func (x *ImageResponse) GetIsPublic() bool {
+	if x != nil {
+		return x.IsPublic
+	}
+	return false
+}
+
+func (x *ImageResponse) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *ImageResponse) GetUploadedBy() string {
+	if x != nil {
+		return x.UploadedBy
+	}
+	return ""
+}
+
+func (x *ImageResponse) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *ImageResponse) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
+func (x *ImageResponse) GetIsPublish() bool {
+	if x != nil {
+		return x.IsPublish
+	}
+	return false
+}
+
+func (x *ImageResponse) GetIsActive() bool {
+	if x != nil {
+		return x.IsActive
+	}
+	return false
+}
+
 type ImageSearchResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// List of Image metadata items for the current page
-	Images []*ImageMetadata `protobuf:"bytes,1,rep,name=images,proto3" json:"images,omitempty"`
+	Images []*Image `protobuf:"bytes,1,rep,name=images,proto3" json:"images,omitempty"`
 	// Total count of items matching the query
 	// @gotags: `json:"totalCount,omitempty" bson:"totalCount,omitempty"`
 	TotalCount int64 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"totalCount,omitempty" bson:"totalCount,omitempty"`
@@ -782,7 +1493,7 @@ type ImageSearchResponse struct {
 
 func (x *ImageSearchResponse) Reset() {
 	*x = ImageSearchResponse{}
-	mi := &file_content_v1_image_image_proto_msgTypes[5]
+	mi := &file_content_v1_image_image_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -794,7 +1505,7 @@ func (x *ImageSearchResponse) String() string {
 func (*ImageSearchResponse) ProtoMessage() {}
 
 func (x *ImageSearchResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_content_v1_image_image_proto_msgTypes[5]
+	mi := &file_content_v1_image_image_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -807,10 +1518,10 @@ func (x *ImageSearchResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImageSearchResponse.ProtoReflect.Descriptor instead.
 func (*ImageSearchResponse) Descriptor() ([]byte, []int) {
-	return file_content_v1_image_image_proto_rawDescGZIP(), []int{5}
+	return file_content_v1_image_image_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *ImageSearchResponse) GetImages() []*ImageMetadata {
+func (x *ImageSearchResponse) GetImages() []*Image {
 	if x != nil {
 		return x.Images
 	}
@@ -845,457 +1556,19 @@ func (x *ImageSearchResponse) GetTotalPages() int32 {
 	return 0
 }
 
-type ImageFileInfo struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// File name
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// MIME type
-	// @gotags: `json:"mimeType,omitempty" bson:"mimeType,omitempty"`
-	MimeType string `protobuf:"bytes,2,opt,name=mime_type,json=mimeType,proto3" json:"mimeType,omitempty" bson:"mimeType,omitempty"`
-	// File size in bytes
-	// @gotags: `json:"sizeBytes,omitempty" bson:"sizeBytes,omitempty"`
-	SizeBytes int64 `protobuf:"varint,3,opt,name=size_bytes,json=sizeBytes,proto3" json:"sizeBytes,omitempty" bson:"sizeBytes,omitempty"`
-	// Image title
-	Title string `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
-	// Image description
-	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
-	// Alt text
-	// @gotags: `json:"altText,omitempty" bson:"altText,omitempty"`
-	AltText string `protobuf:"bytes,6,opt,name=alt_text,json=altText,proto3" json:"altText,omitempty" bson:"altText,omitempty"`
-	// Category (e.g. cover, screenshot, wallpaper)
-	Category string `protobuf:"bytes,7,opt,name=category,proto3" json:"category,omitempty"`
-	// Category tags
-	Tags []string `protobuf:"bytes,8,rep,name=tags,proto3" json:"tags,omitempty"`
-	// Public visibility flag
-	// @gotags: `json:"isPublic,omitempty" bson:"isPublic,omitempty"`
-	IsPublic bool `protobuf:"varint,9,opt,name=is_public,json=isPublic,proto3" json:"isPublic,omitempty" bson:"isPublic,omitempty"`
-	// Custom storage key if specified
-	// @gotags: `json:"customKey,omitempty" bson:"customKey,omitempty"`
-	CustomKey string `protobuf:"bytes,10,opt,name=custom_key,json=customKey,proto3" json:"customKey,omitempty" bson:"customKey,omitempty"`
-	// Uploader user ID
-	// @gotags: `json:"uploaderId,omitempty" bson:"uploaderId,omitempty"`
-	UploaderId string `protobuf:"bytes,11,opt,name=uploader_id,json=uploaderId,proto3" json:"uploaderId,omitempty" bson:"uploaderId,omitempty"`
-	// Uploader username
-	// @gotags: `json:"uploaderUsername,omitempty" bson:"uploaderUsername,omitempty"`
-	UploaderUsername string `protobuf:"bytes,12,opt,name=uploader_username,json=uploaderUsername,proto3" json:"uploaderUsername,omitempty" bson:"uploaderUsername,omitempty"`
-	// Dynamic site/tenant key (e.g. retrogames)
-	// @gotags: `json:"site,omitempty" bson:"site,omitempty"`
-	Site string `protobuf:"bytes,13,opt,name=site,proto3" json:"site,omitempty" bson:"site,omitempty"`
-	// Aspect ratio classification
-	// @gotags: `json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
-	AspectRatio AspectRatio `protobuf:"varint,14,opt,name=aspect_ratio,json=aspectRatio,proto3,enum=content.v1.image.AspectRatio" json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
-	// Publication status flag
-	// @gotags: `json:"isPublish,omitempty" bson:"isPublish,omitempty"`
-	IsPublish bool `protobuf:"varint,15,opt,name=is_publish,json=isPublish,proto3" json:"isPublish,omitempty" bson:"isPublish,omitempty"`
-	// Active status flag
-	// @gotags: `json:"isActive,omitempty" bson:"isActive,omitempty"`
-	IsActive bool `protobuf:"varint,16,opt,name=is_active,json=isActive,proto3" json:"isActive,omitempty" bson:"isActive,omitempty"`
-	// URL-friendly permalink
-	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty"`
-	Permalink     string `protobuf:"bytes,17,opt,name=permalink,proto3" json:"permalink,omitempty" bson:"permalink,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ImageFileInfo) Reset() {
-	*x = ImageFileInfo{}
-	mi := &file_content_v1_image_image_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ImageFileInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ImageFileInfo) ProtoMessage() {}
-
-func (x *ImageFileInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_content_v1_image_image_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ImageFileInfo.ProtoReflect.Descriptor instead.
-func (*ImageFileInfo) Descriptor() ([]byte, []int) {
-	return file_content_v1_image_image_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *ImageFileInfo) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *ImageFileInfo) GetMimeType() string {
-	if x != nil {
-		return x.MimeType
-	}
-	return ""
-}
-
-func (x *ImageFileInfo) GetSizeBytes() int64 {
-	if x != nil {
-		return x.SizeBytes
-	}
-	return 0
-}
-
-func (x *ImageFileInfo) GetTitle() string {
-	if x != nil {
-		return x.Title
-	}
-	return ""
-}
-
-func (x *ImageFileInfo) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
-
-func (x *ImageFileInfo) GetAltText() string {
-	if x != nil {
-		return x.AltText
-	}
-	return ""
-}
-
-func (x *ImageFileInfo) GetCategory() string {
-	if x != nil {
-		return x.Category
-	}
-	return ""
-}
-
-func (x *ImageFileInfo) GetTags() []string {
-	if x != nil {
-		return x.Tags
-	}
-	return nil
-}
-
-func (x *ImageFileInfo) GetIsPublic() bool {
-	if x != nil {
-		return x.IsPublic
-	}
-	return false
-}
-
-func (x *ImageFileInfo) GetCustomKey() string {
-	if x != nil {
-		return x.CustomKey
-	}
-	return ""
-}
-
-func (x *ImageFileInfo) GetUploaderId() string {
-	if x != nil {
-		return x.UploaderId
-	}
-	return ""
-}
-
-func (x *ImageFileInfo) GetUploaderUsername() string {
-	if x != nil {
-		return x.UploaderUsername
-	}
-	return ""
-}
-
-func (x *ImageFileInfo) GetSite() string {
-	if x != nil {
-		return x.Site
-	}
-	return ""
-}
-
-func (x *ImageFileInfo) GetAspectRatio() AspectRatio {
-	if x != nil {
-		return x.AspectRatio
-	}
-	return AspectRatio_ASPECT_RATIO_UNSPECIFIED
-}
-
-func (x *ImageFileInfo) GetIsPublish() bool {
-	if x != nil {
-		return x.IsPublish
-	}
-	return false
-}
-
-func (x *ImageFileInfo) GetIsActive() bool {
-	if x != nil {
-		return x.IsActive
-	}
-	return false
-}
-
-func (x *ImageFileInfo) GetPermalink() string {
-	if x != nil {
-		return x.Permalink
-	}
-	return ""
-}
-
-type UploadImageRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Image display title
-	Title string `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
-	// Image description
-	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	// Alt text
-	// @gotags: `json:"altText,omitempty" bson:"altText,omitempty" form:"altText"`
-	AltText string `protobuf:"bytes,3,opt,name=alt_text,json=altText,proto3" json:"altText,omitempty" bson:"altText,omitempty" form:"altText"`
-	// Category (e.g. cover, screenshot, wallpaper)
-	// @gotags: `json:"category,omitempty" bson:"category,omitempty" form:"category"`
-	Category string `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty" bson:"category,omitempty" form:"category"`
-	// Category tags
-	Tags []string `protobuf:"bytes,5,rep,name=tags,proto3" json:"tags,omitempty"`
-	// Public visibility flag
-	// @gotags: `json:"isPublic,omitempty" bson:"isPublic,omitempty" form:"isPublic"`
-	IsPublic *bool `protobuf:"varint,6,opt,name=is_public,json=isPublic,proto3,oneof" json:"isPublic,omitempty" bson:"isPublic,omitempty" form:"isPublic"`
-	// Custom storage key
-	// @gotags: `json:"customKey,omitempty" bson:"customKey,omitempty" form:"customKey"`
-	CustomKey string `protobuf:"bytes,7,opt,name=custom_key,json=customKey,proto3" json:"customKey,omitempty" bson:"customKey,omitempty" form:"customKey"`
-	// Dynamic site/tenant key (e.g. retrogames)
-	// @gotags: `json:"site,omitempty" bson:"site,omitempty" form:"site"`
-	Site *string `protobuf:"bytes,8,opt,name=site,proto3,oneof" json:"site,omitempty" bson:"site,omitempty" form:"site"`
-	// Aspect ratio classification
-	// @gotags: `json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty" form:"aspectRatio"`
-	AspectRatio *AspectRatio `protobuf:"varint,9,opt,name=aspect_ratio,json=aspectRatio,proto3,enum=content.v1.image.AspectRatio,oneof" json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty" form:"aspectRatio"`
-	// Publication status flag
-	// @gotags: `json:"isPublish,omitempty" bson:"isPublish,omitempty" form:"isPublish"`
-	IsPublish *bool `protobuf:"varint,10,opt,name=is_publish,json=isPublish,proto3,oneof" json:"isPublish,omitempty" bson:"isPublish,omitempty" form:"isPublish"`
-	// Active status flag
-	// @gotags: `json:"isActive,omitempty" bson:"isActive,omitempty" form:"isActive"`
-	IsActive *bool `protobuf:"varint,11,opt,name=is_active,json=isActive,proto3,oneof" json:"isActive,omitempty" bson:"isActive,omitempty" form:"isActive"`
-	// URL-friendly permalink (e.g. /box-art)
-	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty" form:"permalink"`
-	Permalink     string `protobuf:"bytes,12,opt,name=permalink,proto3" json:"permalink,omitempty" bson:"permalink,omitempty" form:"permalink"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UploadImageRequest) Reset() {
-	*x = UploadImageRequest{}
-	mi := &file_content_v1_image_image_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UploadImageRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UploadImageRequest) ProtoMessage() {}
-
-func (x *UploadImageRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_content_v1_image_image_proto_msgTypes[7]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UploadImageRequest.ProtoReflect.Descriptor instead.
-func (*UploadImageRequest) Descriptor() ([]byte, []int) {
-	return file_content_v1_image_image_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *UploadImageRequest) GetTitle() string {
-	if x != nil {
-		return x.Title
-	}
-	return ""
-}
-
-func (x *UploadImageRequest) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
-
-func (x *UploadImageRequest) GetAltText() string {
-	if x != nil {
-		return x.AltText
-	}
-	return ""
-}
-
-func (x *UploadImageRequest) GetCategory() string {
-	if x != nil {
-		return x.Category
-	}
-	return ""
-}
-
-func (x *UploadImageRequest) GetTags() []string {
-	if x != nil {
-		return x.Tags
-	}
-	return nil
-}
-
-func (x *UploadImageRequest) GetIsPublic() bool {
-	if x != nil && x.IsPublic != nil {
-		return *x.IsPublic
-	}
-	return false
-}
-
-func (x *UploadImageRequest) GetCustomKey() string {
-	if x != nil {
-		return x.CustomKey
-	}
-	return ""
-}
-
-func (x *UploadImageRequest) GetSite() string {
-	if x != nil && x.Site != nil {
-		return *x.Site
-	}
-	return ""
-}
-
-func (x *UploadImageRequest) GetAspectRatio() AspectRatio {
-	if x != nil && x.AspectRatio != nil {
-		return *x.AspectRatio
-	}
-	return AspectRatio_ASPECT_RATIO_UNSPECIFIED
-}
-
-func (x *UploadImageRequest) GetIsPublish() bool {
-	if x != nil && x.IsPublish != nil {
-		return *x.IsPublish
-	}
-	return false
-}
-
-func (x *UploadImageRequest) GetIsActive() bool {
-	if x != nil && x.IsActive != nil {
-		return *x.IsActive
-	}
-	return false
-}
-
-func (x *UploadImageRequest) GetPermalink() string {
-	if x != nil {
-		return x.Permalink
-	}
-	return ""
-}
-
-type ImageUploadRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Types that are valid to be assigned to RequestData:
-	//
-	//	*ImageUploadRequest_FileInfo
-	//	*ImageUploadRequest_ChunkData
-	RequestData   isImageUploadRequest_RequestData `protobuf_oneof:"request_data"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ImageUploadRequest) Reset() {
-	*x = ImageUploadRequest{}
-	mi := &file_content_v1_image_image_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ImageUploadRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ImageUploadRequest) ProtoMessage() {}
-
-func (x *ImageUploadRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_content_v1_image_image_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ImageUploadRequest.ProtoReflect.Descriptor instead.
-func (*ImageUploadRequest) Descriptor() ([]byte, []int) {
-	return file_content_v1_image_image_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *ImageUploadRequest) GetRequestData() isImageUploadRequest_RequestData {
-	if x != nil {
-		return x.RequestData
-	}
-	return nil
-}
-
-func (x *ImageUploadRequest) GetFileInfo() *ImageFileInfo {
-	if x != nil {
-		if x, ok := x.RequestData.(*ImageUploadRequest_FileInfo); ok {
-			return x.FileInfo
-		}
-	}
-	return nil
-}
-
-func (x *ImageUploadRequest) GetChunkData() []byte {
-	if x != nil {
-		if x, ok := x.RequestData.(*ImageUploadRequest_ChunkData); ok {
-			return x.ChunkData
-		}
-	}
-	return nil
-}
-
-type isImageUploadRequest_RequestData interface {
-	isImageUploadRequest_RequestData()
-}
-
-type ImageUploadRequest_FileInfo struct {
-	// Image metadata for initial chunk
-	// @gotags: `json:"fileInfo,omitempty" bson:"fileInfo,omitempty"`
-	FileInfo *ImageFileInfo `protobuf:"bytes,1,opt,name=file_info,json=fileInfo,proto3,oneof" json:"fileInfo,omitempty" bson:"fileInfo,omitempty"`
-}
-
-type ImageUploadRequest_ChunkData struct {
-	// Binary chunk data
-	// @gotags: `json:"chunkData,omitempty" bson:"chunkData,omitempty"`
-	ChunkData []byte `protobuf:"bytes,2,opt,name=chunk_data,json=chunkData,proto3,oneof" json:"chunkData,omitempty" bson:"chunkData,omitempty"`
-}
-
-func (*ImageUploadRequest_FileInfo) isImageUploadRequest_RequestData() {}
-
-func (*ImageUploadRequest_ChunkData) isImageUploadRequest_RequestData() {}
-
 type ImageUploadResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Uploaded Image metadata
-	Image         *ImageMetadata `protobuf:"bytes,1,opt,name=image,proto3" json:"image,omitempty"`
+	// Uploaded Image
+	Image *Image `protobuf:"bytes,1,opt,name=image,proto3" json:"image,omitempty"`
+	// Status message
+	Message       string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ImageUploadResponse) Reset() {
 	*x = ImageUploadResponse{}
-	mi := &file_content_v1_image_image_proto_msgTypes[9]
+	mi := &file_content_v1_image_image_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1307,7 +1580,7 @@ func (x *ImageUploadResponse) String() string {
 func (*ImageUploadResponse) ProtoMessage() {}
 
 func (x *ImageUploadResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_content_v1_image_image_proto_msgTypes[9]
+	mi := &file_content_v1_image_image_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1320,239 +1593,19 @@ func (x *ImageUploadResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImageUploadResponse.ProtoReflect.Descriptor instead.
 func (*ImageUploadResponse) Descriptor() ([]byte, []int) {
-	return file_content_v1_image_image_proto_rawDescGZIP(), []int{9}
+	return file_content_v1_image_image_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *ImageUploadResponse) GetImage() *ImageMetadata {
+func (x *ImageUploadResponse) GetImage() *Image {
 	if x != nil {
 		return x.Image
 	}
 	return nil
 }
 
-type ImageUpdateRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique Image identifier
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Updated Image title
-	Title *string `protobuf:"bytes,2,opt,name=title,proto3,oneof" json:"title,omitempty"`
-	// Updated Image description
-	Description *string `protobuf:"bytes,3,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	// Updated alt text
-	// @gotags: `json:"altText,omitempty" bson:"altText,omitempty"`
-	AltText *string `protobuf:"bytes,4,opt,name=alt_text,json=altText,proto3,oneof" json:"altText,omitempty" bson:"altText,omitempty"`
-	// Updated category
-	// @gotags: `json:"category,omitempty" bson:"category,omitempty"`
-	Category *string `protobuf:"bytes,5,opt,name=category,proto3,oneof" json:"category,omitempty" bson:"category,omitempty"`
-	// Updated tags
-	Tags []string `protobuf:"bytes,6,rep,name=tags,proto3" json:"tags,omitempty"`
-	// Updated public visibility flag
-	// @gotags: `json:"isPublic,omitempty" bson:"isPublic,omitempty"`
-	IsPublic *bool `protobuf:"varint,7,opt,name=is_public,json=isPublic,proto3,oneof" json:"isPublic,omitempty" bson:"isPublic,omitempty"`
-	// Updated lifecycle status
-	// @gotags: `json:"status,omitempty" bson:"status,omitempty"`
-	Status *string `protobuf:"bytes,8,opt,name=status,proto3,oneof" json:"status,omitempty" bson:"status,omitempty"`
-	// Updated site identifier
-	// @gotags: `json:"site,omitempty" bson:"site,omitempty"`
-	Site *string `protobuf:"bytes,9,opt,name=site,proto3,oneof" json:"site,omitempty" bson:"site,omitempty"`
-	// Updated aspect ratio classification
-	// @gotags: `json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
-	AspectRatio *AspectRatio `protobuf:"varint,10,opt,name=aspect_ratio,json=aspectRatio,proto3,enum=content.v1.image.AspectRatio,oneof" json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
-	// Updated publication status flag
-	// @gotags: `json:"isPublish,omitempty" bson:"isPublish,omitempty"`
-	IsPublish *bool `protobuf:"varint,11,opt,name=is_publish,json=isPublish,proto3,oneof" json:"isPublish,omitempty" bson:"isPublish,omitempty"`
-	// Updated active status flag
-	// @gotags: `json:"isActive,omitempty" bson:"isActive,omitempty"`
-	IsActive *bool `protobuf:"varint,12,opt,name=is_active,json=isActive,proto3,oneof" json:"isActive,omitempty" bson:"isActive,omitempty"`
-	// Updated permalink
-	// @gotags: `json:"permalink,omitempty" bson:"permalink,omitempty"`
-	Permalink     *string `protobuf:"bytes,13,opt,name=permalink,proto3,oneof" json:"permalink,omitempty" bson:"permalink,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ImageUpdateRequest) Reset() {
-	*x = ImageUpdateRequest{}
-	mi := &file_content_v1_image_image_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ImageUpdateRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ImageUpdateRequest) ProtoMessage() {}
-
-func (x *ImageUpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_content_v1_image_image_proto_msgTypes[10]
+func (x *ImageUploadResponse) GetMessage() string {
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ImageUpdateRequest.ProtoReflect.Descriptor instead.
-func (*ImageUpdateRequest) Descriptor() ([]byte, []int) {
-	return file_content_v1_image_image_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *ImageUpdateRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *ImageUpdateRequest) GetTitle() string {
-	if x != nil && x.Title != nil {
-		return *x.Title
-	}
-	return ""
-}
-
-func (x *ImageUpdateRequest) GetDescription() string {
-	if x != nil && x.Description != nil {
-		return *x.Description
-	}
-	return ""
-}
-
-func (x *ImageUpdateRequest) GetAltText() string {
-	if x != nil && x.AltText != nil {
-		return *x.AltText
-	}
-	return ""
-}
-
-func (x *ImageUpdateRequest) GetCategory() string {
-	if x != nil && x.Category != nil {
-		return *x.Category
-	}
-	return ""
-}
-
-func (x *ImageUpdateRequest) GetTags() []string {
-	if x != nil {
-		return x.Tags
-	}
-	return nil
-}
-
-func (x *ImageUpdateRequest) GetIsPublic() bool {
-	if x != nil && x.IsPublic != nil {
-		return *x.IsPublic
-	}
-	return false
-}
-
-func (x *ImageUpdateRequest) GetStatus() string {
-	if x != nil && x.Status != nil {
-		return *x.Status
-	}
-	return ""
-}
-
-func (x *ImageUpdateRequest) GetSite() string {
-	if x != nil && x.Site != nil {
-		return *x.Site
-	}
-	return ""
-}
-
-func (x *ImageUpdateRequest) GetAspectRatio() AspectRatio {
-	if x != nil && x.AspectRatio != nil {
-		return *x.AspectRatio
-	}
-	return AspectRatio_ASPECT_RATIO_UNSPECIFIED
-}
-
-func (x *ImageUpdateRequest) GetIsPublish() bool {
-	if x != nil && x.IsPublish != nil {
-		return *x.IsPublish
-	}
-	return false
-}
-
-func (x *ImageUpdateRequest) GetIsActive() bool {
-	if x != nil && x.IsActive != nil {
-		return *x.IsActive
-	}
-	return false
-}
-
-func (x *ImageUpdateRequest) GetPermalink() string {
-	if x != nil && x.Permalink != nil {
-		return *x.Permalink
-	}
-	return ""
-}
-
-type ImageDeleteRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique Image identifier to delete
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Hard delete flag (permanently remove file from storage and database)
-	// @gotags: `json:"hardDelete,omitempty" bson:"hardDelete,omitempty"`
-	HardDelete bool `protobuf:"varint,2,opt,name=hard_delete,json=hardDelete,proto3" json:"hardDelete,omitempty" bson:"hardDelete,omitempty"`
-	// Optional site identifier
-	// @gotags: `form:"site" json:"site,omitempty"`
-	Site          *string `protobuf:"bytes,3,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ImageDeleteRequest) Reset() {
-	*x = ImageDeleteRequest{}
-	mi := &file_content_v1_image_image_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ImageDeleteRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ImageDeleteRequest) ProtoMessage() {}
-
-func (x *ImageDeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_content_v1_image_image_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ImageDeleteRequest.ProtoReflect.Descriptor instead.
-func (*ImageDeleteRequest) Descriptor() ([]byte, []int) {
-	return file_content_v1_image_image_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *ImageDeleteRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *ImageDeleteRequest) GetHardDelete() bool {
-	if x != nil {
-		return x.HardDelete
-	}
-	return false
-}
-
-func (x *ImageDeleteRequest) GetSite() string {
-	if x != nil && x.Site != nil {
-		return *x.Site
+		return x.Message
 	}
 	return ""
 }
@@ -1569,7 +1622,7 @@ type ImageDeleteResponse struct {
 
 func (x *ImageDeleteResponse) Reset() {
 	*x = ImageDeleteResponse{}
-	mi := &file_content_v1_image_image_proto_msgTypes[12]
+	mi := &file_content_v1_image_image_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1581,7 +1634,7 @@ func (x *ImageDeleteResponse) String() string {
 func (*ImageDeleteResponse) ProtoMessage() {}
 
 func (x *ImageDeleteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_content_v1_image_image_proto_msgTypes[12]
+	mi := &file_content_v1_image_image_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1594,7 +1647,7 @@ func (x *ImageDeleteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImageDeleteResponse.ProtoReflect.Descriptor instead.
 func (*ImageDeleteResponse) Descriptor() ([]byte, []int) {
-	return file_content_v1_image_image_proto_rawDescGZIP(), []int{12}
+	return file_content_v1_image_image_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ImageDeleteResponse) GetSuccess() bool {
@@ -1611,71 +1664,6 @@ func (x *ImageDeleteResponse) GetMessage() string {
 	return ""
 }
 
-type ImageShareRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique Image identifier to share
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Pre-signed download URL expiration duration in seconds
-	// @gotags: `json:"expiresInSec,omitempty" bson:"expiresInSec,omitempty"`
-	ExpiresInSec int32 `protobuf:"varint,2,opt,name=expires_in_sec,json=expiresInSec,proto3" json:"expiresInSec,omitempty" bson:"expiresInSec,omitempty"`
-	// Optional site identifier
-	// @gotags: `form:"site" json:"site,omitempty"`
-	Site          *string `protobuf:"bytes,3,opt,name=site,proto3,oneof" json:"site,omitempty" form:"site"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ImageShareRequest) Reset() {
-	*x = ImageShareRequest{}
-	mi := &file_content_v1_image_image_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ImageShareRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ImageShareRequest) ProtoMessage() {}
-
-func (x *ImageShareRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_content_v1_image_image_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ImageShareRequest.ProtoReflect.Descriptor instead.
-func (*ImageShareRequest) Descriptor() ([]byte, []int) {
-	return file_content_v1_image_image_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *ImageShareRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *ImageShareRequest) GetExpiresInSec() int32 {
-	if x != nil {
-		return x.ExpiresInSec
-	}
-	return 0
-}
-
-func (x *ImageShareRequest) GetSite() string {
-	if x != nil && x.Site != nil {
-		return *x.Site
-	}
-	return ""
-}
-
 type ImageShareResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Image identifier
@@ -1685,7 +1673,9 @@ type ImageShareResponse struct {
 	DownloadUrl string `protobuf:"bytes,2,opt,name=download_url,json=downloadUrl,proto3" json:"downloadUrl,omitempty" bson:"downloadUrl,omitempty"`
 	// ISO-8601 expiration timestamp
 	// @gotags: `json:"expiresAt,omitempty" bson:"expiresAt,omitempty"`
-	ExpiresAt     string `protobuf:"bytes,3,opt,name=expires_at,json=expiresAt,proto3" json:"expiresAt,omitempty" bson:"expiresAt,omitempty"`
+	ExpiresAt string `protobuf:"bytes,3,opt,name=expires_at,json=expiresAt,proto3" json:"expiresAt,omitempty" bson:"expiresAt,omitempty"`
+	// Status message
+	Message       string `protobuf:"bytes,4,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1741,37 +1731,39 @@ func (x *ImageShareResponse) GetExpiresAt() string {
 	return ""
 }
 
-// AspectRatioImages groups image IDs and enriched image metadata by aspect ratio format.
-// Reusable across all content entities (ROMs, games, articles, videos, etc.)
-type AspectRatioImages struct {
+func (x *ImageShareResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type AspectRatioImagesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Aspect ratio enum classification (16:9, 1:1, 32:9, 3:4, 9:16, 2:3)
+	// Aspect ratio enum classification
 	// @gotags: `json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
 	AspectRatio AspectRatio `protobuf:"varint,1,opt,name=aspect_ratio,json=aspectRatio,proto3,enum=content.v1.image.AspectRatio" json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
-	// Array of image UUID foreign keys stored in database
-	// @gotags: `json:"imageIds,omitempty" bson:"imageIds,omitempty"`
-	ImageIds []string `protobuf:"bytes,2,rep,name=image_ids,json=imageIds,proto3" json:"imageIds,omitempty" bson:"imageIds,omitempty"`
-	// Enriched array of full image metadata resolved at read-time (response only)
+	// Enriched array of full image metadata resolved at read-time
 	// @gotags: `json:"images,omitempty" bson:"-"`
-	Images        []*ImageMetadata `protobuf:"bytes,3,rep,name=images,proto3" json:"images,omitempty" bson:"-"`
+	Images        []*Image `protobuf:"bytes,2,rep,name=images,proto3" json:"images,omitempty" bson:"-"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *AspectRatioImages) Reset() {
-	*x = AspectRatioImages{}
+func (x *AspectRatioImagesResponse) Reset() {
+	*x = AspectRatioImagesResponse{}
 	mi := &file_content_v1_image_image_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *AspectRatioImages) String() string {
+func (x *AspectRatioImagesResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AspectRatioImages) ProtoMessage() {}
+func (*AspectRatioImagesResponse) ProtoMessage() {}
 
-func (x *AspectRatioImages) ProtoReflect() protoreflect.Message {
+func (x *AspectRatioImagesResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_content_v1_image_image_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1783,26 +1775,19 @@ func (x *AspectRatioImages) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AspectRatioImages.ProtoReflect.Descriptor instead.
-func (*AspectRatioImages) Descriptor() ([]byte, []int) {
+// Deprecated: Use AspectRatioImagesResponse.ProtoReflect.Descriptor instead.
+func (*AspectRatioImagesResponse) Descriptor() ([]byte, []int) {
 	return file_content_v1_image_image_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *AspectRatioImages) GetAspectRatio() AspectRatio {
+func (x *AspectRatioImagesResponse) GetAspectRatio() AspectRatio {
 	if x != nil {
 		return x.AspectRatio
 	}
 	return AspectRatio_ASPECT_RATIO_UNSPECIFIED
 }
 
-func (x *AspectRatioImages) GetImageIds() []string {
-	if x != nil {
-		return x.ImageIds
-	}
-	return nil
-}
-
-func (x *AspectRatioImages) GetImages() []*ImageMetadata {
+func (x *AspectRatioImagesResponse) GetImages() []*Image {
 	if x != nil {
 		return x.Images
 	}
@@ -1813,16 +1798,15 @@ var File_content_v1_image_image_proto protoreflect.FileDescriptor
 
 const file_content_v1_image_image_proto_rawDesc = "" +
 	"\n" +
-	"\x1ccontent/v1/image/image.proto\x12\x10content.v1.image\x1a\x16common/v1/common.proto\"\xcb\x05\n" +
-	"\rImageMetadata\x12\x19\n" +
+	"\x1ccontent/v1/image/image.proto\x12\x10content.v1.image\x1a\x18storage/v1/storage.proto\"\xbd\x04\n" +
+	"\x05Image\x12\x19\n" +
 	"\bmongo_id\x18\x01 \x01(\tR\amongoId\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
 	"\x04site\x18\x03 \x01(\tR\x04site\x12\x14\n" +
 	"\x05title\x18\x04 \x01(\tR\x05title\x12\x1c\n" +
 	"\tpermalink\x18\x05 \x01(\tR\tpermalink\x12 \n" +
 	"\vdescription\x18\x06 \x01(\tR\vdescription\x12\x17\n" +
-	"\afile_id\x18\a \x01(\tR\x06fileId\x12\x19\n" +
-	"\balt_text\x18\b \x01(\tR\aaltText\x12\x14\n" +
+	"\afile_id\x18\a \x01(\tR\x06fileId\x12\x14\n" +
 	"\x05width\x18\t \x01(\x05R\x05width\x12\x16\n" +
 	"\x06height\x18\n" +
 	" \x01(\x05R\x06height\x12@\n" +
@@ -1833,26 +1817,19 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"\tis_public\x18\x0f \x01(\bR\bisPublic\x12\x16\n" +
 	"\x06status\x18\x10 \x01(\tR\x06status\x12\x1f\n" +
 	"\vuploader_id\x18\x11 \x01(\tR\n" +
-	"uploaderId\x12+\n" +
-	"\x11uploader_username\x18\x12 \x01(\tR\x10uploaderUsername\x12\x1d\n" +
+	"uploaderId\x12\x1d\n" +
 	"\n" +
 	"created_at\x18\x13 \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x14 \x01(\tR\tupdatedAt\x12<\n" +
-	"\rfile_metadata\x18\x15 \x01(\v2\x17.common.v1.FileMetadataR\ffileMetadata\x12\x1d\n" +
+	"updated_at\x18\x14 \x01(\tR\tupdatedAt\x12\x1d\n" +
 	"\n" +
 	"is_publish\x18\x16 \x01(\bR\tisPublish\x12\x1b\n" +
-	"\tis_active\x18\x17 \x01(\bR\bisActive\"\xa2\x01\n" +
+	"\tis_active\x18\x17 \x01(\bR\bisActive\"O\n" +
 	"\x0fImageGetRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\x04 \x01(\tH\x02R\x04site\x88\x01\x01\x12!\n" +
-	"\tpermalink\x18\x05 \x01(\tH\x03R\tpermalink\x88\x01\x01B\x05\n" +
+	"\x04site\x18\x04 \x01(\tH\x01R\x04site\x88\x01\x01B\x05\n" +
 	"\x03_idB\a\n" +
-	"\x05_nameB\a\n" +
-	"\x05_siteB\f\n" +
-	"\n" +
-	"_permalink\"\xa7\x01\n" +
+	"\x05_site\"\xa7\x01\n" +
 	"\x14ImageDownloadRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x17\n" +
@@ -1909,122 +1886,114 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"\a_sortbyB\r\n" +
 	"\v_sort_orderB\b\n" +
 	"\x06_queryB\a\n" +
-	"\x05_site\"\xbe\x01\n" +
-	"\x13ImageSearchResponse\x127\n" +
-	"\x06images\x18\x01 \x03(\v2\x1f.content.v1.image.ImageMetadataR\x06images\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x03R\n" +
-	"totalCount\x12\x14\n" +
-	"\x05limit\x18\x03 \x01(\x05R\x05limit\x12\x16\n" +
-	"\x06offset\x18\x04 \x01(\x05R\x06offset\x12\x1f\n" +
-	"\vtotal_pages\x18\x05 \x01(\x05R\n" +
-	"totalPages\"\x9c\x04\n" +
-	"\rImageFileInfo\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
-	"\tmime_type\x18\x02 \x01(\tR\bmimeType\x12\x1d\n" +
+	"\x05_site\"\x91\x06\n" +
+	"\x1aImageCreateOrUpdateRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x17\n" +
+	"\x04site\x18\x02 \x01(\tH\x01R\x04site\x88\x01\x01\x12!\n" +
+	"\tpermalink\x18\x03 \x01(\tH\x02R\tpermalink\x88\x01\x01\x12\x19\n" +
+	"\x05title\x18\x04 \x01(\tH\x03R\x05title\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x05 \x01(\tH\x04R\vdescription\x88\x01\x01\x12 \n" +
+	"\tmime_type\x18\x06 \x01(\tH\x05R\bmimeType\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"size_bytes\x18\x03 \x01(\x03R\tsizeBytes\x12\x14\n" +
-	"\x05title\x18\x04 \x01(\tR\x05title\x12 \n" +
-	"\vdescription\x18\x05 \x01(\tR\vdescription\x12\x19\n" +
-	"\balt_text\x18\x06 \x01(\tR\aaltText\x12\x1a\n" +
-	"\bcategory\x18\a \x01(\tR\bcategory\x12\x12\n" +
-	"\x04tags\x18\b \x03(\tR\x04tags\x12\x1b\n" +
-	"\tis_public\x18\t \x01(\bR\bisPublic\x12\x1d\n" +
+	"size_bytes\x18\a \x01(\x03H\x06R\tsizeBytes\x88\x01\x01\x12;\n" +
+	"\bcategory\x18\b \x01(\x0e2\x1f.content.v1.image.ImageCategoryR\bcategory\x12\x12\n" +
+	"\x04tags\x18\t \x03(\tR\x04tags\x12$\n" +
+	"\vuploader_id\x18\n" +
+	" \x01(\tH\aR\n" +
+	"uploaderId\x88\x01\x01\x12E\n" +
+	"\faspect_ratio\x18\v \x01(\x0e2\x1d.content.v1.image.AspectRatioH\bR\vaspectRatio\x88\x01\x01\x12 \n" +
+	"\tis_public\x18\f \x01(\bH\tR\bisPublic\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"custom_key\x18\n" +
-	" \x01(\tR\tcustomKey\x12\x1f\n" +
-	"\vuploader_id\x18\v \x01(\tR\n" +
-	"uploaderId\x12+\n" +
-	"\x11uploader_username\x18\f \x01(\tR\x10uploaderUsername\x12\x12\n" +
-	"\x04site\x18\r \x01(\tR\x04site\x12@\n" +
-	"\faspect_ratio\x18\x0e \x01(\x0e2\x1d.content.v1.image.AspectRatioR\vaspectRatio\x12\x1d\n" +
+	"is_publish\x18\r \x01(\bH\n" +
+	"R\tisPublish\x88\x01\x01\x12 \n" +
+	"\tis_active\x18\x0e \x01(\bH\vR\bisActive\x88\x01\x01\x12\x1b\n" +
+	"\x06status\x18\x0f \x01(\tH\fR\x06status\x88\x01\x01\x12\x1e\n" +
+	"\balt_text\x18\x10 \x01(\tH\rR\aaltText\x88\x01\x01B\x05\n" +
+	"\x03_idB\a\n" +
+	"\x05_siteB\f\n" +
 	"\n" +
-	"is_publish\x18\x0f \x01(\bR\tisPublish\x12\x1b\n" +
-	"\tis_active\x18\x10 \x01(\bR\bisActive\x12\x1c\n" +
-	"\tpermalink\x18\x11 \x01(\tR\tpermalink\"\xe1\x03\n" +
-	"\x12UploadImageRequest\x12\x14\n" +
-	"\x05title\x18\x01 \x01(\tR\x05title\x12 \n" +
-	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
-	"\balt_text\x18\x03 \x01(\tR\aaltText\x12\x1a\n" +
-	"\bcategory\x18\x04 \x01(\tR\bcategory\x12\x12\n" +
-	"\x04tags\x18\x05 \x03(\tR\x04tags\x12 \n" +
-	"\tis_public\x18\x06 \x01(\bH\x00R\bisPublic\x88\x01\x01\x12\x1d\n" +
+	"_permalinkB\b\n" +
+	"\x06_titleB\x0e\n" +
+	"\f_descriptionB\f\n" +
 	"\n" +
-	"custom_key\x18\a \x01(\tR\tcustomKey\x12\x17\n" +
-	"\x04site\x18\b \x01(\tH\x01R\x04site\x88\x01\x01\x12E\n" +
-	"\faspect_ratio\x18\t \x01(\x0e2\x1d.content.v1.image.AspectRatioH\x02R\vaspectRatio\x88\x01\x01\x12\"\n" +
+	"_mime_typeB\r\n" +
+	"\v_size_bytesB\x0e\n" +
+	"\f_uploader_idB\x0f\n" +
+	"\r_aspect_ratioB\f\n" +
 	"\n" +
-	"is_publish\x18\n" +
-	" \x01(\bH\x03R\tisPublish\x88\x01\x01\x12 \n" +
-	"\tis_active\x18\v \x01(\bH\x04R\bisActive\x88\x01\x01\x12\x1c\n" +
-	"\tpermalink\x18\f \x01(\tR\tpermalinkB\f\n" +
-	"\n" +
-	"_is_publicB\a\n" +
-	"\x05_siteB\x0f\n" +
-	"\r_aspect_ratioB\r\n" +
+	"_is_publicB\r\n" +
 	"\v_is_publishB\f\n" +
 	"\n" +
-	"_is_active\"\x85\x01\n" +
-	"\x12ImageUploadRequest\x12>\n" +
-	"\tfile_info\x18\x01 \x01(\v2\x1f.content.v1.image.ImageFileInfoH\x00R\bfileInfo\x12\x1f\n" +
+	"_is_activeB\t\n" +
+	"\a_statusB\v\n" +
+	"\t_alt_text\"\x92\x01\n" +
+	"\x12ImageUploadRequest\x12K\n" +
+	"\tfile_info\x18\x01 \x01(\v2,.content.v1.image.ImageCreateOrUpdateRequestH\x00R\bfileInfo\x12\x1f\n" +
 	"\n" +
 	"chunk_data\x18\x02 \x01(\fH\x00R\tchunkDataB\x0e\n" +
-	"\frequest_data\"L\n" +
-	"\x13ImageUploadResponse\x125\n" +
-	"\x05image\x18\x01 \x01(\v2\x1f.content.v1.image.ImageMetadataR\x05image\"\xd5\x04\n" +
-	"\x12ImageUpdateRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
-	"\x05title\x18\x02 \x01(\tH\x00R\x05title\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x03 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1e\n" +
-	"\balt_text\x18\x04 \x01(\tH\x02R\aaltText\x88\x01\x01\x12\x1f\n" +
-	"\bcategory\x18\x05 \x01(\tH\x03R\bcategory\x88\x01\x01\x12\x12\n" +
-	"\x04tags\x18\x06 \x03(\tR\x04tags\x12 \n" +
-	"\tis_public\x18\a \x01(\bH\x04R\bisPublic\x88\x01\x01\x12\x1b\n" +
-	"\x06status\x18\b \x01(\tH\x05R\x06status\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\t \x01(\tH\x06R\x04site\x88\x01\x01\x12E\n" +
-	"\faspect_ratio\x18\n" +
-	" \x01(\x0e2\x1d.content.v1.image.AspectRatioH\aR\vaspectRatio\x88\x01\x01\x12\"\n" +
-	"\n" +
-	"is_publish\x18\v \x01(\bH\bR\tisPublish\x88\x01\x01\x12 \n" +
-	"\tis_active\x18\f \x01(\bH\tR\bisActive\x88\x01\x01\x12!\n" +
-	"\tpermalink\x18\r \x01(\tH\n" +
-	"R\tpermalink\x88\x01\x01B\b\n" +
-	"\x06_titleB\x0e\n" +
-	"\f_descriptionB\v\n" +
-	"\t_alt_textB\v\n" +
-	"\t_categoryB\f\n" +
-	"\n" +
-	"_is_publicB\t\n" +
-	"\a_statusB\a\n" +
-	"\x05_siteB\x0f\n" +
-	"\r_aspect_ratioB\r\n" +
-	"\v_is_publishB\f\n" +
-	"\n" +
-	"_is_activeB\f\n" +
-	"\n" +
-	"_permalink\"g\n" +
+	"\frequest_data\"g\n" +
 	"\x12ImageDeleteRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vhard_delete\x18\x02 \x01(\bR\n" +
 	"hardDelete\x12\x17\n" +
 	"\x04site\x18\x03 \x01(\tH\x00R\x04site\x88\x01\x01B\a\n" +
-	"\x05_site\"I\n" +
-	"\x13ImageDeleteResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"k\n" +
+	"\x05_site\"k\n" +
 	"\x11ImageShareRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12$\n" +
 	"\x0eexpires_in_sec\x18\x02 \x01(\x05R\fexpiresInSec\x12\x17\n" +
 	"\x04site\x18\x03 \x01(\tH\x00R\x04site\x88\x01\x01B\a\n" +
-	"\x05_site\"f\n" +
+	"\x05_site\"r\n" +
+	"\x11AspectRatioImages\x12@\n" +
+	"\faspect_ratio\x18\x01 \x01(\x0e2\x1d.content.v1.image.AspectRatioR\vaspectRatio\x12\x1b\n" +
+	"\timage_ids\x18\x02 \x03(\tR\bimageIds\"\xbf\x04\n" +
+	"\rImageResponse\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04site\x18\x02 \x01(\tR\x04site\x12\x14\n" +
+	"\x05title\x18\x03 \x01(\tR\x05title\x12\x1c\n" +
+	"\tpermalink\x18\x04 \x01(\tR\tpermalink\x12 \n" +
+	"\vdescription\x18\x05 \x01(\tR\vdescription\x12,\n" +
+	"\x04file\x18\x06 \x01(\v2\x18.storage.v1.FileResponseR\x04file\x12\x14\n" +
+	"\x05width\x18\a \x01(\x05R\x05width\x12\x16\n" +
+	"\x06height\x18\b \x01(\x05R\x06height\x12@\n" +
+	"\faspect_ratio\x18\t \x01(\x0e2\x1d.content.v1.image.AspectRatioR\vaspectRatio\x12\x16\n" +
+	"\x06format\x18\n" +
+	" \x01(\tR\x06format\x12\x1a\n" +
+	"\bcategory\x18\v \x01(\tR\bcategory\x12\x12\n" +
+	"\x04tags\x18\f \x03(\tR\x04tags\x12\x1b\n" +
+	"\tis_public\x18\r \x01(\bR\bisPublic\x12\x16\n" +
+	"\x06status\x18\x0e \x01(\tR\x06status\x12\x1f\n" +
+	"\vuploaded_by\x18\x0f \x01(\tR\n" +
+	"uploadedBy\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x10 \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\x11 \x01(\tR\tupdatedAt\x12\x1d\n" +
+	"\n" +
+	"is_publish\x18\x12 \x01(\bR\tisPublish\x12\x1b\n" +
+	"\tis_active\x18\x13 \x01(\bR\bisActive\"\xb6\x01\n" +
+	"\x13ImageSearchResponse\x12/\n" +
+	"\x06images\x18\x01 \x03(\v2\x17.content.v1.image.ImageR\x06images\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x03R\n" +
+	"totalCount\x12\x14\n" +
+	"\x05limit\x18\x03 \x01(\x05R\x05limit\x12\x16\n" +
+	"\x06offset\x18\x04 \x01(\x05R\x06offset\x12\x1f\n" +
+	"\vtotal_pages\x18\x05 \x01(\x05R\n" +
+	"totalPages\"^\n" +
+	"\x13ImageUploadResponse\x12-\n" +
+	"\x05image\x18\x01 \x01(\v2\x17.content.v1.image.ImageR\x05image\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"I\n" +
+	"\x13ImageDeleteResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\x80\x01\n" +
 	"\x12ImageShareResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12!\n" +
 	"\fdownload_url\x18\x02 \x01(\tR\vdownloadUrl\x12\x1d\n" +
 	"\n" +
-	"expires_at\x18\x03 \x01(\tR\texpiresAt\"\xab\x01\n" +
-	"\x11AspectRatioImages\x12@\n" +
-	"\faspect_ratio\x18\x01 \x01(\x0e2\x1d.content.v1.image.AspectRatioR\vaspectRatio\x12\x1b\n" +
-	"\timage_ids\x18\x02 \x03(\tR\bimageIds\x127\n" +
-	"\x06images\x18\x03 \x03(\v2\x1f.content.v1.image.ImageMetadataR\x06images*\xf4\x02\n" +
+	"expires_at\x18\x03 \x01(\tR\texpiresAt\x12\x18\n" +
+	"\amessage\x18\x04 \x01(\tR\amessage\"\x8e\x01\n" +
+	"\x19AspectRatioImagesResponse\x12@\n" +
+	"\faspect_ratio\x18\x01 \x01(\x0e2\x1d.content.v1.image.AspectRatioR\vaspectRatio\x12/\n" +
+	"\x06images\x18\x02 \x03(\v2\x17.content.v1.image.ImageR\x06images*\xf4\x02\n" +
 	"\vAspectRatio\x12\x1c\n" +
 	"\x18ASPECT_RATIO_UNSPECIFIED\x10\x00\x12\x1f\n" +
 	"\x1bASPECT_RATIO_16_9_LANDSCAPE\x10\x01\x12\x15\n" +
@@ -2038,7 +2007,12 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"\x1aASPECT_RATIO_9_16_VERTICAL\x10\x05\x12\x15\n" +
 	"\x11ASPECT_RATIO_9_16\x10\x05\x12\x1d\n" +
 	"\x19ASPECT_RATIO_2_3_PORTRAIT\x10\x06\x12\x14\n" +
-	"\x10ASPECT_RATIO_2_3\x10\x06\x1a\x02\x10\x01B8Z6github.com/AyuuSaxena/protos-go/content/v1/image;imageb\x06proto3"
+	"\x10ASPECT_RATIO_2_3\x10\x06\x1a\x02\x10\x01*\x86\x01\n" +
+	"\rImageCategory\x12\x1e\n" +
+	"\x1aIMAGE_CATEGORY_UNSPECIFIED\x10\x00\x12\x18\n" +
+	"\x14IMAGE_CATEGORY_COVER\x10\x01\x12\x1d\n" +
+	"\x19IMAGE_CATEGORY_SCREENSHOT\x10\x02\x12\x1c\n" +
+	"\x18IMAGE_CATEGORY_WALLPAPER\x10\x03B8Z6github.com/AyuuSaxena/protos-go/content/v1/image;imageb\x06proto3"
 
 var (
 	file_content_v1_image_image_proto_rawDescOnce sync.Once
@@ -2052,46 +2026,48 @@ func file_content_v1_image_image_proto_rawDescGZIP() []byte {
 	return file_content_v1_image_image_proto_rawDescData
 }
 
-var file_content_v1_image_image_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_content_v1_image_image_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_content_v1_image_image_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_content_v1_image_image_proto_goTypes = []any{
-	(AspectRatio)(0),             // 0: content.v1.image.AspectRatio
-	(*ImageMetadata)(nil),        // 1: content.v1.image.ImageMetadata
-	(*ImageGetRequest)(nil),      // 2: content.v1.image.ImageGetRequest
-	(*ImageDownloadRequest)(nil), // 3: content.v1.image.ImageDownloadRequest
-	(*ImageQuery)(nil),           // 4: content.v1.image.ImageQuery
-	(*ImageSearchRequest)(nil),   // 5: content.v1.image.ImageSearchRequest
-	(*ImageSearchResponse)(nil),  // 6: content.v1.image.ImageSearchResponse
-	(*ImageFileInfo)(nil),        // 7: content.v1.image.ImageFileInfo
-	(*UploadImageRequest)(nil),   // 8: content.v1.image.UploadImageRequest
-	(*ImageUploadRequest)(nil),   // 9: content.v1.image.ImageUploadRequest
-	(*ImageUploadResponse)(nil),  // 10: content.v1.image.ImageUploadResponse
-	(*ImageUpdateRequest)(nil),   // 11: content.v1.image.ImageUpdateRequest
-	(*ImageDeleteRequest)(nil),   // 12: content.v1.image.ImageDeleteRequest
-	(*ImageDeleteResponse)(nil),  // 13: content.v1.image.ImageDeleteResponse
-	(*ImageShareRequest)(nil),    // 14: content.v1.image.ImageShareRequest
-	(*ImageShareResponse)(nil),   // 15: content.v1.image.ImageShareResponse
-	(*AspectRatioImages)(nil),    // 16: content.v1.image.AspectRatioImages
-	(*v1.FileMetadata)(nil),      // 17: common.v1.FileMetadata
+	(AspectRatio)(0),                   // 0: content.v1.image.AspectRatio
+	(ImageCategory)(0),                 // 1: content.v1.image.ImageCategory
+	(*Image)(nil),                      // 2: content.v1.image.Image
+	(*ImageGetRequest)(nil),            // 3: content.v1.image.ImageGetRequest
+	(*ImageDownloadRequest)(nil),       // 4: content.v1.image.ImageDownloadRequest
+	(*ImageQuery)(nil),                 // 5: content.v1.image.ImageQuery
+	(*ImageSearchRequest)(nil),         // 6: content.v1.image.ImageSearchRequest
+	(*ImageCreateOrUpdateRequest)(nil), // 7: content.v1.image.ImageCreateOrUpdateRequest
+	(*ImageUploadRequest)(nil),         // 8: content.v1.image.ImageUploadRequest
+	(*ImageDeleteRequest)(nil),         // 9: content.v1.image.ImageDeleteRequest
+	(*ImageShareRequest)(nil),          // 10: content.v1.image.ImageShareRequest
+	(*AspectRatioImages)(nil),          // 11: content.v1.image.AspectRatioImages
+	(*ImageResponse)(nil),              // 12: content.v1.image.ImageResponse
+	(*ImageSearchResponse)(nil),        // 13: content.v1.image.ImageSearchResponse
+	(*ImageUploadResponse)(nil),        // 14: content.v1.image.ImageUploadResponse
+	(*ImageDeleteResponse)(nil),        // 15: content.v1.image.ImageDeleteResponse
+	(*ImageShareResponse)(nil),         // 16: content.v1.image.ImageShareResponse
+	(*AspectRatioImagesResponse)(nil),  // 17: content.v1.image.AspectRatioImagesResponse
+	(*v1.FileResponse)(nil),            // 18: storage.v1.FileResponse
 }
 var file_content_v1_image_image_proto_depIdxs = []int32{
-	0,  // 0: content.v1.image.ImageMetadata.aspect_ratio:type_name -> content.v1.image.AspectRatio
-	17, // 1: content.v1.image.ImageMetadata.file_metadata:type_name -> common.v1.FileMetadata
-	0,  // 2: content.v1.image.ImageQuery.aspect_ratio:type_name -> content.v1.image.AspectRatio
-	4,  // 3: content.v1.image.ImageSearchRequest.query:type_name -> content.v1.image.ImageQuery
-	1,  // 4: content.v1.image.ImageSearchResponse.images:type_name -> content.v1.image.ImageMetadata
-	0,  // 5: content.v1.image.ImageFileInfo.aspect_ratio:type_name -> content.v1.image.AspectRatio
-	0,  // 6: content.v1.image.UploadImageRequest.aspect_ratio:type_name -> content.v1.image.AspectRatio
-	7,  // 7: content.v1.image.ImageUploadRequest.file_info:type_name -> content.v1.image.ImageFileInfo
-	1,  // 8: content.v1.image.ImageUploadResponse.image:type_name -> content.v1.image.ImageMetadata
-	0,  // 9: content.v1.image.ImageUpdateRequest.aspect_ratio:type_name -> content.v1.image.AspectRatio
-	0,  // 10: content.v1.image.AspectRatioImages.aspect_ratio:type_name -> content.v1.image.AspectRatio
-	1,  // 11: content.v1.image.AspectRatioImages.images:type_name -> content.v1.image.ImageMetadata
-	12, // [12:12] is the sub-list for method output_type
-	12, // [12:12] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	0,  // 0: content.v1.image.Image.aspect_ratio:type_name -> content.v1.image.AspectRatio
+	0,  // 1: content.v1.image.ImageQuery.aspect_ratio:type_name -> content.v1.image.AspectRatio
+	5,  // 2: content.v1.image.ImageSearchRequest.query:type_name -> content.v1.image.ImageQuery
+	1,  // 3: content.v1.image.ImageCreateOrUpdateRequest.category:type_name -> content.v1.image.ImageCategory
+	0,  // 4: content.v1.image.ImageCreateOrUpdateRequest.aspect_ratio:type_name -> content.v1.image.AspectRatio
+	7,  // 5: content.v1.image.ImageUploadRequest.file_info:type_name -> content.v1.image.ImageCreateOrUpdateRequest
+	0,  // 6: content.v1.image.AspectRatioImages.aspect_ratio:type_name -> content.v1.image.AspectRatio
+	18, // 7: content.v1.image.ImageResponse.file:type_name -> storage.v1.FileResponse
+	0,  // 8: content.v1.image.ImageResponse.aspect_ratio:type_name -> content.v1.image.AspectRatio
+	2,  // 9: content.v1.image.ImageSearchResponse.images:type_name -> content.v1.image.Image
+	2,  // 10: content.v1.image.ImageUploadResponse.image:type_name -> content.v1.image.Image
+	0,  // 11: content.v1.image.AspectRatioImagesResponse.aspect_ratio:type_name -> content.v1.image.AspectRatio
+	2,  // 12: content.v1.image.AspectRatioImagesResponse.images:type_name -> content.v1.image.Image
+	13, // [13:13] is the sub-list for method output_type
+	13, // [13:13] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_content_v1_image_image_proto_init() }
@@ -2103,20 +2079,19 @@ func file_content_v1_image_image_proto_init() {
 	file_content_v1_image_image_proto_msgTypes[2].OneofWrappers = []any{}
 	file_content_v1_image_image_proto_msgTypes[3].OneofWrappers = []any{}
 	file_content_v1_image_image_proto_msgTypes[4].OneofWrappers = []any{}
-	file_content_v1_image_image_proto_msgTypes[7].OneofWrappers = []any{}
-	file_content_v1_image_image_proto_msgTypes[8].OneofWrappers = []any{
+	file_content_v1_image_image_proto_msgTypes[5].OneofWrappers = []any{}
+	file_content_v1_image_image_proto_msgTypes[6].OneofWrappers = []any{
 		(*ImageUploadRequest_FileInfo)(nil),
 		(*ImageUploadRequest_ChunkData)(nil),
 	}
-	file_content_v1_image_image_proto_msgTypes[10].OneofWrappers = []any{}
-	file_content_v1_image_image_proto_msgTypes[11].OneofWrappers = []any{}
-	file_content_v1_image_image_proto_msgTypes[13].OneofWrappers = []any{}
+	file_content_v1_image_image_proto_msgTypes[7].OneofWrappers = []any{}
+	file_content_v1_image_image_proto_msgTypes[8].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_content_v1_image_image_proto_rawDesc), len(file_content_v1_image_image_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      2,
 			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   0,

@@ -439,160 +439,6 @@ func (x *CommonListResponse) GetTotalPages() int32 {
 	return 0
 }
 
-// FileMetadata describes a storage file record returned from the S3-Free database.
-type FileMetadata struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// MongoDB internal record identifier (_id)
-	// @gotags: `json:"mongoId,omitempty" bson:"_id,omitempty"`
-	MongoId string `protobuf:"bytes,1,opt,name=mongo_id,json=mongoId,proto3" json:"mongoId,omitempty" bson:"_id,omitempty"`
-	// UUID file identifier in storage database
-	// @gotags: `json:"id,omitempty" bson:"id,omitempty"`
-	Id string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty" bson:"id,omitempty"`
-	// Dynamic site/tenant key (e.g. retrogames)
-	// @gotags: `json:"site,omitempty" bson:"site,omitempty"`
-	Site string `protobuf:"bytes,3,opt,name=site,proto3" json:"site,omitempty" bson:"site,omitempty"`
-	// Bucket name containing this file
-	// @gotags: `json:"bucketId,omitempty" bson:"bucketId,omitempty"`
-	BucketId string `protobuf:"bytes,4,opt,name=bucket_id,json=bucketId,proto3" json:"bucketId,omitempty" bson:"bucketId,omitempty"`
-	// Directory path within the bucket
-	Directory string `protobuf:"bytes,5,opt,name=directory,proto3" json:"directory,omitempty"`
-	// File base name
-	Name string `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
-	// File extension without leading dot
-	// @gotags: `json:"fileExtension,omitempty" bson:"fileExtension,omitempty"`
-	FileExtension string `protobuf:"bytes,7,opt,name=file_extension,json=fileExtension,proto3" json:"fileExtension,omitempty" bson:"fileExtension,omitempty"`
-	// Full storage path (directory/name)
-	// @gotags: `json:"fullPath,omitempty" bson:"fullPath,omitempty"`
-	FullPath string `protobuf:"bytes,8,opt,name=full_path,json=fullPath,proto3" json:"fullPath,omitempty" bson:"fullPath,omitempty"`
-	// MIME content type
-	// @gotags: `json:"contentType,omitempty" bson:"contentType,omitempty"`
-	ContentType string `protobuf:"bytes,9,opt,name=content_type,json=contentType,proto3" json:"contentType,omitempty" bson:"contentType,omitempty"`
-	// File size in bytes
-	// @gotags: `json:"sizeBytes,omitempty" bson:"sizeBytes,omitempty"`
-	SizeBytes int64 `protobuf:"varint,10,opt,name=size_bytes,json=sizeBytes,proto3" json:"sizeBytes,omitempty" bson:"sizeBytes,omitempty"`
-	// ETag / checksum of the file
-	Etag string `protobuf:"bytes,11,opt,name=etag,proto3" json:"etag,omitempty"`
-	// ISO-8601 creation timestamp
-	// @gotags: `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
-	CreatedAt     string `protobuf:"bytes,12,opt,name=created_at,json=createdAt,proto3" json:"createdAt,omitempty" bson:"createdAt,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *FileMetadata) Reset() {
-	*x = FileMetadata{}
-	mi := &file_common_v1_common_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *FileMetadata) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FileMetadata) ProtoMessage() {}
-
-func (x *FileMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_common_v1_common_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FileMetadata.ProtoReflect.Descriptor instead.
-func (*FileMetadata) Descriptor() ([]byte, []int) {
-	return file_common_v1_common_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *FileMetadata) GetMongoId() string {
-	if x != nil {
-		return x.MongoId
-	}
-	return ""
-}
-
-func (x *FileMetadata) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *FileMetadata) GetSite() string {
-	if x != nil {
-		return x.Site
-	}
-	return ""
-}
-
-func (x *FileMetadata) GetBucketId() string {
-	if x != nil {
-		return x.BucketId
-	}
-	return ""
-}
-
-func (x *FileMetadata) GetDirectory() string {
-	if x != nil {
-		return x.Directory
-	}
-	return ""
-}
-
-func (x *FileMetadata) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *FileMetadata) GetFileExtension() string {
-	if x != nil {
-		return x.FileExtension
-	}
-	return ""
-}
-
-func (x *FileMetadata) GetFullPath() string {
-	if x != nil {
-		return x.FullPath
-	}
-	return ""
-}
-
-func (x *FileMetadata) GetContentType() string {
-	if x != nil {
-		return x.ContentType
-	}
-	return ""
-}
-
-func (x *FileMetadata) GetSizeBytes() int64 {
-	if x != nil {
-		return x.SizeBytes
-	}
-	return 0
-}
-
-func (x *FileMetadata) GetEtag() string {
-	if x != nil {
-		return x.Etag
-	}
-	return ""
-}
-
-func (x *FileMetadata) GetCreatedAt() string {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return ""
-}
-
 // FileChunk represents binary chunk data for file streaming.
 type FileChunk struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -604,7 +450,7 @@ type FileChunk struct {
 
 func (x *FileChunk) Reset() {
 	*x = FileChunk{}
-	mi := &file_common_v1_common_proto_msgTypes[5]
+	mi := &file_common_v1_common_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -616,7 +462,7 @@ func (x *FileChunk) String() string {
 func (*FileChunk) ProtoMessage() {}
 
 func (x *FileChunk) ProtoReflect() protoreflect.Message {
-	mi := &file_common_v1_common_proto_msgTypes[5]
+	mi := &file_common_v1_common_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -629,7 +475,7 @@ func (x *FileChunk) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileChunk.ProtoReflect.Descriptor instead.
 func (*FileChunk) Descriptor() ([]byte, []int) {
-	return file_common_v1_common_proto_rawDescGZIP(), []int{5}
+	return file_common_v1_common_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *FileChunk) GetData() []byte {
@@ -707,23 +553,7 @@ const file_common_v1_common_proto_rawDesc = "" +
 	"\x05limit\x18\x02 \x01(\x05R\x05limit\x12\x16\n" +
 	"\x06offset\x18\x03 \x01(\x05R\x06offset\x12\x1f\n" +
 	"\vtotal_pages\x18\x04 \x01(\x05R\n" +
-	"totalPages\"\xd5\x02\n" +
-	"\fFileMetadata\x12\x19\n" +
-	"\bmongo_id\x18\x01 \x01(\tR\amongoId\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
-	"\x04site\x18\x03 \x01(\tR\x04site\x12\x1b\n" +
-	"\tbucket_id\x18\x04 \x01(\tR\bbucketId\x12\x1c\n" +
-	"\tdirectory\x18\x05 \x01(\tR\tdirectory\x12\x12\n" +
-	"\x04name\x18\x06 \x01(\tR\x04name\x12%\n" +
-	"\x0efile_extension\x18\a \x01(\tR\rfileExtension\x12\x1b\n" +
-	"\tfull_path\x18\b \x01(\tR\bfullPath\x12!\n" +
-	"\fcontent_type\x18\t \x01(\tR\vcontentType\x12\x1d\n" +
-	"\n" +
-	"size_bytes\x18\n" +
-	" \x01(\x03R\tsizeBytes\x12\x12\n" +
-	"\x04etag\x18\v \x01(\tR\x04etag\x12\x1d\n" +
-	"\n" +
-	"created_at\x18\f \x01(\tR\tcreatedAt\"\x1f\n" +
+	"totalPages\"\x1f\n" +
 	"\tFileChunk\x12\x12\n" +
 	"\x04data\x18\x01 \x01(\fR\x04dataB2Z0github.com/AyuuSaxena/protos-go/common/v1;commonb\x06proto3"
 
@@ -739,18 +569,17 @@ func file_common_v1_common_proto_rawDescGZIP() []byte {
 	return file_common_v1_common_proto_rawDescData
 }
 
-var file_common_v1_common_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_common_v1_common_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_common_v1_common_proto_goTypes = []any{
 	(*UserTokenPayload)(nil),    // 0: common.v1.UserTokenPayload
 	(*CommonListRequest)(nil),   // 1: common.v1.CommonListRequest
 	(*CommonSearchRequest)(nil), // 2: common.v1.CommonSearchRequest
 	(*CommonListResponse)(nil),  // 3: common.v1.CommonListResponse
-	(*FileMetadata)(nil),        // 4: common.v1.FileMetadata
-	(*FileChunk)(nil),           // 5: common.v1.FileChunk
-	(*structpb.Struct)(nil),     // 6: google.protobuf.Struct
+	(*FileChunk)(nil),           // 4: common.v1.FileChunk
+	(*structpb.Struct)(nil),     // 5: google.protobuf.Struct
 }
 var file_common_v1_common_proto_depIdxs = []int32{
-	6, // 0: common.v1.CommonSearchRequest.query:type_name -> google.protobuf.Struct
+	5, // 0: common.v1.CommonSearchRequest.query:type_name -> google.protobuf.Struct
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -772,7 +601,7 @@ func file_common_v1_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_common_v1_common_proto_rawDesc), len(file_common_v1_common_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

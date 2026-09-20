@@ -45,14 +45,14 @@ func (m *MockGameServiceClient) EXPECT() *MockGameServiceClientMockRecorder {
 }
 
 // GetGame mocks base method.
-func (m *MockGameServiceClient) GetGame(ctx context.Context, in *game.GetGameRequest, opts ...grpc.CallOption) (*rom.RomMetadata, error) {
+func (m *MockGameServiceClient) GetGame(ctx context.Context, in *game.GetGameRequest, opts ...grpc.CallOption) (*rom.RomResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetGame", varargs...)
-	ret0, _ := ret[0].(*rom.RomMetadata)
+	ret0, _ := ret[0].(*rom.RomResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -129,10 +129,10 @@ func (m *MockGameServiceServer) EXPECT() *MockGameServiceServerMockRecorder {
 }
 
 // GetGame mocks base method.
-func (m *MockGameServiceServer) GetGame(arg0 context.Context, arg1 *game.GetGameRequest) (*rom.RomMetadata, error) {
+func (m *MockGameServiceServer) GetGame(arg0 context.Context, arg1 *game.GetGameRequest) (*rom.RomResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetGame", arg0, arg1)
-	ret0, _ := ret[0].(*rom.RomMetadata)
+	ret0, _ := ret[0].(*rom.RomResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

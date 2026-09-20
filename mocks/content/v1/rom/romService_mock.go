@@ -104,14 +104,14 @@ func (mr *MockRomServiceClientMockRecorder) RomDownload(ctx, in any, opts ...any
 }
 
 // RomGet mocks base method.
-func (m *MockRomServiceClient) RomGet(ctx context.Context, in *rom.RomGetRequest, opts ...grpc.CallOption) (*rom.RomMetadata, error) {
+func (m *MockRomServiceClient) RomGet(ctx context.Context, in *rom.RomGetRequest, opts ...grpc.CallOption) (*rom.RomResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "RomGet", varargs...)
-	ret0, _ := ret[0].(*rom.RomMetadata)
+	ret0, _ := ret[0].(*rom.RomResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -164,14 +164,14 @@ func (mr *MockRomServiceClientMockRecorder) RomShare(ctx, in any, opts ...any) *
 }
 
 // RomUpdate mocks base method.
-func (m *MockRomServiceClient) RomUpdate(ctx context.Context, in *rom.RomUpdateRequest, opts ...grpc.CallOption) (*rom.RomMetadata, error) {
+func (m *MockRomServiceClient) RomUpdate(ctx context.Context, in *rom.RomCreateOrUpdateRequest, opts ...grpc.CallOption) (*rom.RomResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "RomUpdate", varargs...)
-	ret0, _ := ret[0].(*rom.RomMetadata)
+	ret0, _ := ret[0].(*rom.RomResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -272,10 +272,10 @@ func (mr *MockRomServiceServerMockRecorder) RomDownload(arg0, arg1 any) *gomock.
 }
 
 // RomGet mocks base method.
-func (m *MockRomServiceServer) RomGet(arg0 context.Context, arg1 *rom.RomGetRequest) (*rom.RomMetadata, error) {
+func (m *MockRomServiceServer) RomGet(arg0 context.Context, arg1 *rom.RomGetRequest) (*rom.RomResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RomGet", arg0, arg1)
-	ret0, _ := ret[0].(*rom.RomMetadata)
+	ret0, _ := ret[0].(*rom.RomResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -317,10 +317,10 @@ func (mr *MockRomServiceServerMockRecorder) RomShare(arg0, arg1 any) *gomock.Cal
 }
 
 // RomUpdate mocks base method.
-func (m *MockRomServiceServer) RomUpdate(arg0 context.Context, arg1 *rom.RomUpdateRequest) (*rom.RomMetadata, error) {
+func (m *MockRomServiceServer) RomUpdate(arg0 context.Context, arg1 *rom.RomCreateOrUpdateRequest) (*rom.RomResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RomUpdate", arg0, arg1)
-	ret0, _ := ret[0].(*rom.RomMetadata)
+	ret0, _ := ret[0].(*rom.RomResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

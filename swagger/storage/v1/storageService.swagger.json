@@ -124,7 +124,6 @@
         "parameters": [
           {
             "name": "body",
-            "description": "CreateBucketRequest is the payload to create a new storage bucket.",
             "in": "body",
             "required": true,
             "schema": {
@@ -254,7 +253,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1FileMetadata"
+              "$ref": "#/definitions/v1File"
             }
           },
           "401": {
@@ -414,7 +413,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1BucketMetadata"
+              "$ref": "#/definitions/v1Bucket"
             }
           },
           "401": {
@@ -521,7 +520,6 @@
         "parameters": [
           {
             "name": "body",
-            "description": "CreateBucketRequest is the payload to create a new storage bucket.",
             "in": "body",
             "required": true,
             "schema": {
@@ -706,7 +704,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1BucketMetadata"
+              "$ref": "#/definitions/v1Bucket"
             }
           },
           "401": {
@@ -751,7 +749,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1FileMetadata"
+              "$ref": "#/definitions/v1File"
             }
           },
           "401": {
@@ -1005,7 +1003,7 @@
         "parameters": [
           {
             "name": "body",
-            "description": "UploadFileRequest represents a client-streaming message for file uploads. (streaming inputs)",
+            "description": "(streaming inputs)",
             "in": "body",
             "required": true,
             "schema": {
@@ -1056,7 +1054,7 @@
         }
       }
     },
-    "v1BucketMetadata": {
+    "v1Bucket": {
       "type": "object",
       "properties": {
         "id": {
@@ -1099,7 +1097,7 @@
           "title": "Weight map for weighted distribution strategy"
         }
       },
-      "description": "BucketMetadata represents a storage bucket entity."
+      "description": "Bucket represents a storage bucket entity."
     },
     "v1CommonListRequest": {
       "type": "object",
@@ -1184,19 +1182,19 @@
           }
         }
       },
-      "description": "CreateBucketRequest is the payload to create a new storage bucket."
+      "title": "Create"
     },
     "v1CreateBucketResponse": {
       "type": "object",
       "properties": {
         "bucket": {
-          "$ref": "#/definitions/v1BucketMetadata"
+          "$ref": "#/definitions/v1Bucket"
         },
         "accessSecret": {
           "type": "string"
         }
       },
-      "description": "CreateBucketResponse returns the created bucket metadata."
+      "title": "Create"
     },
     "v1DeleteBucketResponse": {
       "type": "object",
@@ -1208,7 +1206,7 @@
           "type": "string"
         }
       },
-      "description": "DeleteBucketResponse confirms bucket deletion."
+      "title": "Delete"
     },
     "v1DeleteFileResponse": {
       "type": "object",
@@ -1220,30 +1218,9 @@
           "type": "string"
         }
       },
-      "description": "DeleteFileResponse confirms file deletion."
+      "title": "Delete"
     },
-    "v1FileChunk": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "string",
-          "format": "byte",
-          "title": "Binary payload"
-        },
-        "chunkNumber": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Current chunk index (0-based)"
-        },
-        "totalChunks": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Total expected chunks if known"
-        }
-      },
-      "description": "FileChunk represents a chunk of binary file content for streaming upload/download."
-    },
-    "v1FileMetadata": {
+    "v1File": {
       "type": "object",
       "properties": {
         "mongoId": {
@@ -1291,7 +1268,28 @@
           "title": "Creation timestamp in RFC3339 format"
         }
       },
-      "description": "FileMetadata represents a stored file/object record."
+      "description": "File represents a stored file/object record."
+    },
+    "v1FileChunk": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "format": "byte",
+          "title": "Binary payload"
+        },
+        "chunkNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Current chunk index (0-based)"
+        },
+        "totalChunks": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Total expected chunks if known"
+        }
+      },
+      "description": "FileChunk represents a chunk of binary file content\nfor streaming upload/download."
     },
     "v1ListBucketsResponse": {
       "type": "object",
@@ -1300,14 +1298,14 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/v1BucketMetadata"
+            "$ref": "#/definitions/v1Bucket"
           }
         },
         "pagination": {
           "$ref": "#/definitions/v1CommonListResponse"
         }
       },
-      "description": "ListBucketsResponse returns a list of bucket metadata."
+      "title": "List"
     },
     "v1ListFilesResponse": {
       "type": "object",
@@ -1316,14 +1314,14 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/v1FileMetadata"
+            "$ref": "#/definitions/v1File"
           }
         },
         "pagination": {
           "$ref": "#/definitions/v1CommonListResponse"
         }
       },
-      "description": "ListFilesResponse returns matching files."
+      "title": "List"
     },
     "v1UploadFileInfo": {
       "type": "object",
@@ -1351,7 +1349,7 @@
           }
         }
       },
-      "description": "UploadFileInfo contains initial metadata for a streaming upload."
+      "title": "Upload"
     },
     "v1UploadFileRequest": {
       "type": "object",
@@ -1363,17 +1361,16 @@
           "type": "string",
           "format": "byte"
         }
-      },
-      "description": "UploadFileRequest represents a client-streaming message for file uploads."
+      }
     },
     "v1UploadFileResponse": {
       "type": "object",
       "properties": {
         "file": {
-          "$ref": "#/definitions/v1FileMetadata"
+          "$ref": "#/definitions/v1File"
         }
       },
-      "description": "UploadFileResponse returns uploaded file metadata."
+      "title": "Upload"
     }
   },
   "securityDefinitions": {

@@ -116,7 +116,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/imageImageMetadata"
+              "$ref": "#/definitions/imageImageResponse"
             }
           },
           "401": {
@@ -141,22 +141,8 @@
             "type": "string"
           },
           {
-            "name": "name",
-            "description": "Image name to match",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "site",
             "description": "Optional site identifier",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "permalink",
-            "description": "Optional permalink to match",
             "in": "query",
             "required": false,
             "type": "string"
@@ -237,7 +223,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/imageImageMetadata"
+              "$ref": "#/definitions/imageImageResponse"
             }
           },
           "401": {
@@ -256,7 +242,7 @@
         "parameters": [
           {
             "name": "id",
-            "description": "Unique Image identifier",
+            "description": "Image unique identifier.\nRequired for update and omitted for create.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -430,58 +416,72 @@
     "ImageServiceImageUpdateBody": {
       "type": "object",
       "properties": {
+        "site": {
+          "type": "string",
+          "title": "Site identifier"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
         "title": {
           "type": "string",
-          "title": "Updated Image title"
+          "title": "Image title"
         },
         "description": {
           "type": "string",
-          "title": "Updated Image description"
+          "title": "Image description"
         },
-        "altText": {
+        "mimeType": {
           "type": "string",
-          "title": "Updated alt text"
+          "title": "MIME type"
+        },
+        "sizeBytes": {
+          "type": "string",
+          "format": "int64",
+          "title": "File size in bytes"
         },
         "category": {
-          "type": "string",
-          "title": "Updated category"
+          "$ref": "#/definitions/imageImageCategory",
+          "title": "Category"
         },
         "tags": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Updated tags"
+          "title": "Category tags"
         },
-        "isPublic": {
-          "type": "boolean",
-          "title": "Updated public visibility flag"
-        },
-        "status": {
+        "uploaderId": {
           "type": "string",
-          "title": "Updated lifecycle status"
-        },
-        "site": {
-          "type": "string",
-          "title": "Updated site identifier"
+          "title": "Uploader user ID"
         },
         "aspectRatio": {
           "$ref": "#/definitions/imageAspectRatio",
-          "title": "Updated aspect ratio classification"
+          "title": "Aspect ratio classification"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
         },
         "isPublish": {
           "type": "boolean",
-          "title": "Updated publication status flag"
+          "title": "Publication status flag"
         },
         "isActive": {
           "type": "boolean",
-          "title": "Updated active status flag"
+          "title": "Active status flag"
         },
-        "permalink": {
+        "status": {
           "type": "string",
-          "title": "Updated permalink"
+          "title": "Lifecycle status"
+        },
+        "altText": {
+          "type": "string",
+          "title": "Alt text"
         }
-      }
+      },
+      "description": "ImageCreateOrUpdateRequest is used for both creating and updating\nan Image.\n\nFor create:\n- id is omitted\n- creation fields are provided\n\nFor update:\n- id is provided\n- only fields that need to be updated are provided."
     },
     "imageAspectRatio": {
       "type": "string",
@@ -503,97 +503,7 @@
       "default": "ASPECT_RATIO_UNSPECIFIED",
       "description": "AspectRatio represents standard visual aspect ratio classifications.\n\n - ASPECT_RATIO_16_9_LANDSCAPE: 16:9 Landscape - Primary widescreen format (Recommended 1920x1080)\n - ASPECT_RATIO_1_1_SQUARE: 1:1 Square (Recommended 1080x1080)\n - ASPECT_RATIO_32_9_ULTRA_WIDE: 32:9 Ultra-Wide (OTT)\n - ASPECT_RATIO_3_4_PORTRAIT: 3:4 Portrait\n - ASPECT_RATIO_9_16_VERTICAL: 9:16 Vertical\n - ASPECT_RATIO_2_3_PORTRAIT: 2:3 Portrait"
     },
-    "imageImageDeleteResponse": {
-      "type": "object",
-      "properties": {
-        "success": {
-          "type": "boolean",
-          "title": "Operation success flag"
-        },
-        "message": {
-          "type": "string",
-          "title": "Status message"
-        }
-      }
-    },
-    "imageImageFileInfo": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "title": "File name"
-        },
-        "mimeType": {
-          "type": "string",
-          "title": "MIME type"
-        },
-        "sizeBytes": {
-          "type": "string",
-          "format": "int64",
-          "title": "File size in bytes"
-        },
-        "title": {
-          "type": "string",
-          "title": "Image title"
-        },
-        "description": {
-          "type": "string",
-          "title": "Image description"
-        },
-        "altText": {
-          "type": "string",
-          "title": "Alt text"
-        },
-        "category": {
-          "type": "string",
-          "title": "Category (e.g. cover, screenshot, wallpaper)"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Category tags"
-        },
-        "isPublic": {
-          "type": "boolean",
-          "title": "Public visibility flag"
-        },
-        "customKey": {
-          "type": "string",
-          "title": "Custom storage key if specified"
-        },
-        "uploaderId": {
-          "type": "string",
-          "title": "Uploader user ID"
-        },
-        "uploaderUsername": {
-          "type": "string",
-          "title": "Uploader username"
-        },
-        "site": {
-          "type": "string",
-          "title": "Dynamic site/tenant key (e.g. retrogames)"
-        },
-        "aspectRatio": {
-          "$ref": "#/definitions/imageAspectRatio",
-          "title": "Aspect ratio classification"
-        },
-        "isPublish": {
-          "type": "boolean",
-          "title": "Publication status flag"
-        },
-        "isActive": {
-          "type": "boolean",
-          "title": "Active status flag"
-        },
-        "permalink": {
-          "type": "string",
-          "title": "URL-friendly permalink"
-        }
-      }
-    },
-    "imageImageMetadata": {
+    "imageImage": {
       "type": "object",
       "properties": {
         "mongoId": {
@@ -624,56 +534,54 @@
           "type": "string",
           "title": "Relational Foreign Key to storage file"
         },
-        "altText": {
-          "type": "string",
-          "title": "Domain & Visual Metadata"
-        },
         "width": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "title": "Image width"
         },
         "height": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "title": "Image height"
         },
         "aspectRatio": {
           "$ref": "#/definitions/imageAspectRatio",
           "title": "Aspect ratio classification"
         },
         "format": {
-          "type": "string"
+          "type": "string",
+          "title": "Image format"
         },
         "category": {
-          "type": "string"
+          "type": "string",
+          "title": "Image category"
         },
         "tags": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "title": "Image tags"
         },
         "isPublic": {
-          "type": "boolean"
+          "type": "boolean",
+          "title": "Public visibility flag"
         },
         "status": {
           "type": "string",
           "title": "Lifecycle status (active, archived, draft)"
         },
         "uploaderId": {
-          "type": "string"
-        },
-        "uploaderUsername": {
-          "type": "string"
+          "type": "string",
+          "title": "Uploader user ID"
         },
         "createdAt": {
-          "type": "string"
+          "type": "string",
+          "title": "Created timestamp"
         },
         "updatedAt": {
-          "type": "string"
-        },
-        "fileMetadata": {
-          "$ref": "#/definitions/v1FileMetadata",
-          "title": "Enriched Relations (populated on read, not persisted in DB)\nFull file details resolved from fileId"
+          "type": "string",
+          "title": "Updated timestamp"
         },
         "isPublish": {
           "type": "boolean",
@@ -681,10 +589,107 @@
         },
         "isActive": {
           "type": "boolean",
-          "title": "Active status flag (false indicates archived/deactivated)"
+          "title": "Active status flag"
         }
       },
-      "description": "ImageMetadata represents the core normalized Image entity with relational IDs."
+      "description": "Image represents the core normalized Image entity with relational IDs."
+    },
+    "imageImageCategory": {
+      "type": "string",
+      "enum": [
+        "IMAGE_CATEGORY_UNSPECIFIED",
+        "IMAGE_CATEGORY_COVER",
+        "IMAGE_CATEGORY_SCREENSHOT",
+        "IMAGE_CATEGORY_WALLPAPER"
+      ],
+      "default": "IMAGE_CATEGORY_UNSPECIFIED"
+    },
+    "imageImageCreateOrUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Image unique identifier.\nRequired for update and omitted for create."
+        },
+        "site": {
+          "type": "string",
+          "title": "Site identifier"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
+        "title": {
+          "type": "string",
+          "title": "Image title"
+        },
+        "description": {
+          "type": "string",
+          "title": "Image description"
+        },
+        "mimeType": {
+          "type": "string",
+          "title": "MIME type"
+        },
+        "sizeBytes": {
+          "type": "string",
+          "format": "int64",
+          "title": "File size in bytes"
+        },
+        "category": {
+          "$ref": "#/definitions/imageImageCategory",
+          "title": "Category"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Category tags"
+        },
+        "uploaderId": {
+          "type": "string",
+          "title": "Uploader user ID"
+        },
+        "aspectRatio": {
+          "$ref": "#/definitions/imageAspectRatio",
+          "title": "Aspect ratio classification"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
+        },
+        "isPublish": {
+          "type": "boolean",
+          "title": "Publication status flag"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Active status flag"
+        },
+        "status": {
+          "type": "string",
+          "title": "Lifecycle status"
+        },
+        "altText": {
+          "type": "string",
+          "title": "Alt text"
+        }
+      },
+      "description": "ImageCreateOrUpdateRequest is used for both creating and updating\nan Image.\n\nFor create:\n- id is omitted\n- creation fields are provided\n\nFor update:\n- id is provided\n- only fields that need to be updated are provided."
+    },
+    "imageImageDeleteResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "Operation success flag"
+        },
+        "message": {
+          "type": "string",
+          "title": "Status message"
+        }
+      }
     },
     "imageImageQuery": {
       "type": "object",
@@ -735,6 +740,91 @@
         }
       }
     },
+    "imageImageResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string",
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Display title of the Image"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed description"
+        },
+        "file": {
+          "$ref": "#/definitions/v1FileResponse",
+          "title": "Relational Foreign Key to storage file"
+        },
+        "width": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Image width"
+        },
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Image height"
+        },
+        "aspectRatio": {
+          "$ref": "#/definitions/imageAspectRatio",
+          "title": "Aspect ratio classification"
+        },
+        "format": {
+          "type": "string",
+          "title": "Image format"
+        },
+        "category": {
+          "type": "string",
+          "title": "Image category"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Image tags"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
+        },
+        "status": {
+          "type": "string",
+          "title": "Lifecycle status (active, archived, draft)"
+        },
+        "uploadedBy": {
+          "type": "string",
+          "title": "Uploaded by user"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "Created timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "title": "Updated timestamp"
+        },
+        "isPublish": {
+          "type": "boolean",
+          "title": "Publication status flag"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Active status flag"
+        }
+      }
+    },
     "imageImageSearchRequest": {
       "type": "object",
       "properties": {
@@ -777,7 +867,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/imageImageMetadata"
+            "$ref": "#/definitions/imageImage"
           },
           "title": "List of Image metadata items for the current page"
         },
@@ -817,6 +907,10 @@
         "expiresAt": {
           "type": "string",
           "title": "ISO-8601 expiration timestamp"
+        },
+        "message": {
+          "type": "string",
+          "title": "Status message"
         }
       }
     },
@@ -824,7 +918,7 @@
       "type": "object",
       "properties": {
         "fileInfo": {
-          "$ref": "#/definitions/imageImageFileInfo",
+          "$ref": "#/definitions/imageImageCreateOrUpdateRequest",
           "title": "Image metadata for initial chunk"
         },
         "chunkData": {
@@ -838,8 +932,12 @@
       "type": "object",
       "properties": {
         "image": {
-          "$ref": "#/definitions/imageImageMetadata",
-          "title": "Uploaded Image metadata"
+          "$ref": "#/definitions/imageImage",
+          "title": "Uploaded Image"
+        },
+        "message": {
+          "type": "string",
+          "title": "Status message"
         }
       }
     },
@@ -882,60 +980,43 @@
       },
       "description": "FileChunk represents binary chunk data for file streaming."
     },
-    "v1FileMetadata": {
+    "v1FileResponse": {
       "type": "object",
       "properties": {
-        "mongoId": {
-          "type": "string",
-          "title": "MongoDB internal record identifier (_id)"
-        },
         "id": {
           "type": "string",
-          "title": "UUID file identifier in storage database"
-        },
-        "site": {
-          "type": "string",
-          "title": "Dynamic site/tenant key (e.g. retrogames)"
-        },
-        "bucketId": {
-          "type": "string",
-          "title": "Bucket name containing this file"
-        },
-        "directory": {
-          "type": "string",
-          "title": "Directory path within the bucket"
+          "title": "Unique file identifier (UUID)"
         },
         "name": {
           "type": "string",
-          "title": "File base name"
+          "title": "File name"
         },
-        "fileExtension": {
+        "size": {
           "type": "string",
-          "title": "File extension without leading dot"
-        },
-        "fullPath": {
-          "type": "string",
-          "title": "Full storage path (directory/name)"
+          "format": "int64",
+          "title": "File size in bytes"
         },
         "contentType": {
           "type": "string",
           "title": "MIME content type"
         },
-        "sizeBytes": {
-          "type": "string",
-          "format": "int64",
-          "title": "File size in bytes"
-        },
         "etag": {
           "type": "string",
-          "title": "ETag / checksum of the file"
+          "title": "ETag / Checksum"
+        },
+        "userMetadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Custom user metadata"
         },
         "createdAt": {
           "type": "string",
-          "title": "ISO-8601 creation timestamp"
+          "title": "Creation timestamp in RFC3339 format"
         }
       },
-      "description": "FileMetadata describes a storage file record returned from the S3-Free database."
+      "title": "File response"
     }
   },
   "securityDefinitions": {

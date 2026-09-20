@@ -35,8 +35,8 @@ const (
 type ImageServiceClient interface {
 	ImageSearch(ctx context.Context, in *ImageSearchRequest, opts ...grpc.CallOption) (*ImageSearchResponse, error)
 	ImageUpload(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ImageUploadRequest, ImageUploadResponse], error)
-	ImageGet(ctx context.Context, in *ImageGetRequest, opts ...grpc.CallOption) (*ImageMetadata, error)
-	ImageUpdate(ctx context.Context, in *ImageUpdateRequest, opts ...grpc.CallOption) (*ImageMetadata, error)
+	ImageGet(ctx context.Context, in *ImageGetRequest, opts ...grpc.CallOption) (*ImageResponse, error)
+	ImageUpdate(ctx context.Context, in *ImageCreateOrUpdateRequest, opts ...grpc.CallOption) (*ImageResponse, error)
 	ImageDelete(ctx context.Context, in *ImageDeleteRequest, opts ...grpc.CallOption) (*ImageDeleteResponse, error)
 	ImageDownload(ctx context.Context, in *ImageDownloadRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[v1.FileChunk], error)
 	ImageShare(ctx context.Context, in *ImageShareRequest, opts ...grpc.CallOption) (*ImageShareResponse, error)
@@ -73,9 +73,9 @@ func (c *imageServiceClient) ImageUpload(ctx context.Context, opts ...grpc.CallO
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type ImageService_ImageUploadClient = grpc.ClientStreamingClient[ImageUploadRequest, ImageUploadResponse]
 
-func (c *imageServiceClient) ImageGet(ctx context.Context, in *ImageGetRequest, opts ...grpc.CallOption) (*ImageMetadata, error) {
+func (c *imageServiceClient) ImageGet(ctx context.Context, in *ImageGetRequest, opts ...grpc.CallOption) (*ImageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ImageMetadata)
+	out := new(ImageResponse)
 	err := c.cc.Invoke(ctx, ImageService_ImageGet_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -83,9 +83,9 @@ func (c *imageServiceClient) ImageGet(ctx context.Context, in *ImageGetRequest, 
 	return out, nil
 }
 
-func (c *imageServiceClient) ImageUpdate(ctx context.Context, in *ImageUpdateRequest, opts ...grpc.CallOption) (*ImageMetadata, error) {
+func (c *imageServiceClient) ImageUpdate(ctx context.Context, in *ImageCreateOrUpdateRequest, opts ...grpc.CallOption) (*ImageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ImageMetadata)
+	out := new(ImageResponse)
 	err := c.cc.Invoke(ctx, ImageService_ImageUpdate_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -138,8 +138,8 @@ func (c *imageServiceClient) ImageShare(ctx context.Context, in *ImageShareReque
 type ImageServiceServer interface {
 	ImageSearch(context.Context, *ImageSearchRequest) (*ImageSearchResponse, error)
 	ImageUpload(grpc.ClientStreamingServer[ImageUploadRequest, ImageUploadResponse]) error
-	ImageGet(context.Context, *ImageGetRequest) (*ImageMetadata, error)
-	ImageUpdate(context.Context, *ImageUpdateRequest) (*ImageMetadata, error)
+	ImageGet(context.Context, *ImageGetRequest) (*ImageResponse, error)
+	ImageUpdate(context.Context, *ImageCreateOrUpdateRequest) (*ImageResponse, error)
 	ImageDelete(context.Context, *ImageDeleteRequest) (*ImageDeleteResponse, error)
 	ImageDownload(*ImageDownloadRequest, grpc.ServerStreamingServer[v1.FileChunk]) error
 	ImageShare(context.Context, *ImageShareRequest) (*ImageShareResponse, error)
@@ -159,10 +159,10 @@ func (UnimplementedImageServiceServer) ImageSearch(context.Context, *ImageSearch
 func (UnimplementedImageServiceServer) ImageUpload(grpc.ClientStreamingServer[ImageUploadRequest, ImageUploadResponse]) error {
 	return status.Error(codes.Unimplemented, "method ImageUpload not implemented")
 }
-func (UnimplementedImageServiceServer) ImageGet(context.Context, *ImageGetRequest) (*ImageMetadata, error) {
+func (UnimplementedImageServiceServer) ImageGet(context.Context, *ImageGetRequest) (*ImageResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ImageGet not implemented")
 }
-func (UnimplementedImageServiceServer) ImageUpdate(context.Context, *ImageUpdateRequest) (*ImageMetadata, error) {
+func (UnimplementedImageServiceServer) ImageUpdate(context.Context, *ImageCreateOrUpdateRequest) (*ImageResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ImageUpdate not implemented")
 }
 func (UnimplementedImageServiceServer) ImageDelete(context.Context, *ImageDeleteRequest) (*ImageDeleteResponse, error) {
@@ -239,7 +239,7 @@ func _ImageService_ImageGet_Handler(srv interface{}, ctx context.Context, dec fu
 }
 
 func _ImageService_ImageUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ImageUpdateRequest)
+	in := new(ImageCreateOrUpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -251,7 +251,7 @@ func _ImageService_ImageUpdate_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: ImageService_ImageUpdate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ImageServiceServer).ImageUpdate(ctx, req.(*ImageUpdateRequest))
+		return srv.(ImageServiceServer).ImageUpdate(ctx, req.(*ImageCreateOrUpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

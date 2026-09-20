@@ -26,7 +26,7 @@ var File_management_v1_console_consoleService_proto protoreflect.FileDescriptor
 
 const file_management_v1_console_consoleService_proto_rawDesc = "" +
 	"\n" +
-	"*management/v1/console/consoleService.proto\x12\x15management.v1.console\x1a\x1cgoogle/api/annotations.proto\x1a\x18content/v1/rom/rom.proto2\x85\x01\n" +
+	"*management/v1/console/consoleService.proto\x12\x15management.v1.console\x1a\x1cgoogle/api/annotations.proto\x1a\x1ccontent/v1/rom/console.proto2\x85\x01\n" +
 	"\x0eConsoleService\x12s\n" +
 	"\fListConsoles\x12#.content.v1.rom.ListConsolesRequest\x1a$.content.v1.rom.ListConsolesResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/api/v1/consolesB?Z=github.com/AyuuSaxena/protos-go/management/v1/console;consoleb\x06proto3"
 
