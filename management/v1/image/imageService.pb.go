@@ -27,10 +27,10 @@ var File_management_v1_image_imageService_proto protoreflect.FileDescriptor
 
 const file_management_v1_image_imageService_proto_rawDesc = "" +
 	"\n" +
-	"&management/v1/image/imageService.proto\x12\x13management.v1.image\x1a\x1cgoogle/api/annotations.proto\x1a\x16common/v1/common.proto\x1a\x1ccontent/v1/image/image.proto\x1a\x1fmanagement/v1/image/image.proto2\x90\x02\n" +
+	"&management/v1/image/imageService.proto\x12\x13management.v1.image\x1a\x1cgoogle/api/annotations.proto\x1a\x16common/v1/common.proto\x1a\x1ccontent/v1/image/image.proto\x1a\x1fmanagement/v1/image/image.proto2\xef\x01\n" +
 	"\fImageService\x12n\n" +
-	"\bImageGet\x12$.management.v1.image.ImageGetRequest\x1a\x1f.content.v1.image.ImageResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/images/{id}\x12\x8f\x01\n" +
-	"\vImageStream\x12$.management.v1.image.ImageGetRequest\x1a\x14.common.v1.FileChunk\"B\x82\xd3\xe4\x93\x02<Z\x1e\x12\x1c/api/v1/images/{id}/download\x12\x1a/api/v1/images/{id}/stream0\x01B;Z9github.com/AyuuSaxena/protos-go/management/v1/image;imageb\x06proto3"
+	"\bImageGet\x12$.management.v1.image.ImageGetRequest\x1a\x1f.content.v1.image.ImageResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/images/{id}\x12o\n" +
+	"\vImageStream\x12$.management.v1.image.ImageGetRequest\x1a\x14.common.v1.FileChunk\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/api/v1/images/{id}/stream0\x01B;Z9github.com/AyuuSaxena/protos-go/management/v1/image;imageb\x06proto3"
 
 var file_management_v1_image_imageService_proto_goTypes = []any{
 	(*ImageGetRequest)(nil),     // 0: management.v1.image.ImageGetRequest
