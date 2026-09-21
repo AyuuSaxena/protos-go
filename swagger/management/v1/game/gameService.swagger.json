@@ -228,22 +228,17 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/imageImage"
+            "$ref": "#/definitions/imageImageResponse"
           },
           "title": "Enriched array of full image metadata resolved at read-time"
         }
       }
     },
-    "imageImage": {
+    "imageImageResponse": {
       "type": "object",
       "properties": {
-        "mongoId": {
-          "type": "string",
-          "title": "MongoDB internal record identifier (_id)"
-        },
         "id": {
-          "type": "string",
-          "title": "Unique Image identifier (UUID)"
+          "type": "string"
         },
         "site": {
           "type": "string",
@@ -261,8 +256,8 @@
           "type": "string",
           "title": "Detailed description"
         },
-        "fileId": {
-          "type": "string",
+        "file": {
+          "$ref": "#/definitions/v1FileResponse",
           "title": "Relational Foreign Key to storage file"
         },
         "width": {
@@ -302,9 +297,9 @@
           "type": "string",
           "title": "Lifecycle status (active, archived, draft)"
         },
-        "uploaderId": {
+        "uploadedBy": {
           "type": "string",
-          "title": "Uploader user ID"
+          "title": "Uploaded by user"
         },
         "createdAt": {
           "type": "string",
@@ -322,8 +317,7 @@
           "type": "boolean",
           "title": "Active status flag"
         }
-      },
-      "description": "Image represents the core normalized Image entity with relational IDs."
+      }
     },
     "protobufAny": {
       "type": "object",

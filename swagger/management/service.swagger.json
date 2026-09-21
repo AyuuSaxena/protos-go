@@ -777,7 +777,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/imageImage"
+            "$ref": "#/definitions/imageImageResponse"
           },
           "title": "Enriched array of full image metadata resolved at read-time"
         }
@@ -1120,6 +1120,91 @@
         }
       },
       "title": "File response"
+    },
+    "imageImageResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string",
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Display title of the Image"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed description"
+        },
+        "file": {
+          "$ref": "#/definitions/v1FileResponse",
+          "title": "Relational Foreign Key to storage file"
+        },
+        "width": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Image width"
+        },
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Image height"
+        },
+        "aspectRatio": {
+          "$ref": "#/definitions/imageAspectRatio",
+          "title": "Aspect ratio classification"
+        },
+        "format": {
+          "type": "string",
+          "title": "Image format"
+        },
+        "category": {
+          "type": "string",
+          "title": "Image category"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Image tags"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
+        },
+        "status": {
+          "type": "string",
+          "title": "Lifecycle status (active, archived, draft)"
+        },
+        "uploadedBy": {
+          "type": "string",
+          "title": "Uploaded by user"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "Created timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "title": "Updated timestamp"
+        },
+        "isPublish": {
+          "type": "boolean",
+          "title": "Publication status flag"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Active status flag"
+        }
+      }
     }
   }
 }

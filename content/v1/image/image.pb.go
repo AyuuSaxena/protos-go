@@ -1745,7 +1745,7 @@ type AspectRatioImagesResponse struct {
 	AspectRatio AspectRatio `protobuf:"varint,1,opt,name=aspect_ratio,json=aspectRatio,proto3,enum=content.v1.image.AspectRatio" json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
 	// Enriched array of full image metadata resolved at read-time
 	// @gotags: `json:"images,omitempty" bson:"-"`
-	Images        []*Image `protobuf:"bytes,2,rep,name=images,proto3" json:"images,omitempty" bson:"-"`
+	Images        []*ImageResponse `protobuf:"bytes,2,rep,name=images,proto3" json:"images,omitempty" bson:"-"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1787,7 +1787,7 @@ func (x *AspectRatioImagesResponse) GetAspectRatio() AspectRatio {
 	return AspectRatio_ASPECT_RATIO_UNSPECIFIED
 }
 
-func (x *AspectRatioImagesResponse) GetImages() []*Image {
+func (x *AspectRatioImagesResponse) GetImages() []*ImageResponse {
 	if x != nil {
 		return x.Images
 	}
@@ -1990,10 +1990,10 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"\fdownload_url\x18\x02 \x01(\tR\vdownloadUrl\x12\x1d\n" +
 	"\n" +
 	"expires_at\x18\x03 \x01(\tR\texpiresAt\x12\x18\n" +
-	"\amessage\x18\x04 \x01(\tR\amessage\"\x8e\x01\n" +
+	"\amessage\x18\x04 \x01(\tR\amessage\"\x96\x01\n" +
 	"\x19AspectRatioImagesResponse\x12@\n" +
-	"\faspect_ratio\x18\x01 \x01(\x0e2\x1d.content.v1.image.AspectRatioR\vaspectRatio\x12/\n" +
-	"\x06images\x18\x02 \x03(\v2\x17.content.v1.image.ImageR\x06images*\xf4\x02\n" +
+	"\faspect_ratio\x18\x01 \x01(\x0e2\x1d.content.v1.image.AspectRatioR\vaspectRatio\x127\n" +
+	"\x06images\x18\x02 \x03(\v2\x1f.content.v1.image.ImageResponseR\x06images*\xf4\x02\n" +
 	"\vAspectRatio\x12\x1c\n" +
 	"\x18ASPECT_RATIO_UNSPECIFIED\x10\x00\x12\x1f\n" +
 	"\x1bASPECT_RATIO_16_9_LANDSCAPE\x10\x01\x12\x15\n" +
@@ -2062,7 +2062,7 @@ var file_content_v1_image_image_proto_depIdxs = []int32{
 	2,  // 9: content.v1.image.ImageSearchResponse.images:type_name -> content.v1.image.Image
 	2,  // 10: content.v1.image.ImageUploadResponse.image:type_name -> content.v1.image.Image
 	0,  // 11: content.v1.image.AspectRatioImagesResponse.aspect_ratio:type_name -> content.v1.image.AspectRatio
-	2,  // 12: content.v1.image.AspectRatioImagesResponse.images:type_name -> content.v1.image.Image
+	12, // 12: content.v1.image.AspectRatioImagesResponse.images:type_name -> content.v1.image.ImageResponse
 	13, // [13:13] is the sub-list for method output_type
 	13, // [13:13] is the sub-list for method input_type
 	13, // [13:13] is the sub-list for extension type_name

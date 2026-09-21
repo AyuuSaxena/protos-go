@@ -2281,7 +2281,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/imageImage"
+            "$ref": "#/definitions/imageImageResponse"
           },
           "title": "Enriched array of full image metadata resolved at read-time"
         }
