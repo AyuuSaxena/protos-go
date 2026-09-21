@@ -1,0 +1,403 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "management/v1/image/imageService.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Images"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/images/{id}": {
+      "get": {
+        "summary": "ImageGet retrieves detailed metadata for a single image by ID.",
+        "operationId": "ImageService_ImageGet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/imageImageResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique image identifier",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "site",
+            "description": "Optional site/tenant identifier",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Images"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/images/{id}/download": {
+      "get": {
+        "summary": "ImageStream streams the image binary data directly to the caller.",
+        "operationId": "ImageService_ImageStream2",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/v1FileChunk"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of v1FileChunk"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique image identifier",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "site",
+            "description": "Optional site/tenant identifier",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Images"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/images/{id}/stream": {
+      "get": {
+        "summary": "ImageStream streams the image binary data directly to the caller.",
+        "operationId": "ImageService_ImageStream",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/v1FileChunk"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of v1FileChunk"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique image identifier",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "site",
+            "description": "Optional site/tenant identifier",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Images"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "imageAspectRatio": {
+      "type": "string",
+      "enum": [
+        "ASPECT_RATIO_UNSPECIFIED",
+        "ASPECT_RATIO_16_9_LANDSCAPE",
+        "ASPECT_RATIO_16_9",
+        "ASPECT_RATIO_1_1_SQUARE",
+        "ASPECT_RATIO_1_1",
+        "ASPECT_RATIO_32_9_ULTRA_WIDE",
+        "ASPECT_RATIO_32_9",
+        "ASPECT_RATIO_3_4_PORTRAIT",
+        "ASPECT_RATIO_3_4",
+        "ASPECT_RATIO_9_16_VERTICAL",
+        "ASPECT_RATIO_9_16",
+        "ASPECT_RATIO_2_3_PORTRAIT",
+        "ASPECT_RATIO_2_3"
+      ],
+      "default": "ASPECT_RATIO_UNSPECIFIED",
+      "description": "AspectRatio represents standard visual aspect ratio classifications.\n\n - ASPECT_RATIO_16_9_LANDSCAPE: 16:9 Landscape - Primary widescreen format (Recommended 1920x1080)\n - ASPECT_RATIO_1_1_SQUARE: 1:1 Square (Recommended 1080x1080)\n - ASPECT_RATIO_32_9_ULTRA_WIDE: 32:9 Ultra-Wide (OTT)\n - ASPECT_RATIO_3_4_PORTRAIT: 3:4 Portrait\n - ASPECT_RATIO_9_16_VERTICAL: 9:16 Vertical\n - ASPECT_RATIO_2_3_PORTRAIT: 2:3 Portrait"
+    },
+    "imageImageResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string",
+          "title": "Dynamic site/tenant key (e.g. retrogames)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Display title of the Image"
+        },
+        "permalink": {
+          "type": "string",
+          "title": "URL-friendly permalink"
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed description"
+        },
+        "file": {
+          "$ref": "#/definitions/v1FileResponse",
+          "title": "Relational Foreign Key to storage file"
+        },
+        "width": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Image width"
+        },
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Image height"
+        },
+        "aspectRatio": {
+          "$ref": "#/definitions/imageAspectRatio",
+          "title": "Aspect ratio classification"
+        },
+        "format": {
+          "type": "string",
+          "title": "Image format"
+        },
+        "category": {
+          "type": "string",
+          "title": "Image category"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Image tags"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "title": "Public visibility flag"
+        },
+        "status": {
+          "type": "string",
+          "title": "Lifecycle status (active, archived, draft)"
+        },
+        "uploadedBy": {
+          "type": "string",
+          "title": "Uploaded by user"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "Created timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "title": "Updated timestamp"
+        },
+        "isPublish": {
+          "type": "boolean",
+          "title": "Publication status flag"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Active status flag"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1FileChunk": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "format": "byte",
+          "title": "Binary chunk data"
+        }
+      },
+      "description": "FileChunk represents binary chunk data for file streaming."
+    },
+    "v1FileResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique file identifier (UUID)"
+        },
+        "name": {
+          "type": "string",
+          "title": "File name"
+        },
+        "size": {
+          "type": "string",
+          "format": "int64",
+          "title": "File size in bytes"
+        },
+        "contentType": {
+          "type": "string",
+          "title": "MIME content type"
+        },
+        "etag": {
+          "type": "string",
+          "title": "ETag / Checksum"
+        },
+        "userMetadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Custom user metadata"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "Creation timestamp in RFC3339 format"
+        }
+      },
+      "title": "File response"
+    }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization header using the Bearer scheme. Enter: 'Bearer <token>'"
+    },
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "name": "x-api-key",
+      "in": "header",
+      "description": "Admin or Identity API key (header: x-api-key)"
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    },
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

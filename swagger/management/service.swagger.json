@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Management Service API (Console & Game)",
+    "title": "Management Service API (Console & Game & Image)",
     "version": "v1"
   },
   "tags": [
@@ -10,6 +10,9 @@
     },
     {
       "name": "Games"
+    },
+    {
+      "name": "Images"
     }
   ],
   "consumes": [
@@ -238,6 +241,183 @@
         ],
         "tags": [
           "Games"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/images/{id}": {
+      "get": {
+        "summary": "ImageGet retrieves detailed metadata for a single image by ID.",
+        "operationId": "ImageService_ImageGet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/imageImageResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique image identifier",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "site",
+            "description": "Optional site/tenant identifier",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Images"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/images/{id}/download": {
+      "get": {
+        "summary": "ImageStream streams the image binary data directly to the caller.",
+        "operationId": "ImageService_ImageStream2",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/v1FileChunk"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of v1FileChunk"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique image identifier",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "site",
+            "description": "Optional site/tenant identifier",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Images"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/images/{id}/stream": {
+      "get": {
+        "summary": "ImageStream streams the image binary data directly to the caller.",
+        "operationId": "ImageService_ImageStream",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/v1FileChunk"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of v1FileChunk"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique image identifier",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "site",
+            "description": "Optional site/tenant identifier",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Images"
         ],
         "security": [
           {
