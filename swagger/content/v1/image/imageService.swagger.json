@@ -867,7 +867,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/imageImage"
+            "$ref": "#/definitions/imageImageResponse"
           },
           "title": "List of Image metadata items for the current page"
         },

@@ -1371,7 +1371,7 @@ func (x *RomResponse) GetImages() []*image.AspectRatioImagesResponse {
 type RomSearchResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// List of ROM metadata items for the current page
-	Roms []*Rom `protobuf:"bytes,1,rep,name=roms,proto3" json:"roms,omitempty"`
+	Roms []*RomResponse `protobuf:"bytes,1,rep,name=roms,proto3" json:"roms,omitempty"`
 	// Total count of items matching the query
 	// @gotags: `json:"totalCount,omitempty" bson:"totalCount,omitempty"`
 	TotalCount int64 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"totalCount,omitempty" bson:"totalCount,omitempty"`
@@ -1416,7 +1416,7 @@ func (*RomSearchResponse) Descriptor() ([]byte, []int) {
 	return file_content_v1_rom_rom_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *RomSearchResponse) GetRoms() []*Rom {
+func (x *RomSearchResponse) GetRoms() []*RomResponse {
 	if x != nil {
 		return x.Roms
 	}
@@ -1822,9 +1822,9 @@ const file_content_v1_rom_rom_proto_rawDesc = "" +
 	"\n" +
 	"is_publish\x18\x1a \x01(\bR\tisPublish\x12\x1b\n" +
 	"\tis_active\x18\x1b \x01(\bR\bisActive\x12C\n" +
-	"\x06images\x18\x19 \x03(\v2+.content.v1.image.AspectRatioImagesResponseR\x06images\"\xac\x01\n" +
-	"\x11RomSearchResponse\x12'\n" +
-	"\x04roms\x18\x01 \x03(\v2\x13.content.v1.rom.RomR\x04roms\x12\x1f\n" +
+	"\x06images\x18\x19 \x03(\v2+.content.v1.image.AspectRatioImagesResponseR\x06images\"\xb4\x01\n" +
+	"\x11RomSearchResponse\x12/\n" +
+	"\x04roms\x18\x01 \x03(\v2\x1b.content.v1.rom.RomResponseR\x04roms\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x03R\n" +
 	"totalCount\x12\x14\n" +
 	"\x05limit\x18\x03 \x01(\x05R\x05limit\x12\x16\n" +
@@ -1885,7 +1885,7 @@ var file_content_v1_rom_rom_proto_depIdxs = []int32{
 	15, // 4: content.v1.rom.RomResponse.console:type_name -> content.v1.rom.ConsoleInfo
 	16, // 5: content.v1.rom.RomResponse.file:type_name -> storage.v1.FileResponse
 	17, // 6: content.v1.rom.RomResponse.images:type_name -> content.v1.image.AspectRatioImagesResponse
-	0,  // 7: content.v1.rom.RomSearchResponse.roms:type_name -> content.v1.rom.Rom
+	9,  // 7: content.v1.rom.RomSearchResponse.roms:type_name -> content.v1.rom.RomResponse
 	0,  // 8: content.v1.rom.RomUploadResponse.rom:type_name -> content.v1.rom.Rom
 	9,  // [9:9] is the sub-list for method output_type
 	9,  // [9:9] is the sub-list for method input_type

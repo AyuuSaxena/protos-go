@@ -200,23 +200,6 @@
       "default": "ASPECT_RATIO_UNSPECIFIED",
       "description": "AspectRatio represents standard visual aspect ratio classifications.\n\n - ASPECT_RATIO_16_9_LANDSCAPE: 16:9 Landscape - Primary widescreen format (Recommended 1920x1080)\n - ASPECT_RATIO_1_1_SQUARE: 1:1 Square (Recommended 1080x1080)\n - ASPECT_RATIO_32_9_ULTRA_WIDE: 32:9 Ultra-Wide (OTT)\n - ASPECT_RATIO_3_4_PORTRAIT: 3:4 Portrait\n - ASPECT_RATIO_9_16_VERTICAL: 9:16 Vertical\n - ASPECT_RATIO_2_3_PORTRAIT: 2:3 Portrait"
     },
-    "imageAspectRatioImages": {
-      "type": "object",
-      "properties": {
-        "aspectRatio": {
-          "$ref": "#/definitions/imageAspectRatio",
-          "title": "Aspect ratio enum classification"
-        },
-        "imageIds": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Array of image UUID foreign keys"
-        }
-      },
-      "description": "AspectRatioImages groups image IDs by aspect ratio format.\n\nReusable across all content entities\n(ROMs, games, articles, videos, etc.)"
-    },
     "imageAspectRatioImagesResponse": {
       "type": "object",
       "properties": {
@@ -377,113 +360,6 @@
         }
       },
       "description": "ConsoleInfo represents a gaming console system stored in the database taxonomy."
-    },
-    "romRom": {
-      "type": "object",
-      "properties": {
-        "mongoId": {
-          "type": "string",
-          "title": "MongoDB internal record identifier (_id)"
-        },
-        "id": {
-          "type": "string",
-          "title": "Unique ROM identifier (UUID)"
-        },
-        "site": {
-          "type": "string",
-          "title": "Dynamic site/tenant key (e.g. retrogames)"
-        },
-        "title": {
-          "type": "string",
-          "title": "Display title of the ROM"
-        },
-        "permalink": {
-          "type": "string",
-          "title": "URL-friendly permalink"
-        },
-        "description": {
-          "type": "string",
-          "title": "Detailed description"
-        },
-        "consoleId": {
-          "type": "string",
-          "title": "Console system database ID"
-        },
-        "fileId": {
-          "type": "string",
-          "title": "Relational Foreign Key to storage file"
-        },
-        "publisher": {
-          "type": "string",
-          "title": "Game publisher"
-        },
-        "releaseYear": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Release year"
-        },
-        "genre": {
-          "type": "string",
-          "title": "Game genre"
-        },
-        "region": {
-          "type": "string",
-          "title": "Release region"
-        },
-        "players": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Supported players"
-        },
-        "rating": {
-          "type": "string",
-          "title": "Content rating"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Category tags"
-        },
-        "isPublic": {
-          "type": "boolean",
-          "title": "Public visibility flag"
-        },
-        "status": {
-          "type": "string",
-          "title": "Lifecycle status (active, archived, draft)"
-        },
-        "uploaderId": {
-          "type": "string",
-          "title": "Uploader user ID"
-        },
-        "createdAt": {
-          "type": "string",
-          "title": "Created timestamp"
-        },
-        "updatedAt": {
-          "type": "string",
-          "title": "Updated timestamp"
-        },
-        "isPublish": {
-          "type": "boolean",
-          "title": "Publication status flag"
-        },
-        "isActive": {
-          "type": "boolean",
-          "title": "Active status flag (false indicates archived/deactivated)"
-        },
-        "images": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/imageAspectRatioImages"
-          },
-          "title": "Array of image groups categorized by aspect ratio.\nStores image IDs in DB and enriched images on read."
-        }
-      },
-      "description": "Rom represents the core normalized ROM entity with relational IDs."
     },
     "romRomQuery": {
       "type": "object",
@@ -682,7 +558,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/romRom"
+            "$ref": "#/definitions/romRomResponse"
           },
           "title": "List of ROM metadata items for the current page"
         },

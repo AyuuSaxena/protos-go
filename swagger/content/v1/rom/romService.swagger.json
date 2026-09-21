@@ -1167,7 +1167,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/romRom"
+            "$ref": "#/definitions/romRomResponse"
           },
           "title": "List of ROM metadata items for the current page"
         },

@@ -1476,7 +1476,7 @@ func (x *ImageResponse) GetIsActive() bool {
 type ImageSearchResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// List of Image metadata items for the current page
-	Images []*Image `protobuf:"bytes,1,rep,name=images,proto3" json:"images,omitempty"`
+	Images []*ImageResponse `protobuf:"bytes,1,rep,name=images,proto3" json:"images,omitempty"`
 	// Total count of items matching the query
 	// @gotags: `json:"totalCount,omitempty" bson:"totalCount,omitempty"`
 	TotalCount int64 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"totalCount,omitempty" bson:"totalCount,omitempty"`
@@ -1521,7 +1521,7 @@ func (*ImageSearchResponse) Descriptor() ([]byte, []int) {
 	return file_content_v1_image_image_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *ImageSearchResponse) GetImages() []*Image {
+func (x *ImageSearchResponse) GetImages() []*ImageResponse {
 	if x != nil {
 		return x.Images
 	}
@@ -1970,9 +1970,9 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"updated_at\x18\x11 \x01(\tR\tupdatedAt\x12\x1d\n" +
 	"\n" +
 	"is_publish\x18\x12 \x01(\bR\tisPublish\x12\x1b\n" +
-	"\tis_active\x18\x13 \x01(\bR\bisActive\"\xb6\x01\n" +
-	"\x13ImageSearchResponse\x12/\n" +
-	"\x06images\x18\x01 \x03(\v2\x17.content.v1.image.ImageR\x06images\x12\x1f\n" +
+	"\tis_active\x18\x13 \x01(\bR\bisActive\"\xbe\x01\n" +
+	"\x13ImageSearchResponse\x127\n" +
+	"\x06images\x18\x01 \x03(\v2\x1f.content.v1.image.ImageResponseR\x06images\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x03R\n" +
 	"totalCount\x12\x14\n" +
 	"\x05limit\x18\x03 \x01(\x05R\x05limit\x12\x16\n" +
@@ -2059,7 +2059,7 @@ var file_content_v1_image_image_proto_depIdxs = []int32{
 	0,  // 6: content.v1.image.AspectRatioImages.aspect_ratio:type_name -> content.v1.image.AspectRatio
 	18, // 7: content.v1.image.ImageResponse.file:type_name -> storage.v1.FileResponse
 	0,  // 8: content.v1.image.ImageResponse.aspect_ratio:type_name -> content.v1.image.AspectRatio
-	2,  // 9: content.v1.image.ImageSearchResponse.images:type_name -> content.v1.image.Image
+	12, // 9: content.v1.image.ImageSearchResponse.images:type_name -> content.v1.image.ImageResponse
 	2,  // 10: content.v1.image.ImageUploadResponse.image:type_name -> content.v1.image.Image
 	0,  // 11: content.v1.image.AspectRatioImagesResponse.aspect_ratio:type_name -> content.v1.image.AspectRatio
 	12, // 12: content.v1.image.AspectRatioImagesResponse.images:type_name -> content.v1.image.ImageResponse
