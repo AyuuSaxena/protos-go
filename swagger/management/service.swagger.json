@@ -950,7 +950,7 @@
       "type": "object",
       "properties": {
         "aspectRatio": {
-          "$ref": "#/definitions/imageAspectRatio",
+          "type": "string",
           "title": "Aspect ratio enum classification"
         },
         "images": {
