@@ -1135,8 +1135,8 @@ type RomResponse struct {
 	// Detailed description
 	Description string `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
 	// Console system database ID
-	// @gotags: `json:"consoleId,omitempty" bson:"consoleId,omitempty"`
-	Console *ConsoleInfo `protobuf:"bytes,7,opt,name=console,proto3" json:"consoleId,omitempty" bson:"consoleId,omitempty"`
+	// @gotags: `json:"console,omitempty" bson:"console,omitempty"`
+	Console *ConsoleInfo `protobuf:"bytes,7,opt,name=console,proto3" json:"console,omitempty" bson:"console,omitempty"`
 	// Relational Foreign Key to storage file
 	// @gotags: `json:"file,omitempty" bson:"file,omitempty"`
 	File *v1.FileResponse `protobuf:"bytes,8,opt,name=file,proto3" json:"file,omitempty" bson:"file,omitempty"`

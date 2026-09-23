@@ -46,12 +46,18 @@ type ConsoleInfo struct {
 	// Console icon or logo URL
 	// @gotags: `json:"iconUrl,omitempty" bson:"iconUrl,omitempty"`
 	IconUrl string `protobuf:"bytes,10,opt,name=icon_url,json=iconUrl,proto3" json:"iconUrl,omitempty" bson:"iconUrl,omitempty"`
+	// Default Core to use for roms belonging to this console
+	// @gotags: `json:"defaultCore,omitempty" bson:"defaultCore,omitempty"`
+	DefaultCore string `protobuf:"bytes,11,opt,name=default_core,json=defaultCore,proto3" json:"defaultCore,omitempty" bson:"defaultCore,omitempty"`
+	// System identifier key (e.g. nes, snes, arcade)
+	// @gotags: `json:"system,omitempty" bson:"system,omitempty"`
+	System string `protobuf:"bytes,12,opt,name=system,proto3" json:"system,omitempty" bson:"system,omitempty"`
 	// Creation timestamp
 	// @gotags: `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
-	CreatedAt string `protobuf:"bytes,12,opt,name=created_at,json=createdAt,proto3" json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	CreatedAt string `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"createdAt,omitempty" bson:"createdAt,omitempty"`
 	// Last update timestamp
 	// @gotags: `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
-	UpdatedAt     string `protobuf:"bytes,13,opt,name=updated_at,json=updatedAt,proto3" json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+	UpdatedAt     string `protobuf:"bytes,21,opt,name=updated_at,json=updatedAt,proto3" json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -138,6 +144,20 @@ func (x *ConsoleInfo) GetReleaseYear() int32 {
 func (x *ConsoleInfo) GetIconUrl() string {
 	if x != nil {
 		return x.IconUrl
+	}
+	return ""
+}
+
+func (x *ConsoleInfo) GetDefaultCore() string {
+	if x != nil {
+		return x.DefaultCore
+	}
+	return ""
+}
+
+func (x *ConsoleInfo) GetSystem() string {
+	if x != nil {
+		return x.System
 	}
 	return ""
 }
@@ -251,7 +271,7 @@ var File_content_v1_rom_console_proto protoreflect.FileDescriptor
 
 const file_content_v1_rom_console_proto_rawDesc = "" +
 	"\n" +
-	"\x1ccontent/v1/rom/console.proto\x12\x0econtent.v1.rom\"\xa9\x02\n" +
+	"\x1ccontent/v1/rom/console.proto\x12\x0econtent.v1.rom\"\xe4\x02\n" +
 	"\vConsoleInfo\x12\x19\n" +
 	"\bmongo_id\x18\x01 \x01(\tR\amongoId\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
@@ -263,11 +283,13 @@ const file_content_v1_rom_console_proto_rawDesc = "" +
 	"\fmanufacturer\x18\b \x01(\tR\fmanufacturer\x12!\n" +
 	"\frelease_year\x18\t \x01(\x05R\vreleaseYear\x12\x19\n" +
 	"\bicon_url\x18\n" +
-	" \x01(\tR\aiconUrl\x12\x1d\n" +
+	" \x01(\tR\aiconUrl\x12!\n" +
+	"\fdefault_core\x18\v \x01(\tR\vdefaultCore\x12\x16\n" +
+	"\x06system\x18\f \x01(\tR\x06system\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\f \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"created_at\x18\r \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\r \x01(\tR\tupdatedAt\"7\n" +
+	"updated_at\x18\x15 \x01(\tR\tupdatedAt\"7\n" +
 	"\x13ListConsolesRequest\x12\x17\n" +
 	"\x04site\x18\x01 \x01(\tH\x00R\x04site\x88\x01\x01B\a\n" +
 	"\x05_site\"O\n" +

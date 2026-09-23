@@ -350,6 +350,14 @@
           "type": "string",
           "title": "Console icon or logo URL"
         },
+        "defaultCore": {
+          "type": "string",
+          "title": "Default Core to use for roms belonging to this console"
+        },
+        "system": {
+          "type": "string",
+          "title": "System identifier key (e.g. nes, snes, arcade)"
+        },
         "createdAt": {
           "type": "string",
           "title": "Creation timestamp"
