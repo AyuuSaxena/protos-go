@@ -1256,6 +1256,10 @@
           "type": "string",
           "title": "ETag / Checksum"
         },
+        "fileExtension": {
+          "type": "string",
+          "title": "File Extension"
+        },
         "userMetadata": {
           "type": "object",
           "additionalProperties": {

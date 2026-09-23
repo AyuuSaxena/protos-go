@@ -2243,6 +2243,10 @@
           "type": "string",
           "title": "File name"
         },
+        "fileExtension": {
+          "type": "string",
+          "title": "File Extension"
+        },
         "size": {
           "type": "string",
           "format": "int64",

@@ -166,12 +166,15 @@ type File struct {
 	// ETag / Checksum
 	// @gotags: `json:"etag,omitempty" bson:"etag,omitempty"`
 	Etag string `protobuf:"bytes,8,opt,name=etag,proto3" json:"etag,omitempty" bson:"etag,omitempty"`
+	// File Extension
+	// @gotags: `json:"fileExtension,omitempty" bson:"fileExtension,omitempty"`
+	FileExtension string `protobuf:"bytes,9,opt,name=file_extension,json=fileExtension,proto3" json:"fileExtension,omitempty" bson:"fileExtension,omitempty"`
 	// Custom user metadata
 	// @gotags: `json:"userMetadata,omitempty" bson:"userMetadata,omitempty"`
-	UserMetadata map[string]string `protobuf:"bytes,9,rep,name=user_metadata,json=userMetadata,proto3" json:"userMetadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value" bson:"userMetadata,omitempty"`
+	UserMetadata map[string]string `protobuf:"bytes,10,rep,name=user_metadata,json=userMetadata,proto3" json:"userMetadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value" bson:"userMetadata,omitempty"`
 	// Creation timestamp in RFC3339 format
 	// @gotags: `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
-	CreatedAt     string `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	CreatedAt     string `protobuf:"bytes,20,opt,name=created_at,json=createdAt,proto3" json:"createdAt,omitempty" bson:"createdAt,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -258,6 +261,13 @@ func (x *File) GetContentType() string {
 func (x *File) GetEtag() string {
 	if x != nil {
 		return x.Etag
+	}
+	return ""
+}
+
+func (x *File) GetFileExtension() string {
+	if x != nil {
+		return x.FileExtension
 	}
 	return ""
 }
@@ -1263,10 +1273,13 @@ type FileResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Unique file identifier (UUID)
 	// @gotags: `json:"id,omitempty" bson:"id,omitempty"`
-	Id string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty" bson:"id,omitempty"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty" bson:"id,omitempty"`
 	// File name
 	// @gotags: `json:"name,omitempty" bson:"name,omitempty"`
-	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty" bson:"name,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" bson:"name,omitempty"`
+	// File Extension
+	// @gotags: `json:"fileExtension,omitempty" bson:"fileExtension,omitempty"`
+	FileExtension string `protobuf:"bytes,3,opt,name=file_extension,json=fileExtension,proto3" json:"fileExtension,omitempty" bson:"fileExtension,omitempty"`
 	// File size in bytes
 	// @gotags: `json:"size,omitempty" bson:"size,omitempty"`
 	Size int64 `protobuf:"varint,6,opt,name=size,proto3" json:"size,omitempty" bson:"size,omitempty"`
@@ -1330,6 +1343,13 @@ func (x *FileResponse) GetName() string {
 	return ""
 }
 
+func (x *FileResponse) GetFileExtension() string {
+	if x != nil {
+		return x.FileExtension
+	}
+	return ""
+}
+
 func (x *FileResponse) GetSize() int64 {
 	if x != nil {
 		return x.Size
@@ -1385,7 +1405,7 @@ const file_storage_v1_storage_proto_rawDesc = "" +
 	"\x0esource_weights\x18\b \x03(\v2%.storage.v1.Bucket.SourceWeightsEntryR\rsourceWeights\x1a@\n" +
 	"\x12SourceWeightsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\"\xf4\x02\n" +
+	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\"\x9b\x03\n" +
 	"\x04File\x12\x19\n" +
 	"\bmongo_id\x18\x01 \x01(\tR\amongoId\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12\x1b\n" +
@@ -1394,11 +1414,12 @@ const file_storage_v1_storage_proto_rawDesc = "" +
 	"\x04name\x18\x05 \x01(\tR\x04name\x12\x12\n" +
 	"\x04size\x18\x06 \x01(\x03R\x04size\x12!\n" +
 	"\fcontent_type\x18\a \x01(\tR\vcontentType\x12\x12\n" +
-	"\x04etag\x18\b \x01(\tR\x04etag\x12G\n" +
-	"\ruser_metadata\x18\t \x03(\v2\".storage.v1.File.UserMetadataEntryR\fuserMetadata\x12\x1d\n" +
+	"\x04etag\x18\b \x01(\tR\x04etag\x12%\n" +
+	"\x0efile_extension\x18\t \x01(\tR\rfileExtension\x12G\n" +
+	"\ruser_metadata\x18\n" +
+	" \x03(\v2\".storage.v1.File.UserMetadataEntryR\fuserMetadata\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\n" +
-	" \x01(\tR\tcreatedAt\x1a?\n" +
+	"created_at\x18\x14 \x01(\tR\tcreatedAt\x1a?\n" +
 	"\x11UserMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"e\n" +
@@ -1488,10 +1509,11 @@ const file_storage_v1_storage_proto_rawDesc = "" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\":\n" +
 	"\x12UploadFileResponse\x12$\n" +
-	"\x04file\x18\x01 \x01(\v2\x10.storage.v1.FileR\x04file\"\xae\x02\n" +
+	"\x04file\x18\x01 \x01(\v2\x10.storage.v1.FileR\x04file\"\xd5\x02\n" +
 	"\fFileResponse\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x05 \x01(\tR\x04name\x12\x12\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
+	"\x0efile_extension\x18\x03 \x01(\tR\rfileExtension\x12\x12\n" +
 	"\x04size\x18\x06 \x01(\x03R\x04size\x12!\n" +
 	"\fcontent_type\x18\a \x01(\tR\vcontentType\x12\x12\n" +
 	"\x04etag\x18\b \x01(\tR\x04etag\x12O\n" +
