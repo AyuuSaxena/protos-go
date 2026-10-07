@@ -1,0 +1,982 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "page/v1/pageService.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Appcms"
+    },
+    {
+      "name": "Page"
+    },
+    {
+      "name": "Pages"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/appcms": {
+      "get": {
+        "summary": "── AppCMS Global Settings & Branding ──────────────────────────────────────",
+        "operationId": "PageService_GetAppCMS",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AppCMS"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "site",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Appcms"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "put": {
+        "operationId": "PageService_UpdateAppCMS",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AppCMS"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateAppCMSRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Appcms"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/page": {
+      "get": {
+        "summary": "── Page & Template Management ─────────────────────────────────────────────",
+        "operationId": "PageService_GetPage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1PageConfig"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "site",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Page"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/pages": {
+      "get": {
+        "operationId": "PageService_ListPages",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListPagesResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "site",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "isTemplate",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "Pages"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "PageService_CreatePage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1PageConfig"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreatePageRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Pages"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/pages/{id}": {
+      "get": {
+        "operationId": "PageService_GetPageByID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1PageConfig"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "site",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Pages"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "PageService_DeletePage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeletePageResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "site",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Pages"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "put": {
+        "operationId": "PageService_UpdatePage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1PageConfig"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT Bearer token or x-api-key"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or invalid token claims"
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PageServiceUpdatePageBody"
+            }
+          }
+        ],
+        "tags": [
+          "Pages"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "PageServiceUpdatePageBody": {
+      "type": "object",
+      "properties": {
+        "site": {
+          "type": "string"
+        },
+        "page": {
+          "$ref": "#/definitions/v1PageConfig"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1AppCMS": {
+      "type": "object",
+      "properties": {
+        "site": {
+          "type": "string"
+        },
+        "brand": {
+          "$ref": "#/definitions/v1BrandConfig"
+        },
+        "theme": {
+          "$ref": "#/definitions/v1ThemeConfig"
+        },
+        "featureToggles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "navigation": {
+          "$ref": "#/definitions/v1NavigationConfig"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "description": "AppCMS holds all global application settings, brand styling, feature toggles, and dynamic labels for a tenant site."
+    },
+    "v1BrandConfig": {
+      "type": "object",
+      "properties": {
+        "brandId": {
+          "type": "string"
+        },
+        "brandName": {
+          "type": "string"
+        },
+        "logoUrl": {
+          "type": "string"
+        },
+        "faviconUrl": {
+          "type": "string"
+        },
+        "splashUrl": {
+          "type": "string"
+        }
+      },
+      "description": "BrandConfig defines branding assets."
+    },
+    "v1ContentMode": {
+      "type": "string",
+      "enum": [
+        "CONTENT_MODE_UNSPECIFIED",
+        "CONTENT_MODE_CURATED",
+        "CONTENT_MODE_PROGRAMMATIC"
+      ],
+      "default": "CONTENT_MODE_UNSPECIFIED",
+      "description": "ContentMode defines whether content in a tray is manually curated or programmatically generated."
+    },
+    "v1CreatePageRequest": {
+      "type": "object",
+      "properties": {
+        "site": {
+          "type": "string"
+        },
+        "page": {
+          "$ref": "#/definitions/v1PageConfig"
+        }
+      }
+    },
+    "v1DeletePageResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1ListPagesResponse": {
+      "type": "object",
+      "properties": {
+        "pages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PageConfig"
+          }
+        }
+      }
+    },
+    "v1ModuleConfig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "moduleType": {
+          "type": "string",
+          "title": "e.g. \"VL Masthead\", \"VL Highlight Tray\", \"VL Tray\", \"VL Live Preview Tray\", \"VL Footer\", \"hero\", \"shelf\", \"grid\", \"video_player\""
+        },
+        "layout": {
+          "type": "string",
+          "title": "\"banner\", \"carousel\", \"grid\", \"full-width\", \"contained\""
+        },
+        "styling": {
+          "$ref": "#/definitions/v1TrayStyling",
+          "title": "CSS / color customization"
+        },
+        "contentStrategy": {
+          "$ref": "#/definitions/v1TrayContentStrategy",
+          "title": "Curated vs Programmatic content"
+        },
+        "trays": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1TrayConfig"
+          },
+          "title": "Optional sub-trays or items"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "featureToggles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "order": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "customFields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "ModuleConfig represents a module-wise block in a page mapped to web-app modules."
+    },
+    "v1NavItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "external": {
+          "type": "boolean"
+        },
+        "order": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "description": "NavItem represents a header or footer navigation link."
+    },
+    "v1NavigationConfig": {
+      "type": "object",
+      "properties": {
+        "headerLinks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1NavItem"
+          }
+        },
+        "footerLinks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1NavItem"
+          }
+        }
+      },
+      "description": "NavigationConfig holds global navigation definitions."
+    },
+    "v1PageConfig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "title": "\"home\", \"landing\", \"catalog\", \"detail\""
+        },
+        "templateId": {
+          "type": "string",
+          "title": "Reference to source template if instantiated"
+        },
+        "status": {
+          "type": "string",
+          "title": "\"draft\", \"published\", \"archived\""
+        },
+        "seo": {
+          "$ref": "#/definitions/v1SEOConfig"
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1SectionConfig"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "isTemplate": {
+          "type": "boolean",
+          "title": "true = template blueprint, false = live site page"
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1ModuleConfig"
+          },
+          "title": "Module-wise layout for web-app mapping"
+        }
+      },
+      "description": "PageConfig represents both live pages and reusable template blueprints."
+    },
+    "v1ProgrammaticQuery": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "title": "\"trending\", \"featured\", \"category\", \"console\", \"all\""
+        },
+        "consoleId": {
+          "type": "string",
+          "title": "e.g. \"snes\", \"nes\", \"gba\", \"genesis\", \"arcade\""
+        },
+        "genre": {
+          "type": "string",
+          "title": "e.g. \"action\", \"platformer\", \"rpg\""
+        },
+        "sortBy": {
+          "type": "string",
+          "title": "\"popular\", \"newest\", \"rating\", \"alphabetical\""
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32",
+          "title": "maximum items to retrieve"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "filter tags"
+        }
+      },
+      "description": "ProgrammaticQuery holds rules for dynamically generating tray items."
+    },
+    "v1SEOConfig": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "keywords": {
+          "type": "string"
+        },
+        "ogImage": {
+          "type": "string"
+        },
+        "canonical": {
+          "type": "string"
+        }
+      },
+      "description": "SEOConfig defines search engine and social graph tags for pages and templates."
+    },
+    "v1SectionConfig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "layout": {
+          "type": "string",
+          "title": "\"full-width\", \"contained\", \"split\""
+        },
+        "trays": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1TrayConfig"
+          }
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "featureToggles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "order": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "moduleType": {
+          "type": "string",
+          "title": "e.g. \"VL Masthead\", \"VL Highlight Tray\", \"VL Tray\""
+        }
+      },
+      "description": "SectionConfig groups trays within a layout structure."
+    },
+    "v1ThemeConfig": {
+      "type": "object",
+      "properties": {
+        "primaryColor": {
+          "type": "string"
+        },
+        "accentColor": {
+          "type": "string"
+        },
+        "backgroundColor": {
+          "type": "string"
+        },
+        "surfaceColor": {
+          "type": "string"
+        },
+        "textColor": {
+          "type": "string"
+        },
+        "textMutedColor": {
+          "type": "string"
+        },
+        "borderColor": {
+          "type": "string"
+        },
+        "fontHeading": {
+          "type": "string"
+        },
+        "fontBody": {
+          "type": "string"
+        },
+        "radius": {
+          "type": "string"
+        },
+        "customCss": {
+          "type": "string"
+        },
+        "trayOverrides": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1TrayStyling"
+          },
+          "title": "specific styling overrides per tray type"
+        }
+      },
+      "description": "ThemeConfig defines brand styling tokens and global CSS."
+    },
+    "v1TrayConfig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "title": "\"hero\", \"shelf\", \"grid\", \"spotlight\", \"list\", \"live\""
+        },
+        "layout": {
+          "type": "string",
+          "title": "\"poster\", \"landscape\", \"square\", \"banner\""
+        },
+        "styling": {
+          "$ref": "#/definitions/v1TrayStyling",
+          "title": "customizable colors/css"
+        },
+        "contentStrategy": {
+          "$ref": "#/definitions/v1TrayContentStrategy",
+          "title": "curated vs programmatic"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "e.g. \"browse_all_label\", \"badge_label\""
+        },
+        "featureToggles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "title": "e.g. \"show_arrows\", \"show_browse_all\", \"enable_badges\""
+        },
+        "order": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "moduleType": {
+          "type": "string",
+          "title": "e.g. \"VL Masthead\", \"VL Highlight Tray\", \"VL Tray\""
+        }
+      },
+      "description": "TrayConfig represents an individual visual tray layout and its content strategy."
+    },
+    "v1TrayContentStrategy": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "$ref": "#/definitions/v1ContentMode"
+        },
+        "curatedItemIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "IDs of games/media manually chosen in CMS"
+        },
+        "query": {
+          "$ref": "#/definitions/v1ProgrammaticQuery",
+          "title": "parameters for automatic generation"
+        }
+      },
+      "description": "TrayContentStrategy determines how a tray gets its content: curated or programmatically generated."
+    },
+    "v1TrayStyling": {
+      "type": "object",
+      "properties": {
+        "titleColor": {
+          "type": "string"
+        },
+        "subtitleColor": {
+          "type": "string"
+        },
+        "backgroundColor": {
+          "type": "string"
+        },
+        "cardAccentColor": {
+          "type": "string"
+        },
+        "borderColor": {
+          "type": "string"
+        },
+        "customCss": {
+          "type": "string"
+        },
+        "radius": {
+          "type": "string"
+        }
+      },
+      "description": "TrayStyling controls brand-level and tray-specific CSS alterations."
+    },
+    "v1UpdateAppCMSRequest": {
+      "type": "object",
+      "properties": {
+        "site": {
+          "type": "string"
+        },
+        "appCms": {
+          "$ref": "#/definitions/v1AppCMS"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization header using the Bearer scheme. Enter: 'Bearer <token>'"
+    },
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "name": "x-api-key",
+      "in": "header",
+      "description": "Admin or Identity API key (header: x-api-key)"
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    },
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

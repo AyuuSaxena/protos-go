@@ -50,3 +50,11 @@ var ManagementConsoleServiceSwaggerJSON []byte
 //
 //go:embed management/v1/game/gameService.swagger.json
 var ManagementGameServiceSwaggerJSON []byte
+
+// PageServiceSwaggerJSON contains the raw OpenAPI 2.0 JSON for PageService.
+//
+//go:embed page/v1/pageService.swagger.json
+var PageServiceSwaggerJSON []byte
+
+// PageSwaggerJSON is an alias for PageServiceSwaggerJSON.
+var PageSwaggerJSON = PageServiceSwaggerJSON
