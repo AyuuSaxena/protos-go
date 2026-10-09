@@ -533,9 +533,9 @@ type ImageQuery struct {
 	// Filter by format (e.g. png, jpeg, webp)
 	// @gotags: `form:"format" json:"format,omitempty" bson:"format,omitempty"`
 	Format *string `protobuf:"bytes,3,opt,name=format,proto3,oneof" json:"format,omitempty" form:"format" bson:"format,omitempty"`
-	// Filter by content status (e.g. active, archived)
+	// Filter by one or more content statuses (e.g. active, draft, archived)
 	// @gotags: `form:"status" json:"status,omitempty" bson:"status,omitempty"`
-	Status *string `protobuf:"bytes,4,opt,name=status,proto3,oneof" json:"status,omitempty" form:"status" bson:"status,omitempty"`
+	Status []string `protobuf:"bytes,4,rep,name=status,proto3" json:"status,omitempty" form:"status" bson:"status,omitempty"`
 	// Filter by public visibility
 	// @gotags: `form:"isPublic" json:"isPublic,omitempty" bson:"isPublic,omitempty"`
 	IsPublic *bool `protobuf:"varint,5,opt,name=is_public,json=isPublic,proto3,oneof" json:"isPublic,omitempty" form:"isPublic" bson:"isPublic,omitempty"`
@@ -612,11 +612,11 @@ func (x *ImageQuery) GetFormat() string {
 	return ""
 }
 
-func (x *ImageQuery) GetStatus() string {
-	if x != nil && x.Status != nil {
-		return *x.Status
+func (x *ImageQuery) GetStatus() []string {
+	if x != nil {
+		return x.Status
 	}
-	return ""
+	return nil
 }
 
 func (x *ImageQuery) GetIsPublic() bool {
@@ -1839,28 +1839,26 @@ const file_content_v1_image_image_proto_rawDesc = "" +
 	"\x05_nameB\a\n" +
 	"\x05_siteB\f\n" +
 	"\n" +
-	"_permalink\"\x8e\x04\n" +
+	"_permalink\"\xfe\x03\n" +
 	"\n" +
 	"ImageQuery\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tH\x00R\x04name\x88\x01\x01\x12\x1f\n" +
 	"\bcategory\x18\x02 \x01(\tH\x01R\bcategory\x88\x01\x01\x12\x1b\n" +
-	"\x06format\x18\x03 \x01(\tH\x02R\x06format\x88\x01\x01\x12\x1b\n" +
-	"\x06status\x18\x04 \x01(\tH\x03R\x06status\x88\x01\x01\x12 \n" +
-	"\tis_public\x18\x05 \x01(\bH\x04R\bisPublic\x88\x01\x01\x12\x15\n" +
-	"\x03tag\x18\x06 \x01(\tH\x05R\x03tag\x88\x01\x01\x12$\n" +
-	"\vuploader_id\x18\a \x01(\tH\x06R\n" +
+	"\x06format\x18\x03 \x01(\tH\x02R\x06format\x88\x01\x01\x12\x16\n" +
+	"\x06status\x18\x04 \x03(\tR\x06status\x12 \n" +
+	"\tis_public\x18\x05 \x01(\bH\x03R\bisPublic\x88\x01\x01\x12\x15\n" +
+	"\x03tag\x18\x06 \x01(\tH\x04R\x03tag\x88\x01\x01\x12$\n" +
+	"\vuploader_id\x18\a \x01(\tH\x05R\n" +
 	"uploaderId\x88\x01\x01\x12\x17\n" +
-	"\x04site\x18\b \x01(\tH\aR\x04site\x88\x01\x01\x12E\n" +
-	"\faspect_ratio\x18\t \x01(\x0e2\x1d.content.v1.image.AspectRatioH\bR\vaspectRatio\x88\x01\x01\x12\"\n" +
+	"\x04site\x18\b \x01(\tH\x06R\x04site\x88\x01\x01\x12E\n" +
+	"\faspect_ratio\x18\t \x01(\x0e2\x1d.content.v1.image.AspectRatioH\aR\vaspectRatio\x88\x01\x01\x12\"\n" +
 	"\n" +
 	"is_publish\x18\n" +
-	" \x01(\bH\tR\tisPublish\x88\x01\x01\x12 \n" +
-	"\tis_active\x18\v \x01(\bH\n" +
-	"R\bisActive\x88\x01\x01B\a\n" +
+	" \x01(\bH\bR\tisPublish\x88\x01\x01\x12 \n" +
+	"\tis_active\x18\v \x01(\bH\tR\bisActive\x88\x01\x01B\a\n" +
 	"\x05_nameB\v\n" +
 	"\t_categoryB\t\n" +
-	"\a_formatB\t\n" +
-	"\a_statusB\f\n" +
+	"\a_formatB\f\n" +
 	"\n" +
 	"_is_publicB\x06\n" +
 	"\x04_tagB\x0e\n" +

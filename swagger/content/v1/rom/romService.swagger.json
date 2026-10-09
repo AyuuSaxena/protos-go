@@ -1002,8 +1002,11 @@
           "title": "Filter by release region (e.g. USA, EUR, JPN)"
         },
         "status": {
-          "type": "string",
-          "title": "Filter by content status (e.g. active, archived)"
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Filter by one or more content statuses (e.g. active, draft, archived)"
         },
         "isPublic": {
           "type": "boolean",
